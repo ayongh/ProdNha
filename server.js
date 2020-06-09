@@ -10,6 +10,10 @@ dotenv.config();
 
 const app = express()
 
+//Import Route Modules 
+const user_login = require('../nhaProd/Routes/login/login')
+const Recaptcha = require ('../nhaProd/Routes/middleware/recaptcha')
+
 //SWGGER Documentaion Hold
 
 
@@ -35,23 +39,19 @@ mongoose.connect(process.env.DB_CONNECTION, {useNewUrlParser: true, useUnifiedTo
     return true
 })
 
-app.get('/test', (req, res) =>{
-    const data = {
-        message:"Test Server"
-    }
+//Routess
+app.use('/recaptcha',Recaptcha)
+app.use('/user/login',user_login)
 
-    res.cookie('test','AbhishekCookie',{httpOnly:true, maxAge: 1000*60*60*5, sameSite:true}).status(200).send(data)
+app.get('/test',(req,res)=>
+{
+    return res.status(200).send({message: "hello"})
 })
 
 
-app.get('/getcookie', (req,res)=>
-{
-    console.log()
-})
-
-if(process.env.NODE_ENV === 'production')
-{
-    app.use(express.static('client/build'))
-}
+// if(process.env.NODE_ENV === 'production')
+// {
+//     app.use(express.static('client/build'))
+// }
 
 app.listen(port, console.log(`server is starting at ${port}`))
