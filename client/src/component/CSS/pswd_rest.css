@@ -1,0 +1,16 @@
+.Countdown-col-element
+{
+    display: grid;
+    margin: 10px;
+}
+
+.Countdown
+{
+    display: flex;  
+    margin: auto;
+}
+
+.login_left.passwordReset
+{
+    background: white;
+}

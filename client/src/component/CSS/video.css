@@ -1,0 +1,113 @@
+.Video_container
+{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+}
+
+.video_warpper
+{
+    width: 80vw;
+    height: 100vh;
+}
+
+.NextVideo_container_wrapper
+{
+    width: 20%;
+    height: 100%;
+}
+
+.current-playing
+{
+    margin: 5%;
+    border-bottom: solid;
+    border-width: .1px;
+    border-color: gray;
+}
+
+.Next_video
+{
+    padding: 20px;
+    height: 90vh;
+    overflow: auto;
+}
+
+.nextVideoIcon
+{
+    margin-right: 10px;
+    transition: all 1s;
+    color: burlywood;
+}
+
+.nextVideoIcon:hover
+{
+    transform: scale(1.1);
+}
+
+.player-wrapper {
+    position: relative;
+    padding-top: 56.25% /* Player ratio: 100 / (1280 / 720) */
+}
+
+.react-player {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom:0 ;
+    right: 0;
+    background: black;
+}
+
+.caresoleImage_episode_video
+{
+    width: 24%;
+}
+
+
+.pauseVideoContainer
+{
+    position: absolute;
+    color: white;
+    width: 80%;
+    height: 100%;
+    background:black;
+    opacity: .6;
+    display: none;
+}
+
+.pauseContent
+{
+    margin-top: 20%;
+    margin-left: 2%;
+}
+
+
+.noepisode
+{
+    width: 100%;
+    text-align: center;
+}
+
+.videoBackButton
+{
+    font-size: medium;
+    color:white;
+    z-index: 1000;
+    position: absolute;
+    margin-top: 2%;
+    margin-left: 2%;
+
+}
+
+.videobackHint
+{
+    display: none;
+    transition: all 2s;
+    font-size: 100;
+}
+
+.videoBackButton:hover .videobackHint:hover
+{
+    display: inline;
+    transform: scale(1.05)
+}

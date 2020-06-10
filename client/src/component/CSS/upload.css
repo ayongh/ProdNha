@@ -1,0 +1,29 @@
+.upload_container
+{
+    margin-left: 135px;
+}
+
+.classCoverPic
+{
+    width: 200px;
+}
+
+.class_cover_upload_container
+{
+    display: block;
+}
+
+.reqired_section
+{
+    display: table-caption;
+    margin-bottom: 20px;
+}
+
+.classinfo
+{
+    display: table-caption;
+}
+
+.p{
+    margin-bottom: 0px;
+}

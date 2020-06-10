@@ -9,8 +9,8 @@
     "build": "cd client && npm run build",
     "heroku-postbuild": "npm run install-client && npm run build",
     "client": "cd client && npm start",
-    "start": "node server.js",
-    "dev": "concurrently -n 'server, client' -c 'red,yellow' \"nodemon server.js\" \"npm run client\""
+    "start": "nodemon server.js",
+    "dev": "concurrently -n 'server, client' -c 'green,yellow' \"nodemon server.js\" \"npm run client\""
   },
   "keywords": [],
   "author": "",
@@ -24,9 +24,23 @@
     "express": "^4.17.1",
     "express-validator": "^6.5.0",
     "firebase": "^7.15.0",
+    "json-size": "^1.0.0",
     "jsonwebtoken": "^8.5.1",
+    "jwt-decode": "^2.2.0",
     "mongoose": "^5.9.18",
     "morgan": "^1.10.0",
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.4",
+    "react-google-invisible-recaptcha": "^0.2.11",
+    "react-icons-kit": "^1.3.1",
+    "react-player": "^2.2.0",
+    "react-redux": "^7.2.0",
+    "react-responsive-modal": "^5.0.2",
+    "react-router-dom": "^5.2.0",
+    "redux": "^4.0.5",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-thunk": "^2.3.0"
+  },
+  "devDependencies": {
+    "case-sensitive-paths-webpack-plugin": "^2.3.0"
   }
 }

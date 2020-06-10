@@ -1,0 +1,25 @@
+.file_notFound_container
+{
+    width: 100%;
+    height: 100%;
+    align-content: center;
+    text-align: center;
+}
+
+.fnc_inner_container
+{
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+}
+
+.fnc_404
+{
+    margin: 0px;
+    font-size: 300px;
+}
+
+.fnc_Message
+{
+    margin: 0px
+}

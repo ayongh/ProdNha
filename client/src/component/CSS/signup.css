@@ -1,0 +1,96 @@
+.signup_body
+{
+    width: 100vw;
+    height: 100vh;
+    background: url(../img/login_background.jpg);
+    display: flex;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.signup_left
+{
+    width: 50%;
+    height: 100%;
+    background: white;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.signup_right
+{
+    width: 50%;
+    height: 100%;
+}
+
+.signup_right_inner_container
+{
+    padding: 50px;
+    display: grid;
+    text-align: center;
+    overflow:auto;
+}
+
+.signup_right_outer_container
+{
+    background: white;
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-top: 15%;
+    -webkit-box-shadow: 7px 14px 25px -2px rgba(37,41,41,1);
+    -moz-box-shadow: 7px 14px 25px -2px rgba(37,41,41,1);
+    box-shadow: 7px 14px 25px -2px rgba(37,41,41,1);    
+
+}
+
+.signup_signup_right_inner_container_elem
+{
+text-align: left;
+display: grid;
+margin-top:10px ;
+}
+
+.txt
+{
+    padding: 10px;
+}
+
+.btn
+{
+    margin-top: 20px;
+    padding: 12px;
+    background: orange;
+    border: solid;
+    border-style: none;
+    font-size: medium;
+    -webkit-transition: -webkit-box-shadow 2s;
+    outline: bisque;
+}
+
+.signup_left_outer_container
+{
+    width: 50%;
+    height: 25%;
+    display: grid;
+    margin-left: 23%;
+    margin-top: 40%;
+    text-align: center;
+}
+
+.signup
+{
+    width: 60%;
+}
+
+.btn:hover
+{
+    -webkit-box-shadow: 0px 21px 20px -15px rgba(37,41,41,1);
+    -moz-box-shadow: 0px 21px 20px -15px rgba(37,41,41,1);
+    box-shadow: 0px 21px 20px -15px rgba(37,41,41,1);
+}
+
+.episode_link
+{
+    display: flex;
+    width: 24%;
+}

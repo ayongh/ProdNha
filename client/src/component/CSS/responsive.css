@@ -1,0 +1,211 @@
+@media only screen and (max-width: 1242px) {
+
+    .login_body
+    {
+        display: grid;
+    }
+    .login_left
+    {
+        width: 100%;
+    }
+    
+    .login_left_outer_container {
+        width: 90%;
+        margin-left: 5%;
+        margin-top: 5%;
+    }
+
+    .login_right
+    {
+        width: 100%;
+    }
+
+    .navbar_menu
+    {
+        text-align: center;
+    }
+
+
+    .login_right_outer_container
+    {
+        margin-left: 5%;
+        margin-right: 5%;
+        margin-top: 5%;
+    }
+
+    /* ************************singup******************************* */
+    .signup_body
+    {
+        display: grid;
+    }
+
+    .signup_left
+    {
+        width: 90%;
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+
+    .signup 
+    {
+        margin-bottom: 5%;
+    }
+    
+    .signup_left_outer_container
+    {
+        width: 100%;
+        margin-left: 2%;
+        margin-top: 2%;
+    }
+
+    .signup_right
+    {
+        width: 100%;
+    }
+
+    .signup_right_outer_container
+    {
+        margin-left: 2%;
+        margin-right: 2%;
+        margin-top: 2%;
+    }
+
+    .signup_right_inner_container
+    {
+        padding: 30px;
+    }
+
+    /* ------------------------------Homepage ----------------*/
+    .search_home_main_header
+    {
+        display: table;
+    }
+
+    .mainContaineerImg
+    {
+        margin-top: 10%;
+        margin-left: 10%;
+    }
+
+    .search_home_main_header_left
+    {
+        width: 91%;
+        height: auto;
+        text-align: center;
+    }
+
+    .main_header_left_content
+    {
+        width: 100%;
+    }
+
+
+    .userinfo_title
+    {
+        display: none;
+    }
+
+    .update_userinfo_detail
+    {
+        width: 100%;
+    }
+
+    .searchContent
+    {
+        margin-left: 14%;
+    }
+
+    /* ---------------------popup ----------------------- */
+    .styles_overlay__CLSq-
+    {
+        padding: 0%;
+    }
+
+    .styles_modal__gNwvD 
+    {
+        padding: 0rem;
+    }
+    .styles_modal__gNwvD {
+        max-width: 90%;
+        max-height: auto;
+    }
+
+    .caresole_wrapper
+    {
+        display: contents;
+    }
+
+    .caresole_image_wrapper
+    {
+        width: 100%;
+    }
+
+    .caresole_popup_container
+    {
+        width: 100%;
+        text-align: center;
+    }
+
+    .contentWraperSimilar
+    {
+        width: 100px;
+    }
+
+
+    .search_home_main_container
+    {
+        height: auto;
+    }
+    
+    .caresoleImage_episode
+    {
+        width: 100px;
+        height: 150px;
+    }
+
+    .episode_link
+    {
+        width: 100px;
+    }
+
+    .login_body
+    {
+        height: auto;
+    }
+    /* video player */
+    .Video_container
+    {
+        display: inline;
+    }
+
+    .video_warpper
+    {
+        width: 100%;
+    }
+    .react-player
+    {
+        width: 100%;
+    }
+
+    .NextVideo_container_wrapper
+    {
+        width: 100%;
+    }
+
+    .caresole_episode_desc
+    {
+        width: 100%;
+    }
+
+}
+
+
+@media only screen and  (max-width: 13400px)
+{
+    .caresoleImage_episode
+    {
+        height: intrinsic;
+    }
+
+    
+}

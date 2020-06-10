@@ -1,0 +1,88 @@
+.userprofile_main_container
+{
+    width: 100vw;
+}
+
+.user_info_container
+{
+    margin-top: 5%;
+    margin-left: 15%;
+    margin-right: 15%;
+
+    width: 70%;
+}
+.userinfo_wrapper
+{
+    width: 100%;
+    display: inline-flex;
+    border-top: solid;
+    border-bottom: solid;
+    border-style: line;
+    border-width: 1px;
+}
+
+.userinfo_title
+{
+    width: 30%;
+}
+
+.userinfo_detail_changeDetail
+{
+    margin-left: 10%;
+}
+.subTitle
+{
+    font-size: 20px;
+    font-weight: 300;
+}
+
+.Name
+{
+    font-weight: 600;
+}
+
+.subIdentifier
+{
+    font-weight: 300;
+    color: darkgrey;
+}
+.update_userinfo_wrapper
+{
+    width: 100%;
+    display: inline-flex;
+    border-top: solid;
+    border-style: line;
+    border-width: 1px;
+}
+.update_userinfo_detail
+{
+    display: grid;
+    width: 60%;
+}
+
+.updateform
+{
+    width: 100%;
+}
+.updateText
+{
+    width: 99%;
+    padding: 10px 0px 10px 1%;
+    font-weight: 300;
+    outline: none;
+}
+
+.update_subIdentifier
+{
+    font-weight: 300;
+    margin-bottom: 0px;
+}
+
+.updateButton
+{
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 7px;
+    font-weight: 300;
+}

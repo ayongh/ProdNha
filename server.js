@@ -3,6 +3,8 @@ const morgan = require('morgan')
 const path = require('path')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
+var cookieParser = require('cookie-parser'); //under obesrvation
+
 
 //Holds the important Enviroment Variable for local
 const dotenv = require('dotenv')
@@ -11,9 +13,13 @@ dotenv.config();
 const app = express()
 
 //Import Route Modules 
-const user_login = require('../nhaProd/Routes/login/login')
-const Recaptcha = require ('../nhaProd/Routes/middleware/recaptcha')
-
+const user_Login = require('./Routes/login')
+const Recaptcha = require ('./Routes/recaptcha')
+const token_Validation = require('./Routes/token_validation')
+const Recomendation = require('./Routes/recommendation')
+const render_Class = require('./Routes/render_class')
+const Course = require('./Routes/course')
+const user_info = require('./Routes/user_info')
 //SWGGER Documentaion Hold
 
 
@@ -26,32 +32,27 @@ app.use(morgan('tiny'))
 app.use(express.json())
 app.use(bodyParser.json())
 app.use(express.urlencoded({extended:false}))
-
-
-//MongoDB data connection
-mongoose.connect(process.env.DB_CONNECTION, {useNewUrlParser: true, useUnifiedTopology:true}, (error) =>
-{
-    if(error)
-    {
-        return false
-    }
-
-    return true
-})
+app.use(cookieParser());
 
 //Routess
 app.use('/recaptcha',Recaptcha)
-app.use('/user/login',user_login)
+app.use('/user/login',user_Login)
+app.use('/token/validation', token_Validation);
+app.use('/recomendation',Recomendation);
+app.use('/render/class',render_Class);
+app.use('/course', Course)
+app.use('/user/info', user_info)
 
 app.get('/test',(req,res)=>
 {
     return res.status(200).send({message: "hello"})
 })
 
+app.use(express.static(__dirname + '/public/'));
 
-// if(process.env.NODE_ENV === 'production')
-// {
-//     app.use(express.static('client/build'))
-// }
+if(process.env.NODE_ENV === 'production')
+{
+    app.use(express.static('client/build'))
+}
 
 app.listen(port, console.log(`server is starting at ${port}`))
