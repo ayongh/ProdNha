@@ -48,8 +48,6 @@ app.get('/test',(req,res)=>
     return res.status(200).send({message: "hello"})
 })
 
-app.use(express.static(__dirname + '/public/'));
-
 if(process.env.NODE_ENV === 'production')
 {
     app.use(express.static('client/build'))

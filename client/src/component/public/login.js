@@ -212,7 +212,7 @@ class login extends Component
                 <Recaptcha
                 ref={ ref => this.recaptcha = ref }
                 //**************************************************DANGER remove site key to saftey *********************************************************************
-                sitekey="6LdhWNsUAAAAAKIeVaOGdY3HCKy5Siva9emmZDl6"
+                sitekey={process.env.RECAPTCHA_SITEKEY}
                 onResolved={ this.onResolved } />
                 </div>
             </div>
