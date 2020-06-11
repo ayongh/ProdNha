@@ -564,7 +564,7 @@ nav
     width: 100%;
     max-width: 848px;
     opacity: 1;
-    z-index: 3001;
+    z-index: 300001;
     background-color: var(--black);
     transition: transform 0.5s ease, opacity 0.2s ease;
     display: flex;

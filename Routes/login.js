@@ -9,6 +9,8 @@ router.post('/', async (req, res) =>
         {
             return res.cookie('aid', response.data.token,{httpOnly:true, sameSite:true, maxAge:432000000}).status(response.status).send(response.data)
         }
+
+        return res.status(response.status).send(response.data)
     })
   
 });
