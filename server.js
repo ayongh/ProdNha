@@ -43,10 +43,6 @@ app.use('/render/class',render_Class);
 app.use('/course', Course)
 app.use('/user/info', user_info)
 
-app.get('/test',(req,res)=>
-{
-    return res.status(200).send({message: "hello"})
-})
 
 if(process.env.NODE_ENV === 'production')
 {
