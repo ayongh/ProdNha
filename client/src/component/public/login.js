@@ -36,18 +36,6 @@ class login extends Component
         })
     }
     
-    componentDidMount()
-    {
-        var isSafari = navigator.vendor && navigator.vendor.indexOf('Apple') > -1 && navigator.userAgent && navigator.userAgent.indexOf('CriOS') === -1 &&navigator.userAgent.indexOf('FxiOS') === -1;
-        if (isSafari) 
-        {
-            this.setState({
-                safaribrowser:true
-            })
-        }
-    }
-
-
     handleSubmit = (e)=>
     {
         e.preventDefault();
@@ -76,23 +64,6 @@ class login extends Component
         document.getElementById("alert").style.display="none"
     }
 
-    safariAlert()
-    {
-        var alert = null;
-        if(this.state.safaribrowser === true)
-        {alert =  <div class="alert warning" id="alert"> <span class="closebtn" onClick={()=>this.closealert()}>&times;</span> <strong>Warning!</strong> Please turn off the cookie blocker while using this application. to turn off the cookie blocker follow the instruction below 
-            <br/><strong>Iphone</strong>
-            <ol>
-                <li>Setting > Safari > Prevent Cross-Site Tracking (Turn this setting off) </li>
-            </ol>
-            <br/><strong>Laptop</strong>
-            <ol>
-                <li>Safari > Preferences > Privacy > prevent cross-site tracking (uncheck this box) </li>
-            </ol> 
-      </div>}
-        
-        return alert
-    }
 
     //When recaptcha is resolved
     onResolved() {
@@ -144,11 +115,32 @@ class login extends Component
         {
             errorElement = <p style={{color:"red", display:"flex"}}><Icon icon={close}></Icon>{this.props.state.login.error}</p>
         }
+
+        const route = this.props.location.state
+       
+        if(this.props.state.login.loginFlag)
+        {
+            if(route !== undefined)
+            {
+                if(route.prevLocation === '/browse/:genre' || route.prevLocation === '/watch/:videoID')
+                {
+                    return <Redirect to= "/Homepage"/>
+                }
+                else
+                {
+                    return <Redirect to= {route.prevLocation}/>
+                }
+            }
+            else
+            {
+                return <Redirect to= "/Homepage"/>
+            }   
+        }
+
             
+
         return (
             <div className="loginEntire">
-                {this.safariAlert()}
-
                 <div className="login_body">
                 <div className="login_left">
                     <div className="login_left_outer_container">

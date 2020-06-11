@@ -312,6 +312,7 @@ class getmodel extends Component
 
         var liked = "liked"+classID._id
         var like = "like"+classID._id
+        
         axios.post('/course/like', payload, {withCredentials: true, validateStatus: function (status) { return status >= 200 && status < 600; }}).then( async res =>{
             if(res.status === 200)
             {  
@@ -536,7 +537,7 @@ class getmodel extends Component
         {
             return(
                 <div>
-                    <h3>No content found with such name</h3>
+                    <h3>closing</h3>
                 </div>
             )
         }

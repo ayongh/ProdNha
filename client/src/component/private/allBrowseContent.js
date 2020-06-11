@@ -72,8 +72,6 @@ class allBrowseContent extends Component
             }
         }
 
-        
-
     }
 
     onCloseModal = () => {

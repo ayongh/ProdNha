@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import {Link} from 'react-router-dom'
 
 import {angleRight} from 'react-icons-kit/fa/angleRight'
 import { Icon } from 'react-icons-kit'
@@ -13,11 +14,11 @@ class getImageElement extends Component
         return (
             <div className="CaresoleCategorie">
                 <h2 className="rowHeader">
-                    <a className="allBrowseLink" href={this.props.link}>
+                    <Link className="allBrowseLink" to={{pathname: "/categorie"+this.props.link}} >
                         <div className="row-header-title">{this.props.title}</div>
                         <p className="see-all-link">Explore All</p>
                         <Icon icon={angleRight}></Icon>
-                    </a>
+                    </Link>
                 </h2>
             </div>
         )

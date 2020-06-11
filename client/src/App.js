@@ -109,8 +109,6 @@ class App extends Component
             {/* Search class using title and other factors */}
             <ProtectedRoute exact path="/search/movie" loggedIn={this.props.state.login.loginFlag} component={SearchPage}/>
 
-
-            
             <ProtectedRoute exact path="/upload" loggedIn={this.props.state.login.loginFlag} component={Upload}/>
             <ProtectedRoute exact path="/profile" loggedIn={this.props.state.login.loginFlag} component={UserProfile}/>
             <ProtectedRoute exact path="/profile/username" loggedIn={this.props.state.login.loginFlag} component={Update_Username}/>
