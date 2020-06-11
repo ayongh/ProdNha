@@ -105,7 +105,7 @@ class App extends Component
             <ProtectedRoute exact path="/Homepage" loggedIn={this.props.state.login.loginFlag} component={HomePage}/>
             {/* Main browse Content */}
             <ProtectedRoute exact path="/browse/movie" loggedIn={this.props.state.login.loginFlag} component={BrowsePage}/>
-            <ProtectedRoute exact path="/browse/movie/:categorie" loggedIn={this.props.state.login.loginFlag} component={Main_Browse_Show}/>
+            <ProtectedRoute exact path="/categorie/:categorie" loggedIn={this.props.state.login.loginFlag} component={Main_Browse_Show}/>
             {/* Search class using title and other factors */}
             <ProtectedRoute exact path="/search/movie" loggedIn={this.props.state.login.loginFlag} component={SearchPage}/>
 
