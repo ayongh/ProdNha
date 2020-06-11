@@ -144,30 +144,7 @@ class login extends Component
         {
             errorElement = <p style={{color:"red", display:"flex"}}><Icon icon={close}></Icon>{this.props.state.login.error}</p>
         }
-
-        const route = this.props.location.state
-       
-        if(this.props.state.login.loginFlag)
-        {
-            if(route !== undefined)
-            {
-                if(route.prevLocation === '/browse/:genre' || route.prevLocation === '/watch/:videoID')
-                {
-                    return <Redirect to= "/Homepage"/>
-                }
-                else
-                {
-                    return <Redirect to= {route.prevLocation}/>
-                }
-            }
-            else
-            {
-                return <Redirect to= "/Homepage"/>
-            }   
-        }
-
             
-
         return (
             <div className="loginEntire">
                 {this.safariAlert()}

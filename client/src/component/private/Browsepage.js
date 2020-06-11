@@ -113,7 +113,7 @@ class BrowsePage extends Component
         return (
             <div>
                 <Menu></Menu>
-                <GetTitleElement title="Popular" link="categorie/popular"></GetTitleElement>
+                <GetTitleElement title="Popular" link="/categorie/popular"></GetTitleElement>
                 <div className="caresoleWrapper">
                     <div className="caresole dragscroll">
                         <GetImageElement classes = {this.state.Popularclasses}></GetImageElement>
@@ -121,7 +121,7 @@ class BrowsePage extends Component
                 </div>
 
                
-                <GetTitleElement title="Newly Added" link="categorie/newlyadded"></GetTitleElement>
+                <GetTitleElement title="Newly Added" link="/categorie/newlyadded"></GetTitleElement>
                 <div className="caresoleWrapper">
                     <div className="caresole dragscroll">
                         <GetImageElement classes = {this.state.newlyaddedclasses}></GetImageElement>
@@ -137,14 +137,14 @@ class BrowsePage extends Component
                     </div>
                 </div>
 
-                <GetTitleElement title="Health" link="categorie/Health"></GetTitleElement>
+                <GetTitleElement title="Health" link="/categorie/Health"></GetTitleElement>
                 <div className="caresoleWrapper">
                     <div className="caresole dragscroll">
                     <GetImageElement classes = {this.state.healthclasses}></GetImageElement>
                     </div>
                 </div>
 
-                <GetTitleElement title="Education" link="categorie/education"></GetTitleElement>
+                <GetTitleElement title="Education" link="/categorie/education"></GetTitleElement>
                 <div className="caresoleWrapper">
                     <div className="caresole dragscroll">
                         <GetImageElement classes = {this.state.educationclasses}></GetImageElement>
