@@ -117,7 +117,29 @@ margin-top:10px ;
     color: black;
   }
 
-  .body
-  {
-      display: inline;
+.body
+{
+    display: inline;
+}
+
+#loginLoad
+{
+    display: none;
+}
+
+
+.loginIcon
+{
+    animation: rotation 2s infinite linear;
+}
+
+
+@keyframes rotation {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(359deg);
+    }
   }
+  

@@ -31,9 +31,6 @@ export default class pswd_reset extends Component
             [e.target.id]: e.target.value
         })
 
-        console.log(process.env.main_apiLink)
-
-
     }
     
     submit = (e)=>

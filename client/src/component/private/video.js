@@ -138,8 +138,6 @@ class video extends Component
     {
         var file = new Blob([this.state.url], {type: "text/javascript"})
         var url = URL.createObjectURL(file)
-
-        console.log(url)        
     }
 
     pauseContentPlay()

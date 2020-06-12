@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import '../../CSS/Menu.css';
 import { Icon } from 'react-icons-kit'
-import {Link } from 'react-router-dom'
+import {Link} from 'react-router-dom'
+
+import axios from 'axios'
 
 import {monitor} from 'react-icons-kit/feather/monitor'
 import {androidHome} from 'react-icons-kit/ionicons/androidHome'
@@ -12,6 +14,16 @@ import {iosDownloadOutline} from 'react-icons-kit/ionicons/iosDownloadOutline'
 
 
 class Menu extends Component {
+
+    logOut() {
+        axios.get('/user/logout').then(response=>{
+            if(response.status === 200)
+            {
+                window.location.reload(false)
+            }
+        })
+    }
+
   render() {
     return (
         <div className="body">
@@ -81,8 +93,8 @@ class Menu extends Component {
                         </Link>
                     </li>
                     
-                    <li className="nav-item">
-                        <Link to="#" className="nav-link">
+                    <li className="nav-item" >
+                        <Link onClick={this.logOut} className="nav-link">
                         <Icon icon={logOut} size={120}></Icon>
                         <span className="link-text">Log out</span>
                         </Link>

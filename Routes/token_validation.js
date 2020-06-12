@@ -13,9 +13,9 @@ router.get('/',checkCookie, async (req, res) =>
 
         validateStatus: function (status) { return status >= 200 && status < 600; }}).then(response=>
         {
-            console.log(response.data)
             return res.status(response.status).send(response.data)
         }
+        
     ).catch(e =>{
         return res.status(500).send({error:"token validation failed hit token validation"})
 

@@ -12,14 +12,6 @@ dotenv.config();
 
 const app = express()
 
-//Import Route Modules 
-const user_Login = require('./Routes/login')
-const Recaptcha = require ('./Routes/recaptcha')
-const token_Validation = require('./Routes/token_validation')
-const Recomendation = require('./Routes/recommendation')
-const render_Class = require('./Routes/render_class')
-const Course = require('./Routes/course')
-const user_info = require('./Routes/user_info')
 //SWGGER Documentaion Hold
 
 
@@ -35,13 +27,16 @@ app.use(express.urlencoded({extended:false}))
 app.use(cookieParser());
 
 //Routess
-app.use('/recaptcha',Recaptcha)
-app.use('/user/login',user_Login)
-app.use('/token/validation', token_Validation);
-app.use('/recomendation',Recomendation);
-app.use('/render/class',render_Class);
-app.use('/course', Course)
-app.use('/user/info', user_info)
+app.use('/recaptcha', require ('./Routes/recaptcha'))
+app.use('/token/validation', require('./Routes/token_validation'));
+
+app.use('/user/login', require('./Routes/login'))
+app.use('/user/logout', require('./Routes/logout'))
+app.use('/user/info', require('./Routes/user_info'))
+
+app.use('/recomendation',require('./Routes/recommendation'));
+app.use('/render/class',require('./Routes/render_class'));
+app.use('/course', require('./Routes/course'))
 
 
 

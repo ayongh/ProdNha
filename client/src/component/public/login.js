@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
 import Recaptcha from 'react-google-invisible-recaptcha';
+
 import { Icon } from 'react-icons-kit'
 import {close} from 'react-icons-kit/fa/close'
+import {spinner2} from 'react-icons-kit/icomoon/spinner2'
+
 import {Link, Redirect} from 'react-router-dom'
 
 import {connect} from 'react-redux'
@@ -68,6 +71,9 @@ class login extends Component
     //When recaptcha is resolved
     onResolved() {
 
+        document.getElementById('loginLoad').style.display = "block"
+        document.getElementById('loginText').style.display= "none"
+
         const payload = {
             email:this.state.username,
             password:this.state.password,
@@ -81,12 +87,16 @@ class login extends Component
                     if(res.status === 200)
                     {   
                         localStorage.setItem("watchhistory", JSON.stringify( res.data.message.watchHistory))
+                        document.getElementById('loginLoad').style.display = "none"
+                        document.getElementById('loginText').style.display= "block"
                         this.props.Actionlogin()
                         this.props.ActionUserIntialize(res.data.message)
 
                     }
                     else
                     {
+                        document.getElementById('loginLoad').style.display = "none"
+                        document.getElementById('loginText').style.display= "block"
                         this.recaptcha.reset();
                         this.props.ActionError(res.data.errors)
                     }
@@ -95,6 +105,8 @@ class login extends Component
             }
             else
             {
+                document.getElementById('loginLoad').style.display = "none"
+                document.getElementById('loginText').style.display= "block"
                 this.recaptcha.reset();
                 this.props.ActionError(res.data.errors)
             }
@@ -104,7 +116,7 @@ class login extends Component
     render()
     {
         //Checks error and display it errorElement
-        let errorElement = this.state.userError
+        let errorElement = null
         
         if(this.state.userError !== null)
         {
@@ -170,7 +182,11 @@ class login extends Component
                                     <input id="password" onChange={this.handleChange}  className="txt" type="password" placeholder="password"></input>
                                 </div>
                                 {errorElement}
-                                <button id="submit_btn" className="btn" type="submit">Login</button>
+                                <button id="submit_btn" className="btn" type="submit">
+                                    <span id="loginLoad"><Icon className="loginIcon" id="loginicon" icon={spinner2}></Icon></span>
+                                    <span id="loginText">Login</span>
+
+                                </button>
                             </form>
                             
                             <p> I forgot my <Link to={"/pswdreset"}>password</Link></p>
