@@ -55,6 +55,8 @@ margin-top:10px ;
 .txt
 {
     padding: 10px;
+    border: 1px solid #000000;
+
 }
 
 .btn
@@ -138,8 +140,8 @@ margin-top:10px ;
     from {
       transform: rotate(0deg);
     }
+
     to {
       transform: rotate(359deg);
     }
-  }
-  
+}
