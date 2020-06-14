@@ -147,8 +147,10 @@ class signup extends Component
         
         if(recaptchaValidation(this.recaptcha.getResponse()))
         {
-            axios.post('/user/signup/emailvarification', data).then( async res =>{
+            console.log('Recaptcha')
+            axios.post('/user/signup/emailvarification', data,{validateStatus: function (status) { return status >= 200 && status < 600; }}).then( async res =>{
 
+                console.log(res.data)
                 if(res.status === 200)
                 {
                     await this.setState({

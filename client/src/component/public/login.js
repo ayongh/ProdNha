@@ -149,8 +149,6 @@ class login extends Component
             }   
         }
 
-            
-
         return (
             <div className="loginEntire">
                 <div className="login_body">

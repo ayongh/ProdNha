@@ -1,13 +1,17 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+
 import { Redirect } from 'react-router-dom'
 import { Icon } from 'react-icons-kit'
 import {close} from 'react-icons-kit/fa/close'
 
+import {connect} from 'react-redux'
+import {Actionlogin} from '../../redux/Action/loginAction'
+
 import Recaptcha from 'react-google-invisible-recaptcha';
 import {recaptchaValidation} from '../../redux/Action/RecaptchaVelidation' //'../Action/RecaptchaVelidation'
 
-export default class signupEmailValidation extends Component 
+class signupEmailValidation extends Component 
 {
     constructor(prop)
     {
@@ -64,10 +68,11 @@ export default class signupEmailValidation extends Component
                 "userInputedCode":this.state.userVerificationCode
             }
     
-            axios.post('/user/signup', data).then( async res =>{
+            axios.post('/user/signup', data, {validateStatus: function (status) { return status >= 200 && status < 600; }}).then( async res =>{
                 
                 if(res.status === 200)
                 {
+                    this.props.Actionlogin()
                     await this.setState({
                         redirectlogin:true
                     })
@@ -120,7 +125,7 @@ export default class signupEmailValidation extends Component
     {    
         if(this.state.redirectlogin === true)
         {
-            return <Redirect to="/Homepage"/>
+            return <Redirect to={{pathname:"/", state:{prevlocation:"signup"}}}/>
         }
 
         //multiple errors from server
@@ -196,3 +201,13 @@ export default class signupEmailValidation extends Component
         )
     }
 }
+
+//access all the state
+const mapToState = (state) =>{
+    return {
+        state:state
+    }
+}
+
+
+export default connect(mapToState,{Actionlogin}) (signupEmailValidation);

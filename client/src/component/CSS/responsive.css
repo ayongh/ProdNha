@@ -4,6 +4,7 @@
     {
         display: grid;
     }
+
     .login_left
     {
         width: 100%;
@@ -168,10 +169,6 @@
         width: 100px;
     }
 
-    .login_body
-    {
-        height: auto;
-    }
     /* video player */
     .Video_container
     {

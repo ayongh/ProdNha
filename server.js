@@ -37,7 +37,7 @@ app.use('/user/info', require('./Routes/user_info'))
 app.use('/recomendation',require('./Routes/recommendation'));
 app.use('/render/class',require('./Routes/render_class'));
 app.use('/course', require('./Routes/course'))
-
+app.use('/user/signup', require('./Routes/signup'))
 
 
 
