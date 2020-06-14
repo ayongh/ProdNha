@@ -21,6 +21,11 @@
 {
     width: 50%;
     height: 100%;
+    position: relative;
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 2s;
+    animation-name: animatetop;
+    animation-duration: 2s
 }
 
 .signup_right_inner_container
@@ -29,7 +34,19 @@
     display: grid;
     text-align: center;
     overflow:auto;
+    
 }
+
+/* Add Animation */
+@-webkit-keyframes animatetop {
+    from {top:-300px; opacity:0} 
+    to {top:0; opacity:1}
+  }
+  
+  @keyframes animatetop {
+    from {top:-300px; opacity:0}
+    to {top:0; opacity:1}
+  }
 
 .signup_right_outer_container
 {
