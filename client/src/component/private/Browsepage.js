@@ -111,11 +111,16 @@ class BrowsePage extends Component
         }
         return (
             <div>
-                <Menu></Menu>
+                {/* <Menu></Menu> */}
                 <GetTitleElement title="Popular" link="/popular"></GetTitleElement>
                 <div className="caresoleWrapper">
                     <div className="caresole dragscroll">
                         <GetImageElement classes = {this.state.Popularclasses}></GetImageElement>
+                        <GetImageElement classes = {this.state.Popularclasses}></GetImageElement>
+                        <GetImageElement classes = {this.state.Popularclasses}></GetImageElement>
+                        <GetImageElement classes = {this.state.Popularclasses}></GetImageElement>
+                        <GetImageElement classes = {this.state.Popularclasses}></GetImageElement>
+
                     </div>
                 </div>
 

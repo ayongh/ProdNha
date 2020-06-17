@@ -193,6 +193,18 @@
 
 }
 
+.caresoleWrapper-homepage
+{
+
+    width: 90vw;
+    height: auto;
+    flex-wrap: wrap;
+    overflow-y: hidden;
+    transition: height 1.15s;
+
+}
+
+
 .contentWraper
 {
     z-index: 0;
@@ -269,11 +281,6 @@
 .popup_content_wraper
 {
     width: 100%;
-}
-
-section
-{
-    padding: 30px;
 }
 
 nav
@@ -439,7 +446,7 @@ nav
 }
 
 .caresole{
-    display: flex;
+    display: inline-flex;
 }
 
 .caresole_section_image_desc
@@ -598,7 +605,8 @@ nav
     width: 250px;
     margin-top: 20px;
     margin-bottom: 20px;
-    margin-right: 2.50px;
+    margin-right: 10px;
+    margin-left: 10px;
     height: auto;
     display: block;
     position: relative;
@@ -609,6 +617,9 @@ nav
 .Searchcaresole
 {
     display: flex;
+    flex-wrap: wrap;
+    padding-left: 5%;
+    padding-right: 5%;
 }
 
 .caresoleImage_description_wrapper
@@ -712,4 +723,112 @@ nav
     text-decoration: none;
     display: inline-flex;
     color: black;
+}
+
+
+.Homepage-v-header
+{
+    height: 85vh;
+    display: flex;
+    align-items: center;
+    color: #fff;
+}
+
+.halfscreen-video-wrap
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 85vh;
+    overflow: hidden;
+}
+
+.Homepage-header-overlay
+{
+    height: 85vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    z-index: 1;
+    background: #225470;
+    opacity: 0.85;
+}
+
+.Homepage_mainContainer
+{
+    margin: 0px;
+}
+
+.mainHomepage_more_recommended_movie_title
+{
+    width:100%;
+    height: 15vh;
+    text-align: center;
+    padding: 20px;
+    color: #225470;
+}
+
+.mainHomepage_more_recommended_movie_title h1{
+    margin: 0px;
+}
+
+.homePage_content_container_morecontent
+{
+    width: 100vw;
+}
+
+
+.homePage_content_container_morecontent_wrapper
+{
+    width: 80%;
+    height: 100%;
+    margin-left: 10%;
+    margin-right: 10%;
+    display: flex;
+}
+
+
+.movie_content
+{
+    background: #f9f9f9;
+}
+
+.contact-footer
+{
+    padding-top: 30px;
+    padding-left: 5%;
+    padding-right: 5%;
+    width: 100%;
+    margin-top: 50px;
+    text-align: center;
+    background-color: #254f66;
+    color: white;
+}
+
+.contatct_icon
+{
+    margin: 10px;
+    cursor: pointer;
+}
+
+.contatct_icon:hover
+{
+    color: gold;
+}
+
+.contact_wrapper_policy
+{
+    padding: 20px;
+}
+
+.privacy
+{
+    margin:10px
+}
+
+.privacy a{
+    color: #f9f9f9;
+    margin-left: 20px;
 }

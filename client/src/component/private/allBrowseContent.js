@@ -86,6 +86,11 @@ class allBrowseContent extends Component
                 <div className="caresoleWrapper">
                     <div className="Searchcaresole">
                         <GetImageElement classes = {this.state.classes}></GetImageElement>
+                        <GetImageElement classes = {this.state.classes}></GetImageElement>
+                        <GetImageElement classes = {this.state.classes}></GetImageElement>
+                        <GetImageElement classes = {this.state.classes}></GetImageElement>
+                        <GetImageElement classes = {this.state.classes}></GetImageElement>
+
                     </div>
                 </div>
 

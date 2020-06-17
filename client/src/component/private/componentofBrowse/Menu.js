@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import '../../CSS/Menu.css';
 import { Icon } from 'react-icons-kit'
-import {Link} from 'react-router-dom'
+import {Link,Redirect} from 'react-router-dom'
 
 import axios from 'axios'
 
@@ -19,7 +19,7 @@ class Menu extends Component {
         axios.get('/user/logout').then(response=>{
             if(response.status === 200)
             {
-                window.location.reload(false)
+                return <Redirect to={"/"}></Redirect>
             }
         })
     }

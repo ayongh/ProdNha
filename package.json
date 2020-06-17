@@ -9,7 +9,7 @@
     "postbuild": "cd client && npm run build",
     "heroku-postbuild": "npm run install-client && npm run postbuild",
     "client": "cd client && npm start",
-    "start": "nodemon server.js",
+    "start": "node server.js",
     "dev": "concurrently -n 'server, client' -c 'green,yellow' \"nodemon server.js\" \"npm run client\""
   },
   "keywords": [],
@@ -18,19 +18,19 @@
   "dependencies": {
     "axios": "^0.19.2",
     "bcryptjs": "^2.4.3",
-    "concurrently": "^5.2.0",
     "cookie-parser": "^1.4.5",
+    "css-loader": "^3.6.0",
     "dotenv": "^8.2.0",
     "email-validator": "^2.0.4",
     "express": "^4.17.1",
     "express-validator": "^6.5.0",
+    "file-loader": "^6.0.0",
     "firebase": "^7.15.0",
     "json-size": "^1.0.0",
     "jsonwebtoken": "^8.5.1",
     "jwt-decode": "^2.2.0",
     "mongoose": "^5.9.18",
     "morgan": "^1.10.0",
-    "nodemon": "^2.0.4",
     "react-google-invisible-recaptcha": "^0.2.11",
     "react-icons-kit": "^1.3.1",
     "react-player": "^2.2.0",
@@ -38,10 +38,15 @@
     "react-responsive-modal": "^5.0.2",
     "react-router-dom": "^5.2.0",
     "redux": "^4.0.5",
-    "redux-devtools-extension": "^2.13.8",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "style-loader": "^1.2.1",
+    "typed.js": "^2.0.11"
   },
   "devDependencies": {
-    "case-sensitive-paths-webpack-plugin": "^2.3.0"
+    "case-sensitive-paths-webpack-plugin": "^2.3.0",
+    "concurrently": "^5.2.0",
+    "nodemon": "^2.0.4",
+    "path": "^0.12.7",
+    "redux-devtools-extension": "^2.13.8"
   }
 }
