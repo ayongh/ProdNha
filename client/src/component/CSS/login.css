@@ -289,19 +289,6 @@ body{
     border-bottom: solid;
 }
 
-.blink{
-  animation:blinkingText .5s infinite;
-}
-@keyframes blinkingText{
-  0%{     color: white;    }
-  49%{    color: white; }
-  60%{    color: transparent; }
-  99%{    color:transparent;  }
-  100%{   color: white;    }
-}
-
-
-
 /* The Modal (background) */
 .modal {
     display: none; /* Hidden by default */
@@ -335,6 +322,8 @@ body{
   {
       display: flex;
   }
+
+  
   /* Add Animation */
   @-webkit-keyframes animatetop {
     from {top:-300px; opacity:0} 

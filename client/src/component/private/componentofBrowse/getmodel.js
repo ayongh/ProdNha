@@ -6,6 +6,9 @@ import ReactPlayer from 'react-player'
 
 import {buttonCheck} from 'react-icons-kit/metrize/buttonCheck'
 import {buttonAdd} from 'react-icons-kit/metrize/buttonAdd'
+import {heartOutline} from 'react-icons-kit/typicons/heartOutline'
+import {heart} from 'react-icons-kit/typicons/heart'
+
 import {cross} from 'react-icons-kit/metrize/cross'
 import { Icon } from 'react-icons-kit'
 
@@ -284,11 +287,13 @@ class getmodel extends Component
                 document.getElementById(like).style.display="flex"
                 document.getElementById(liked).style.display="none"             
                 document.getElementById("message").innerHTML = "Class sucessfully disliked"
+                document.getElementById('notification').style.background="brown"
+
                 document.getElementById('notification').style.display="flex"
                 setTimeout(function(){ 
                     document.getElementById('notification').style.display="none"
         
-                }, 3000);
+                }, 1000);
 
                 axios.get('/course/listrating', {withCredentials: true, validateStatus: function (status) { return status >= 200 && status < 600; }}).then( async res =>{
                     if(res.status === 200)
@@ -319,11 +324,13 @@ class getmodel extends Component
                 
                 document.getElementById(liked).style.display="flex"
                 document.getElementById(like).style.display="none"
+                document.getElementById('notification').style.background="green"
+
                 document.getElementById("message").innerHTML = "Sucessfully liked a class"
                 document.getElementById('notification').style.display="flex"
                 setTimeout(function(){ 
                     document.getElementById('notification').style.display="none"
-                }, 3000);
+                }, 1000);
 
                 axios.get('/course/listrating', {withCredentials: true, validateStatus: function (status) { return status >= 200 && status < 600; }}).then( async res =>{
                     if(res.status === 200)
@@ -360,9 +367,11 @@ class getmodel extends Component
                 }
                 document.getElementById("message").innerHTML = "Class sucessfully add to the Watch List"
                 document.getElementById('notification').style.display="flex"
+                document.getElementById('notification').style.background="green"
+
                 setTimeout(function(){ 
                     document.getElementById('notification').style.display="none"
-                }, 3000);
+                }, 1000);
 
                 var watchHistorypayload= {
                     pagination: 20
@@ -399,9 +408,11 @@ class getmodel extends Component
                 }
                 document.getElementById("message").innerHTML = "Class sucessfully removed from the Watch List"
                 document.getElementById('notification').style.display="flex"
+                document.getElementById('notification').style.background="brown"
+
                 setTimeout(function(){ 
                     document.getElementById('notification').style.display="none"
-                }, 3000);
+                }, 1000);
 
                 var watchHistorypayload= {
                     pagination: 20
@@ -500,8 +511,8 @@ class getmodel extends Component
                                     {this.state.class.description}
                                 </p>
                                 <div className="popup_action">
-                                    <Icon className="popup_movie_btn liked" style={{display:"none"}} id={"liked"+this.state.class._id} size={40} icon={buttonCheck} onClick={() =>this.removeLikeAction(this.state.class)}></Icon>
-                                    <Icon className="popup_movie_btn" id={"like"+this.state.class._id} style={{display:"none"}} size={40} icon={buttonCheck} onClick={() =>this.LikeAction(this.state.class)}></Icon>
+                                    <Icon className="popup_movie_btn liked" style={{display:"none"}} id={"liked"+this.state.class._id} size={40} icon={heartOutline} onClick={() =>this.removeLikeAction(this.state.class)}></Icon>
+                                    <Icon className="popup_movie_btn" id={"like"+this.state.class._id} style={{display:"none", color:"pink"}} size={40} icon={heart} onClick={() =>this.LikeAction(this.state.class)}></Icon>
                                     {this.RenderLikeButton(this.state.class)}
 
                                     <Icon className="popup_movie_btn" id={"add"+this.state.class._id} size={40} icon={buttonAdd} onClick={() =>this.addlist(this.state.class)}></Icon>

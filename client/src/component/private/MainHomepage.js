@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import {Link} from 'react-router-dom'
 
 
 import { Icon } from 'react-icons-kit'
@@ -9,11 +10,17 @@ import {ic_more_horiz} from 'react-icons-kit/md/ic_more_horiz'
 import ReactPlayer from 'react-player'
 
 import GetImageElement from './componentofBrowse/getImageElement'
+import GetModel from './componentofBrowse/getmodel'
 
 import Menu from '../../component/private/componentofBrowse/Menu'
 import ContactFooter from './componentofBrowse/contactfooter'
 
-export default class MainHomepage extends Component 
+import NoImageFound from '../img/nophoto.png'
+
+import {connect} from 'react-redux'
+import {ActionCloseModel} from '../../redux/Action/ModelAction'
+
+class MainHomepage extends Component 
 {
     constructor(prop)
     {
@@ -124,13 +131,21 @@ export default class MainHomepage extends Component
             content =   <div className="header-content text-md-center">
                             <h1 className="header_type_text">{this.state.class.name}</h1>
                             <p>{this.state.class.description}</p>
-                            <a className="btn" href="#about">watch</a>
+                            <Link to={{pathname:"/watch/" + this.state.class._id+"/"+this.state.sectionContent.data[0]._id, state:{classID: this.state.class._id, prevPath:"/Homepage"}}} className="homepage_link">
+                                <a className="btn">watch</a>
+                            </Link>
                         </div>
         }
 
         return content
         
     }
+
+    errorImag(e)
+    {
+        e.target.src  = NoImageFound
+    }
+
 
     getMainContentBackgroundVideo()
     {
@@ -140,11 +155,18 @@ export default class MainHomepage extends Component
         {
             if(this.state.sectionContent.data.length>0)
             {
-                content = <ReactPlayer className='react-player-background' playing={true} loop={true} width="100%" height="100%" muted url="https://firebasestorage.googleapis.com/v0/b/nhadb-c07ce.appspot.com/o/video%2FReactJS-%20Upload%20Image%20to%20Firebase%20storage%20and%20Display%20on%20web..mp4?alt=media&token=93ac2909-d81c-4a5f-842f-e002660842fe" />
+                content = <ReactPlayer className='react-player-background' playing={true} loop={true} width="100%" height="100%" muted url= {this.state.sectionContent.data[0].videoUrl}/>
             }
             else
             {
-                content = <ReactPlayer className='react-player-background' playing={true} loop={true} width="100%" height="100%" muted url="https://firebasestorage.googleapis.com/v0/b/nhadb-c07ce.appspot.com/o/video%2FReactJS-%20Upload%20Image%20to%20Firebase%20storage%20and%20Display%20on%20web..mp4?alt=media&token=93ac2909-d81c-4a5f-842f-e002660842fe" /> // <img src={this.state.class.thumbnail}></img>
+                if(this.state.class !== null)
+                {
+                    content = <img className='react-player-background' width="100%" onError={this.errorImag} src={this.state.class.thumbnail} />
+                }
+                else
+                {
+                    content = <img className='react-player-background' width="100%" onError={this.errorImag} src={this.state.class.thumbnail} />
+                }
             }
 
         }
@@ -152,12 +174,33 @@ export default class MainHomepage extends Component
         return content
     }
 
+    modelClose = () => {
+        this.props.ActionCloseModel()
+    }
+       
     render() 
     {
-        if(this.state.sectionContent !== null)
+        const modelflag = this.props.state.Model.modelState
+
+        if(document.getElementById('myModal') !== null)
         {
-            console.log(this.state.class)
+            if(modelflag)
+            {
+                document.getElementById('myModal').style.display="block"
+            }
+            else
+            {
+                document.getElementById('myModal').style.display="none"
+            }
+    
         }
+
+        var loadModelClass = <h1>Failed to load class</h1>
+        if (this.props.state.Model.class !== null)
+        {
+            loadModelClass = <GetModel></GetModel>
+        }
+       
 
         return (
 
@@ -193,17 +236,26 @@ export default class MainHomepage extends Component
                         <div className="caresoleWrapper-homepage">
                             <div className="Searchcaresole">
                                 <GetImageElement classes = {this.state.classes}></GetImageElement>
-                                <GetImageElement classes = {this.state.classes}></GetImageElement>
-                                <GetImageElement classes = {this.state.classes}></GetImageElement>
-                                <GetImageElement classes = {this.state.classes}></GetImageElement>
-
                             </div>
                         </div>
                     </div>
                 </div>
 
+                {/* Pop up Modal */}
+                <div id="myModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close" onClick={this.modelClose}>&times;</span>
+                        {loadModelClass}
+
+                    </div>
+                </div>
+
                 <ContactFooter></ContactFooter>
                 
+                {/* Notification */}
+                <div className="addedlistAlert" id="notification">
+                    <p id="message">Sucessfully added to watch Later list</p>
+                </div>
                 
             </div>
 
@@ -211,3 +263,12 @@ export default class MainHomepage extends Component
         )
     }
 }
+
+
+const mapToState = (state) =>{
+    return {
+        state:state
+    }
+}
+
+export default connect(mapToState,{ActionCloseModel}) (MainHomepage);

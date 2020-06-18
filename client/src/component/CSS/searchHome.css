@@ -705,7 +705,7 @@ nav
     margin: 0 0 0 4px;
     font-size: small;
     line-height: initial;
-    bottom: -11px;
+    bottom: -14px;
     position: relative;
     display: none;
 }
@@ -723,9 +723,42 @@ nav
     text-decoration: none;
     display: inline-flex;
     color: black;
+    
 }
 
 
+  /* Add Animation */
+  @-webkit-keyframes animateleftSlide {
+    from {left:-30px; opacity:0} 
+    to {left:0; opacity:1}
+  }
+  
+  @keyframes animateleftSlide {
+    from {left:-30px; opacity:0} 
+    to {left:0; opacity:1}
+  }
+
+  .see-all-link:hover
+  {
+      color: #225470;
+  }
+  
+
+.allBrowseLink:hover .see-all-link
+{
+    display: inline;
+    -webkit-animation-name: animateleftSlide;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animateleftSlide;
+    animation-duration: 0.4s
+}
+
+.homepage_link
+{
+    width: 100%;
+    text-align: center;
+    text-decoration: none;
+}
 .Homepage-v-header
 {
     height: 85vh;
