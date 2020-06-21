@@ -194,6 +194,26 @@
         width: 100%;
     }
 
+    .left
+    {
+        display: none;
+    }
+
+    .modal-content
+    {
+        width: 90%;
+    }
+
+    .model_container 
+    {
+        width: 100%;
+    }
+
+    .close{
+        position: absolute;
+        padding: 20px;
+    }
+
 }
 
 
