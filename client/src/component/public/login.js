@@ -204,8 +204,13 @@ class login extends Component
             <div>
                 <div className="login_nav">
                     <div className="login_nav_wrapper">
-                        <a className="login_option" onClick={this.loginModelOpen}>Login</a>
-                        <a className="login_option" href="/signup">Signup</a>
+                        <div className="logo">
+                            <h2>NHA</h2>
+                        </div>
+                        <div className="menuContent">
+                            <a className="login_option" onClick={this.loginModelOpen}>Login</a>
+                            <a className="login_option" href="/signup">Signup</a>
+                        </div>
                     </div>
                 </div>
 

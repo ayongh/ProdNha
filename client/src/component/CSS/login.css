@@ -20,6 +20,8 @@
     height: 100%;
 }
 
+
+
 .login_right_inner_container
 {
     padding: 50px;
@@ -266,28 +268,7 @@ body{
     cursor: pointer;
 }
 
-.login_nav
-{
-    background: white;
-    width: 100%;
-    height: auto;
-    color: black;
-    position: fixed;
-    z-index: 10;
-    text-align: right;
-    padding: 2px;
-}
 
-.login_nav_wrapper
-{
-    padding: 30px;
-}
-
-.login_option:hover
-{
-    border-width: 2px;
-    border-bottom: solid;
-}
 
 /* The Modal (background) */
 .modal {
@@ -424,4 +405,10 @@ body{
 }
 
 .one{
+}
+
+
+.video-react.video-react-fluid
+{
+  height: 100%;
 }

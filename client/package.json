@@ -9,7 +9,6 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-google-invisible-recaptcha": "^0.2.11",
-    "react-responsive-modal": "^5.0.2",
     "react-scripts": "3.4.1"
   },
   "scripts": {

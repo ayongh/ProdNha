@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import { Redirect } from 'react-router-dom'
-import Modal from 'react-responsive-modal';
+
 import { Icon } from 'react-icons-kit'
 import {close} from 'react-icons-kit/fa/close'
 
@@ -194,10 +194,14 @@ export default class pswd_reset extends Component
                     
                 </div>
 
-                <Modal open={open} onClose={this.onCloseModal} center style={{color:"red", textAlign:"center"}}>
-                    <h2 style={{color:"green", width:"100%", textAlign:"center"}}>Password Updtaed</h2>
-                    <p style={{color:"green", width:"100%", textAlign:"center"}}>your password was successfully updated. we now will redirect you to login page</p>
-                </Modal>
+                {/* Pop up Modal */}
+                <div id="myModal" class="modal">
+                    <div class="modal-content">
+                        <h2 style={{color:"green", width:"100%", textAlign:"center"}}>Password Updtaed</h2>
+                        <p style={{color:"green", width:"100%", textAlign:"center"}}>your password was successfully updated. we now will redirect you to login page</p>
+                    </div>
+                </div>
+                   
             </div>
         )
     }

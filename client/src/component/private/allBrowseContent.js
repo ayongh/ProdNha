@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 
 import '../CSS/react-responsive-model.css';
-import Modal from 'react-responsive-modal';
 
 import axios from 'axios'
 
@@ -74,23 +73,57 @@ class allBrowseContent extends Component
 
     }
 
-    onCloseModal = () => {
+    modelClose = () => {
         this.props.ActionCloseModel()
     }
 
+
     render() {
+        const modelflag = this.props.state.Model.modelState
+
+        if(document.getElementById('myModal') !== null)
+        {
+            if(modelflag)
+            {
+                document.getElementById('myModal').style.display="block"
+            }
+            else
+            {
+                document.getElementById('myModal').style.display="none"
+            }
+    
+        }
+
+        var loadModelClass = <h1>Failed to load class</h1>
+        if (this.props.state.Model.class !== null)
+        {
+            loadModelClass = <GetModel></GetModel>
+        }
+
+        var title = "Title"
+
+        if(this.props.match.params.categorie !== undefined)
+        {
+            switch(this.props.match.params.categorie)
+            {
+                case "popular":
+                    title="Poplular"
+                    break;
+
+                case "newlyadded":
+                    title="Newly added"
+                    break;
+            }
+        }
+
         return (
             <div>
                 <Menu></Menu>
-                <h2 className="CaresoleCategorie">{this.props.categorie}</h2>
-                <div className="caresoleWrapper">
+
+                <div className="allBrowse_caresoleWrapper">
+                    <h2 className="browse_all_title">{title}</h2>
                     <div className="Searchcaresole">
                         <GetImageElement classes = {this.state.classes}></GetImageElement>
-                        <GetImageElement classes = {this.state.classes}></GetImageElement>
-                        <GetImageElement classes = {this.state.classes}></GetImageElement>
-                        <GetImageElement classes = {this.state.classes}></GetImageElement>
-                        <GetImageElement classes = {this.state.classes}></GetImageElement>
-
                     </div>
                 </div>
 
@@ -98,9 +131,14 @@ class allBrowseContent extends Component
                     <p id="message">Sucessfully added to watch Later list</p>
                 </div>
 
-                <Modal open={this.props.state.Model.modelState} onClose={this.onCloseModal} center style={{color:"white", width:"90vw",height:"80vh"}}>
-                    <GetModel></GetModel>
-                </Modal>
+                {/* Pop up Modal */}
+                <div id="myModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close" onClick={this.modelClose}>&times;</span>
+                        {loadModelClass}
+
+                    </div>
+                </div>
             </div>
         );
       }

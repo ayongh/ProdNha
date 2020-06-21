@@ -15,6 +15,57 @@ import {iosDownloadOutline} from 'react-icons-kit/ionicons/iosDownloadOutline'
 
 class Menu extends Component {
 
+   /*  componentDidMount()
+    {
+        window.addEventListener('scroll', this.listenToScroll)    
+    }
+
+    listenToScroll = () => {
+        const winScroll =
+          document.body.scrollTop || document.documentElement.scrollTop
+      
+        const height =
+          document.documentElement.scrollHeight -
+          document.documentElement.clientHeight
+      
+        const scrolled = winScroll / height
+        
+        if(document.getElementById('login_nav') !== null)
+        {
+            if(scrolled >0.026)
+            {
+                document.getElementById('login_nav').style.background="white"      
+                var loginOption = document.getElementsByClassName('login_option')
+
+                for(var i = 0; loginOption.length > i; i++)
+                {
+                    loginOption[i].style.color ="black"
+                }
+    
+        
+            }
+            else
+            {
+                document.getElementById('login_nav').style.background="none"
+                var loginOption = document.getElementsByClassName('login_option')
+
+                for(var i = 0; loginOption.length > i; i++)
+                {
+                    loginOption[i].style.color ="gold"
+                }
+            }
+
+        }
+        
+    }
+
+    componentWillUnmount()
+    {
+        window.removeEventListener('scroll', this.listenToScroll)
+
+    } */
+      
+
     logOut() {
         axios.get('/user/logout').then(response=>{
             if(response.status === 200)
@@ -26,84 +77,22 @@ class Menu extends Component {
 
   render() {
     return (
-        <div className="body">
-            <nav className="navbar">
-                <ul className="navbar-nav">
-                    <li className="logo">
-                        <a href="#" className="nav-link">
-                        <span className="link-text logo-text">NHA</span>
-                        <svg
-                            aria-hidden="true"
-                            focusable="false"
-                            data-prefix="fad"
-                            data-icon="angle-double-right"
-                            role="img"
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 448 512"
-                            className="svg-inline--fa fa-angle-double-right fa-w-14 fa-5x"
-                        >
-                            <g className="fa-group">
-                            <path
-                                fill="currentColor"
-                                d="M224 273L88.37 409a23.78 23.78 0 0 1-33.8 0L32 386.36a23.94 23.94 0 0 1 0-33.89l96.13-96.37L32 159.73a23.94 23.94 0 0 1 0-33.89l22.44-22.79a23.78 23.78 0 0 1 33.8 0L223.88 239a23.94 23.94 0 0 1 .1 34z"
-                                className="fa-secondary"
-                            ></path>
-                            <path
-                                fill="currentColor"
-                                d="M415.89 273L280.34 409a23.77 23.77 0 0 1-33.79 0L224 386.26a23.94 23.94 0 0 1 0-33.89L320.11 256l-96-96.47a23.94 23.94 0 0 1 0-33.89l22.52-22.59a23.77 23.77 0 0 1 33.79 0L416 239a24 24 0 0 1-.11 34z"
-                                className="fa-primary"
-                            ></path>
-                            </g>
-                        </svg>
-                        </a>
-                    </li>
+        <div className="login_nav">
+            <div className="login_nav_wrapper">
+                <div className="logo">
+                    <h2>NHA</h2>
+                </div>
+                <div className="menuContent">
+                    <Link className="login_option" to="/Homepage" >Home</Link>
+                    <Link className="login_option" to="/browse/movie">Browse</Link>
+                    <Link className="login_option" to="/search/movie">Search</Link>
+                    <Link className="login_option" to="/profile">profile</Link>
+                    <Link className="login_option" onClick={this.logOut}>Logout</Link>
 
-                    <li className="nav-item">
-                        <Link to="/Homepage" className="nav-link">
-                        <Icon icon={androidHome} size={120}></Icon>
-                        <span className="link-text">Home</span>
-                        </Link>
-                    </li>
-
-                    <li className="nav-item">
-                        <Link to="/browse/movie" className="nav-link">
-                        <Icon icon={monitor} size={120}></Icon>
-                        <span className="link-text">Browse</span>
-                        </Link>
-                    </li>
-
-                    <li className="nav-item">
-                        <Link to="/search/movie" className="nav-link">
-                        <Icon icon={iosSearch} size={120}></Icon>
-                        <span className="link-text">Search</span>
-                        </Link>
-                    </li>
-
-                    <li className="nav-item">
-                        <Link to="/upload" className="nav-link">
-                        <Icon icon={iosDownloadOutline} size={120}></Icon>
-                        <span className="link-text">Upload</span>
-                        </Link>
-                    </li>
-
-                    <li className="nav-item">
-                        <Link to="/profile" className="nav-link">
-                        <Icon icon={person} size={120}></Icon>
-                        <span className="link-text">Profile</span>
-                        </Link>
-                    </li>
-                    
-                    <li className="nav-item" >
-                        <Link onClick={this.logOut} className="nav-link">
-                        <Icon icon={logOut} size={120}></Icon>
-                        <span className="link-text">Log out</span>
-                        </Link>
-                    </li>
-
-                </ul>
-            </nav>
+                </div>
+            </div>
         </div>
-       
+        
     );
   }
 }

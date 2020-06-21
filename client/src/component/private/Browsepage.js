@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 import '../CSS/react-responsive-model.css';
-import Modal from 'react-responsive-modal';
+import '../CSS/skeleton-loading.css';
 
 import axios from 'axios'
 
@@ -12,6 +12,7 @@ import GetModel from './componentofBrowse/getmodel'
 
 import {connect} from 'react-redux'
 import {ActionCloseModel} from '../../redux/Action/ModelAction'
+import Skeleton from 'react-loading-skeleton';
 
 
 class BrowsePage extends Component 
@@ -95,7 +96,8 @@ class BrowsePage extends Component
         })
     }
 
-    onCloseModal = () => {
+
+    modelClose = () => {
         this.props.ActionCloseModel()
     }
 
@@ -103,65 +105,92 @@ class BrowsePage extends Component
         
         const modelflag = this.props.state.Model.modelState
 
-        if(this.state.Popularclasses === null || this.state.educationclasses=== null || this.state.healthclasses === null)
+        if(document.getElementById('myModal') !== null)
         {
-            return(
-                <h1>loading</h1>
-            )
+            if(modelflag)
+            {
+                document.getElementById('myModal').style.display="block"
+            }
+            else
+            {
+                document.getElementById('myModal').style.display="none"
+            }
+    
         }
+
+        var loadModelClass = <h1>Failed to load class</h1>
+        if (this.props.state.Model.class !== null)
+        {
+            loadModelClass = <GetModel></GetModel>
+        }
+
+        var loadModelClass = <h1>Failed to load class</h1>
+        if (this.props.state.Model.class !== null)
+        {
+            loadModelClass = <GetModel></GetModel>
+        }
+
         return (
             <div>
-                {/* <Menu></Menu> */}
-                <GetTitleElement title="Popular" link="/popular"></GetTitleElement>
-                <div className="caresoleWrapper">
-                    <div className="caresole dragscroll">
-                        <GetImageElement classes = {this.state.Popularclasses}></GetImageElement>
-                        <GetImageElement classes = {this.state.Popularclasses}></GetImageElement>
-                        <GetImageElement classes = {this.state.Popularclasses}></GetImageElement>
-                        <GetImageElement classes = {this.state.Popularclasses}></GetImageElement>
-                        <GetImageElement classes = {this.state.Popularclasses}></GetImageElement>
+                <Menu></Menu>
 
+                <div className="browsePage-content">
+
+
+                    <GetTitleElement title="Popular" link="/popular"></GetTitleElement>
+                    <div className="caresoleWrapper">
+                        <div className="caresole dragscroll">
+                            <GetImageElement classes = {this.state.Popularclasses}></GetImageElement>
+                        </div>
+                    </div>
+
+                
+                    <GetTitleElement title="Newly Added" link="/newlyadded"></GetTitleElement>
+                    <div className="caresoleWrapper">
+                        <div className="caresole dragscroll">
+                            <GetImageElement classes = {this.state.newlyaddedclasses}></GetImageElement>
+                        </div>
+                    </div>
+
+                    <div className="CaresoleCategorie">
+                        <h2 className="categorie_title">Watch History</h2>
+                    </div>
+                    <div className="caresoleWrapper">
+                        <div className="caresole dragscroll">
+                            <GetImageElement classes = {this.state.watchHistoryclasses}></GetImageElement>
+                        </div>
+                    </div>
+
+                    <GetTitleElement title="Health" link="/Health"></GetTitleElement>
+                    <div className="caresoleWrapper">
+                        <div className="caresole dragscroll">
+                        <GetImageElement classes = {this.state.healthclasses}></GetImageElement>
+                        </div>
+                    </div>
+
+                    <GetTitleElement title="Education" link="/education"></GetTitleElement>
+                    <div className="caresoleWrapper">
+                        <div className="caresole dragscroll">
+                            <GetImageElement classes = {this.state.educationclasses}></GetImageElement>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                {/* Pop up Modal */}
+                <div id="myModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close" onClick={this.modelClose}>&times;</span>
+                        {loadModelClass}
                     </div>
                 </div>
 
-               
-                <GetTitleElement title="Newly Added" link="/newlyadded"></GetTitleElement>
-                <div className="caresoleWrapper">
-                    <div className="caresole dragscroll">
-                        <GetImageElement classes = {this.state.newlyaddedclasses}></GetImageElement>
-                    </div>
-                </div>
-
-                <div className="CaresoleCategorie">
-                    <h2 className="categorie_title">Watch History</h2>
-                </div>
-                <div className="caresoleWrapper">
-                    <div className="caresole dragscroll">
-                        <GetImageElement classes = {this.state.watchHistoryclasses}></GetImageElement>
-                    </div>
-                </div>
-
-                <GetTitleElement title="Health" link="/Health"></GetTitleElement>
-                <div className="caresoleWrapper">
-                    <div className="caresole dragscroll">
-                    <GetImageElement classes = {this.state.healthclasses}></GetImageElement>
-                    </div>
-                </div>
-
-                <GetTitleElement title="Education" link="/education"></GetTitleElement>
-                <div className="caresoleWrapper">
-                    <div className="caresole dragscroll">
-                        <GetImageElement classes = {this.state.educationclasses}></GetImageElement>
-                    </div>
-                </div>
-
+                
                 <div className="addedlistAlert" id="notification">
                     <p id="message">Sucessfully added to watch Later list</p>
                 </div>
 
-                <Modal open={modelflag} onClose={this.onCloseModal} center style={{color:"white", width:"90vw",height:"80vh"}}>
-                    <GetModel></GetModel>
-                </Modal>
 
             </div>
         );

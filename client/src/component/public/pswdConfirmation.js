@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import Modal from 'react-responsive-modal';
+
 import { Icon } from 'react-icons-kit'
 import {close} from 'react-icons-kit/fa/close'
 import {Actionlogin, ActionLoading, ActionError} from '../../redux/Action/loginAction' //'../Action/loginAction'
@@ -266,10 +266,13 @@ class pswdConfirmation extends Component
                     
                 </div>
 
-                <Modal open={open} onClose={this.onCloseModal} center style={{color:"red", textAlign:"center"}}>
-                    <h2 style={{color:"red", width:"100%", textAlign:"center"}}>Code Expired</h2>
-                    <p style={{color:"red", width:"100%", textAlign:"center"}}>The code sent to your email has expired process will restart again</p>
-                </Modal>
+                {/* Pop up Modal */}
+                <div id="myModal" class="modal">
+                    <div class="modal-content">
+                        <h2 style={{color:"red", width:"100%", textAlign:"center"}}>Code Expired</h2>
+                        <p style={{color:"red", width:"100%", textAlign:"center"}}>The code sent to your email has expired process will restart again</p>
+                    </div>
+                </div>
 
                 <Recaptcha
                 ref={ ref => this.recaptcha = ref }

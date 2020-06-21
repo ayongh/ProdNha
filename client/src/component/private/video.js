@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 import ReactPlayer from 'react-player'
+
+import { Player,BigPlayButton,ControlBar, ReplayControl,ForwardControl } from 'video-react';
+
 import { Icon } from 'react-icons-kit'
 import {arrowLeft2} from 'react-icons-kit/icomoon/arrowLeft2'
 
@@ -160,7 +163,7 @@ class video extends Component
             <div className="Video_container" >
                 <div className="video_warpper" onContextMenu={(e)=> e.preventDefault()}>
                     <a href={returback} className="videoBackButton"><Icon className="videobackbtn" size={40} icon={arrowLeft2}> </Icon> <span class="videobackHint">Back</span></a>
-                    <ReactPlayer 
+                    {/* <ReactPlayer 
                         id="reactplayyer"
                         url= {this.state.url}
                         className='react-player'
@@ -181,7 +184,18 @@ class video extends Component
                                 controlsList: 'nodownload'
                             }
                         }}}
-                    />
+                    /> */}
+                    <Player
+                        width = {this.state.videowidth}
+                        height = {100}>
+                        <source src="https://media.w3.org/2010/05/sintel/trailer_hd.mp4" />
+                        <BigPlayButton position="center" />
+                        <ControlBar autoHide={true} className="my-class">         
+                            <ReplayControl seconds={30} order={2.3} />
+                            <ForwardControl seconds={30} order={3.3} />
+                        </ControlBar>
+
+                    </Player>
 
                     
                 </div>

@@ -38,6 +38,8 @@ class MainHomepage extends Component
         }
     }
 
+   
+
     componentDidMount()
     {
         
@@ -205,16 +207,7 @@ class MainHomepage extends Component
         return (
 
             <div className="Homepage_mainContainer">
-                <div className="login_nav">
-                    <div className="login_nav_wrapper">
-                        <a className="login_option" href="/Homepage" >Home</a>
-                        <a className="login_option" href="/browse/movie">Browse</a>
-                        <a className="login_option" href="/search/movie">Search</a>
-                        <a className="login_option" href="/profile">profile</a>
-
-                    </div>
-                </div>
-
+                <Menu></Menu>
                 <div className="homePage_content_container">
                     <header className="Homepage-v-header container">
                         <div className="halfscreen-video-wrap">

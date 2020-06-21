@@ -134,6 +134,9 @@ class getmodel extends Component
 
     RenderLikeButton(val)
     {
+        var liked = "liked"+val._id
+        var like = "like"+val._id      
+          
         if(this.state.ratingList !== null)
         {
             var found =false;   
@@ -145,8 +148,7 @@ class getmodel extends Component
                 }
             })
 
-            var liked = "liked"+val._id
-            var like = "like"+val._id
+        
 
             if(found=== true)
             {
@@ -166,7 +168,16 @@ class getmodel extends Component
 
                 }
             }
-        }        
+        }  
+        else
+        {
+            if(document.getElementById(like) != null)
+            {
+                document.getElementById(like).style.display="none"
+                document.getElementById(liked).style.display="flex"
+
+            }
+        }      
     }
 
 
@@ -248,7 +259,7 @@ class getmodel extends Component
                 return (
                     <div key= {val._id} className="contentWraper_episode_content">
                         <Link to={{pathname:"/watch/" + this.state.class._id+"/"+val._id, state:{classID: this.state.class._id, prevPath:"/browse/movie"}}} className="episode_link">
-                            <ReactPlayer playing={false} className="caresoleImage_episode" width = {this.state.videowidth} height = "auto" url={val.videoUrl+"#t=0,10"}></ReactPlayer>
+                            <ReactPlayer playing={false} className="caresoleImage_episode" width = {this.state.videowidth} height = "auto" url={val.videoUrl} light={true} ></ReactPlayer>
                         </Link>
 
                         <div className="caresole_episode_desc">
