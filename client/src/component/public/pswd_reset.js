@@ -83,6 +83,7 @@ export default class pswd_reset extends Component
     {
         if(this.state.Varifypassword === '' || this.state.Newpassword === '')
         {
+            alert("password Sucessfully updated")
             this.setState({
                 handlederror: "Make sure red higligted field is filled"     
             })
