@@ -65,7 +65,7 @@ class getImageElement extends Component
             }
             else
             {
-                classesElement = <h1>No content Found </h1>
+                classesElement = <div style={{width: "100%", textAlign:"center"}}><h1>No content Found </h1></div> 
             }
            
         }

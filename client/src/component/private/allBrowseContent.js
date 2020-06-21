@@ -113,6 +113,13 @@ class allBrowseContent extends Component
                 case "newlyadded":
                     title="Newly added"
                     break;
+                case "Health":
+                    title="Health"
+                    break;
+
+                case "education":
+                    title="Education"
+                    break;
             }
         }
 

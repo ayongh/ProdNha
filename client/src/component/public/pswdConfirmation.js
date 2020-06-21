@@ -86,7 +86,7 @@ class pswdConfirmation extends Component
             }
 
             //Calls the post method to validate if the confirmation matches or not
-            axios.post('/user/pswdReset/confirmation').then( res =>{
+            axios.post('/user/pswdReset/confirmation',data,{validateStatus: function (status) { return status >= 200 && status < 600; }}).then( async res =>{
                 
                 //if we get success the we move to next page
                 if(res.status === 200)

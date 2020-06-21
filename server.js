@@ -33,6 +33,7 @@ app.use('/token/validation', require('./Routes/token_validation'));
 app.use('/user/login', require('./Routes/login'))
 app.use('/user/logout', require('./Routes/logout'))
 app.use('/user/info', require('./Routes/user_info'))
+app.use('/user/pswdReset', require('./Routes/user_pswdReset'));
 
 app.use('/recomendation',require('./Routes/recommendation'));
 app.use('/render/class',require('./Routes/render_class'));

@@ -70,11 +70,11 @@ export default class pswd_userID extends Component
             }
 
             //Calls the post method to retrive the token and validate username and password
-            axios.post('/user/pswdReset', data).then( res =>{
+            axios.post('/user/pswdReset', data ,{validateStatus: function (status) { return status >= 200 && status < 600; }}).then( async res =>{
 
                 if(res.status === 200)
                 {
-                this.setState({
+                    this.setState({
                         redirectNextPage: true,
                     })
                 }

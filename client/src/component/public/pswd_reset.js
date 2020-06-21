@@ -51,11 +51,13 @@ export default class pswd_reset extends Component
         {
             "password":this.state.Newpassword
         }
-        axios.post('/user/pswdReset/updatePswd', data).then( res =>{
+        axios.post('/user/pswdReset/updatePswd', data,{validateStatus: function (status) { return status >= 200 && status < 600; }}).then( async res =>{
 
             if(res.status === 200)
             {
-                this.onOpenModal()
+               this.setState({
+                 redirectLoginpage: true
+               })
             }
             else if( res.status === 403)
             {
@@ -129,13 +131,6 @@ export default class pswd_reset extends Component
 
     }
 
-    onOpenModal = () => {
-        this.setState({ open: true });
-    };
-
-    onCloseModal = () => {
-        this.setState({ open: false, redirectLoginpage:true});
-    };
 
     render() 
     {
