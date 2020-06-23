@@ -7,7 +7,8 @@ import ReactPlayer from 'react-player'
 import { Icon } from 'react-icons-kit'
 import {close} from 'react-icons-kit/fa/close'
 import {spinner2} from 'react-icons-kit/icomoon/spinner2'
-
+import {embed2} from 'react-icons-kit/icomoon/embed2'
+import {u1F4BB} from 'react-icons-kit/noto_emoji_regular/u1F4BB'
 
 import {Link, Redirect} from 'react-router-dom'
 
@@ -15,7 +16,7 @@ import {connect} from 'react-redux'
 import {Actionlogin, ActionLoading, ActionError} from '../../redux/Action/loginAction'
 import {ActionUserIntialize} from '../../redux/Action/userinfoAction'
 
-import GetImageElement from '../public/component/public_getImageElement'
+import GetImageElement from '../private/componentofBrowse/getImageElement'
 
 import Typed from 'typed.js';
 
@@ -23,7 +24,7 @@ import ContactFooter from '../private/componentofBrowse/contactfooter'
 
 const image = require('../img/coding.jpg')
 
-class login extends Component
+class aboutUs extends Component
 {
     
     constructor(props)
@@ -34,12 +35,8 @@ class login extends Component
             username:null,
             password:null,
             userError: null,
-            search:null,
 
-            classes:null,
-
-
-            safaribrowser:false,
+            redirectSearch: false,
 
             typed:undefined,
 
@@ -52,23 +49,6 @@ class login extends Component
     handleChange = (e) =>{
         this.setState({
             [e.target.id]: e.target.value
-        })
-
-    }
-
-    handleSearchChange=(e)=>
-    {
-        this.setState({
-            [e.target.id]: e.target.value
-        })
-
-        axios.get('/course/search/public/'+this.state.search).then( res =>{ 
-            if(res.status === 200)
-            {
-                this.setState({
-                    classes:res.data.data
-                })
-            }
         })
 
     }
@@ -166,16 +146,7 @@ class login extends Component
             pagination: 20
         }
 
-        axios.post('/render/class/popular/public',popularpayload, {validateStatus: function (status) { return status >= 200 && status < 600; }}).then( res =>{ 
-            if(res.status === 200)
-            {
-                this.setState({
-                    classes:res.data
-                })
-            }
-        })
-
-        if(this.props.location.pathname ==='/')
+        if(this.props.location.pathname ==='/aboutus')
         {
             try
             {
@@ -198,6 +169,13 @@ class login extends Component
 
         }
         
+    }
+
+    searchClicked()
+    {
+        this.setState({
+            redirectSearch: true
+        })
     }
 
     render()
@@ -236,6 +214,11 @@ class login extends Component
             }   
         }
 
+        if (this.state.redirectSearch === true)
+        {
+            return <Redirect to="/"></Redirect>
+        }
+
         return (
             <div>
                 <div className="login_nav">
@@ -244,24 +227,77 @@ class login extends Component
                             <h2>NHA</h2>
                         </div>
 
-                        <div className="login_search">
-                            <input className="login_search_input" id="search" onChange={this.handleSearchChange} type="text" placeholder="Search"/>
-                        </div>
-
-                        <div className="menuContent">
+                        <div className="aboutus_menuContent">
                             <a className="login_option" onClick={this.loginModelOpen}>Login</a>
                             <a className="login_option" href="/signup">Signup</a>
-                            <a className="login_option" href="/aboutus">About us</a>
-
+                            <a className="login_option" href="/">Home</a>
                         </div>
                     </div>
                 </div>
 
-                <div className="search_caresoleWrapper login_searchWrapper">
-                    <div className="login_Searchcaresole">
-                        <GetImageElement classes = {this.state.classes}></GetImageElement>
+                <header className="v-header container">
+                    <div className="fullscreen-video-wrap">
+                        <ReactPlayer className='react-player-background' playing={true} loop={true} width="100%" height="100%" muted url="https://firebasestorage.googleapis.com/v0/b/nhadb-c07ce.appspot.com/o/video%2Fvideoplayback%20(1).mp4?alt=media&token=012d7e51-680a-4773-b9ae-1b483e4966ae" />
                     </div>
-                </div>
+                    <div className="header-overlay"></div>
+                    <div className="header-content text-md-center">
+                    <h1 className="header_type_text">
+                        <>
+                        <span
+                        style={{ whiteSpace: "pre" }}
+                        ref={(el) => {
+                            this.el = el;
+                        }}
+                        />
+                        </>
+                    </h1>
+                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Id temporibus perferendis necessitatibus numquam amet impedit explicabo? Debitis quasi ullam aperiam!</p>
+                        <a className="btn" href="#about">Find Out More</a>
+                    </div>
+                </header>
+        
+                <section className="section section-a" id="about">
+                    <div className="container_section_A A_left">
+                        <img src={image} className="A_left_image"></img>
+                    </div>
+
+                    <div className="container_section_A A_right">
+                        <div className="A_right_comp1">
+                            <div className="A_right_comp1_warpper">
+                                <div className="A_right_comp1_part one">
+                                    <Icon icon={embed2} size={50} className="A_right_content_icon"></Icon>
+                                    <div className="A_right_content">
+                                        <h2> About Application</h2>
+                                        <p>Bases of this application is to share knowledge wither it is small or big. 
+                                            In the ongoing fight with COVID 19 we are in need of platform were we can share our ideas on protecting our love once,
+                                            help our young once with School learning and college advice, provide advices to once that are in need of counsoling, and entertainment for once that needs to 
+                                            relax. Our application provides this content to help you in the time of emergency. 
+                                            We belive no infromation is too small you dont have to be educated college student to share knowledge you have learned from 
+                                            expirence, your love once
+                                            
+                                            .Therefore we leave what content gets to be shared to you. you are the teacher, mentor, guide to once that need the help you might have already percevired in your life time.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div className="A_right_comp1_part three">
+                                <Icon icon={u1F4BB} size={50} className="A_right_content_icon"></Icon>
+                                    <div className="A_right_content">
+                                        <h2> Technical Detail</h2>
+                                        <p>Goal of this application is to provide user with content that enrich their daily life. the intention of this project was to share and </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    </div>
+                </section>
+        
+                <section className="section section-b">
+                    <div className="container">
+                   
+                    </div>
+                </section>
 
                 <ContactFooter></ContactFooter>
 
@@ -319,4 +355,4 @@ const mapToState = (state) =>{
     }
 }
 
-export default connect(mapToState,{Actionlogin,ActionLoading,ActionError,ActionUserIntialize}) (login);
+export default connect(mapToState,{Actionlogin,ActionLoading,ActionError,ActionUserIntialize}) (aboutUs);

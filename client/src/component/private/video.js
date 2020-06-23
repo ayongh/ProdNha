@@ -29,10 +29,20 @@ class video extends Component
             control:true,
             videowidth: '80%'
         }
+        this.handleStateChange.bind(this)
+    }
+
+    handleStateChange(state) {
+        // copy player state to this component's state
+        this.setState({
+          player: state
+        });
     }
 
     componentDidMount()
     {
+        this.player.subscribeToStateChange(this.handleStateChange.bind(this));
+
         this.state.sectionData.forEach(element => {
             if(element._id === this.state.sectionID)
             {
@@ -49,6 +59,8 @@ class video extends Component
                 videowidth:"100%"
             })
         }
+
+        this.player.load();
         
     }
 
@@ -90,6 +102,7 @@ class video extends Component
             url: data.videoUrl,
             section:data          
         })
+
     }
 
     getVideoList()
@@ -163,36 +176,18 @@ class video extends Component
             <div className="Video_container" >
                 <div className="video_warpper" onContextMenu={(e)=> e.preventDefault()}>
                     <a href={returback} className="videoBackButton"><Icon className="videobackbtn" size={40} icon={arrowLeft2}> </Icon> <span class="videobackHint">Back</span></a>
-                    {/* <ReactPlayer 
-                        id="reactplayyer"
-                        url= {this.state.url}
-                        className='react-player'
-                        pip={false}
-                        playing={this.state.playing}
-                        controls={this.state.control}
-                        onEnablePIP	={this.handleminimize}
-                        onDisablePIP = {this.handleMaximize}
-                        onProgress={this.handleProgress}
-                        onDuration={this.handleDuration}
-                        onPause ={this.handlePause}
-                        onPlay= {this.handleonplay}
-                        onEnded={this.onEnded}
-                        width = {this.state.videowidth}
-                        height = "100%"
-                        config={{ file: {
-                            attributes: {
-                                controlsList: 'nodownload'
-                            }
-                        }}}
-                    /> */}
                     <Player
                         width = {this.state.videowidth}
-                        height = {100}>
-                        <source src="https://media.w3.org/2010/05/sintel/trailer_hd.mp4" />
+                        height = {100}
+                        ref={player => {
+                            this.player = player;
+                        }}
+                        >
+                        <source src={this.state.url} />
                         <BigPlayButton position="center" />
                         <ControlBar autoHide={true} className="my-class">         
-                            <ReplayControl seconds={30} order={2.3} />
-                            <ForwardControl seconds={30} order={3.3} />
+                            <ReplayControl seconds={10} order={2.3} />
+                            <ForwardControl seconds={10} order={3.3} />
                         </ControlBar>
 
                     </Player>

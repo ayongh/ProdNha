@@ -39,6 +39,20 @@ router.get('/findSection/:classID',checkCookie, async (req, res) =>
     })
 });
 
+router.get('/findSection/public/:classID', async (req, res) =>
+{
+    if(req.params.classID === undefined)
+    {
+        return res.status(403).send({error: "undefined ClassID"})
+    }
+
+    const classInfo = req.params.classID
+
+    axios.get(process.env.URI+"/course/findSection/public/"+classInfo, {validateStatus: function (status) { return status >= 200 && status < 600; }}).then(response=>{
+        return res.status(response.status).send(response.data)
+    })
+});
+
 router.get('/searchCourse/:categorie',checkCookie, async (req, res) =>
 {
     if(req.params.categorie === undefined)
@@ -63,6 +77,20 @@ router.get('/search/:content',checkCookie, async (req, res) =>
     const contentInfo = req.params.content
 
     axios.get(process.env.URI+"/course/search/"+contentInfo, { headers: {'Authorization': 'Bearer '+req.cookies.aid}, validateStatus: function (status) { return status >= 200 && status < 600; }}).then(response=>{
+        return res.status(response.status).send(response.data)
+    })
+});
+
+router.get('/search/public/:content', async (req, res) =>
+{
+    if(req.params.content === undefined)
+    {
+        return res.status(403).send({error: "undefined content"})
+    }
+    
+    const contentInfo = req.params.content
+
+    axios.get(process.env.URI+"/course/search/public/"+contentInfo, {validateStatus: function (status) { return status >= 200 && status < 600; }}).then(response=>{
         return res.status(response.status).send(response.data)
     })
 });

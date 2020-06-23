@@ -10,19 +10,15 @@ import {ActionInitModel} from '../../../redux/Action/ModelAction'
 
 import '../../CSS/skeleton-loading.css';
 import Skeleton from 'react-loading-skeleton';
+import { Link } from 'react-router-dom'
 
 
-class getImageElement extends Component 
+class public_getImageElement extends Component 
 {
 
     errorImag(e)
     {
         e.target.src  = NoImageFound
-    }
-
-    open(val)
-    {
-        this.props.ActionInitModel(val)
     }
 
     render()
@@ -45,7 +41,9 @@ class getImageElement extends Component
                                 <img className="caresoleImage" id={val._id} onError={this.errorImag} src={val.thumbnail} alt={'apple'}/>
                                 <div className="caresoleImage_description_wrapper">
                                     <div className="top_caresoleImage_description">
-                                        <Icon icon={ic_play_circle_outline} size={70} style={{color:'white', marginTop:"18%", cursor:"pointer"}} onClick={()=>this.open(val)}></Icon>
+                                        <Link to= {"/video/"+val._id}>
+                                            <Icon icon={ic_play_circle_outline} size={70} style={{color:'white', marginTop:"18%", cursor:"pointer"}}></Icon>
+                                        </Link>
                                     </div>                            
                                     <div className="description">
                                         <div className="bottom_caresoleImage_description">
@@ -81,4 +79,4 @@ const mapToState = (state) =>{
     }
 }
 
-export default connect(mapToState,{ActionInitModel}) (getImageElement);
+export default connect(mapToState,{ActionInitModel}) (public_getImageElement);

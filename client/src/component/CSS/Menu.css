@@ -24,8 +24,9 @@
 
 .menuContent
 {
-  width: 90%;
+  width: 40%;
   padding: 30px;
+  text-align: center;
 }
 
 .login_nav_wrapper a{
@@ -36,4 +37,16 @@
 {
     border-width: 2px;
     border-bottom: solid;
+}
+
+.aboutus_menuContent
+{
+  width: 80%;
+  padding: 30px;
+}
+
+.login_private_menuContent
+{
+  width: 90%;
+  padding: 30px;
 }

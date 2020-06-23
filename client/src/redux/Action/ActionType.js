@@ -1,5 +1,6 @@
 export const ADD_ARTICLE = "ADD_ARTICLE";
 export const LOGIN = "LOGIN";
+export const LOGOUT = "LOGOUT"
 export const LOADING = "LOGIN_LOADING";
 export const ERROR = "LOGIN_ERROR";
 

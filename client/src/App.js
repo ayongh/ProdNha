@@ -39,6 +39,8 @@ import BrowsePage from './component/private/Browsepage'
 import Main_Browse_Show from './component/private/allBrowseContent';
 import Video from './component/private/video'
 import Upload from './component/private/upload'
+import AboutUs from './component/public/aboutUs'
+import publicVideo from './component/public/public_video'
 
 // private
 import UserProfile from './component/private/profile/userprofile'
@@ -97,6 +99,9 @@ class App extends Component
             <Route exact path="/signup" component={Signup}/>
 
             <Route  exact path="/pswdreset" component={UserID}/>
+            <Route  exact path="/aboutus" component={AboutUs}/>
+            <Route  exact path="/video/:classID" component={publicVideo}/>
+
             <ProtectedRoute  exact path="/pswdreset/NewPswd" loggedIn={this.props.state.loginFlag} component={PasswordReset}/>               
 
 
@@ -116,8 +121,8 @@ class App extends Component
             <ProtectedRoute exact path="/profile/email/validation" loggedIn={this.props.state.login.loginFlag} component={Update_Email_Validation}/>
             <ProtectedRoute exact path="/watch/:classID/:videoID" loggedIn={this.props.state.login.loginFlag} component={Video}/>
 
-            <Route exact path="/noIternet" component={NoInternet}/> 
-            <Route component={Filenotfound}/>
+            <Route exact path="/noIternet" loggedIn={this.props.state.login.loginFlag} component={NoInternet}/> 
+            <ProtectedRoute component={Filenotfound}/>
           </Switch>
         </BrowserRouter>
       );

@@ -1,4 +1,4 @@
-import {LOADING,LOGIN,ERROR} from '../Action/ActionType'
+import {LOADING,LOGIN,ERROR,LOGOUT} from '../Action/ActionType'
 
 const intLogin = {
     loginFlag:false,
@@ -14,6 +14,13 @@ const logedin = ( state = intLogin, action)=>
             return {
                 ...state,
                 loginFlag:true,
+                loading:false
+            }
+
+        case LOGOUT: 
+            return {
+                ...state,
+                loginFlag:false,
                 loading:false
             }
 

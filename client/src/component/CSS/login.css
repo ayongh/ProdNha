@@ -20,7 +20,17 @@
     height: 100%;
 }
 
+.login_search_input
+{
+  padding: 10px;
+  width: 80%;
+}
 
+.login_search
+{
+  padding: 20px;
+  width: 60%;
+}
 
 .login_right_inner_container
 {

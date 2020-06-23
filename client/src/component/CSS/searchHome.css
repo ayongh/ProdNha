@@ -616,6 +616,12 @@ nav
     padding-right: 5%;
 }
 
+.login_Searchcaresole
+{
+    display: flex;
+    margin-top: 84px;
+}
+
 .caresoleImage_description_wrapper
 {
     visibility: hidden;
@@ -886,3 +892,8 @@ nav
     padding-left: 50px;
 }
 
+
+.login_searchWrapper
+{
+    min-height: 100vh;
+}

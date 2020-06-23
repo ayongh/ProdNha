@@ -1,10 +1,17 @@
-import {LOGIN,LOADING,ERROR} from './ActionType'
+import {LOGIN,LOADING,ERROR,LOGOUT} from './ActionType'
 
 export function Actionlogin() {
     return{
-        type:LOGIN,
+        type:LOGIN
     }
 }
+
+export function Actionlogout() {
+    return{
+        type:LOGOUT
+    }
+}
+
 
 export function ActionLoading() {
     return{

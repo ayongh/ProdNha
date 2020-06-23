@@ -33,6 +33,13 @@ router.post('/categorie',checkCookie, async (req, res) =>
     })
 });
 
+router.post('/popular/public', async (req, res) =>
+{
+    axios.post(process.env.URI+"/render/class/popular/public",req.body, { headers: {'Authorization': 'Bearer '+req.cookies.aid}, validateStatus: function (status) { return status >= 200 && status < 600; }}).then(response=>{
+        return res.status(response.status).send(response.data)
+    })
+});
+
 
 
 

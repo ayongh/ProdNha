@@ -5,6 +5,9 @@ import {Link,Redirect} from 'react-router-dom'
 
 import axios from 'axios'
 
+import {connect} from 'react-redux'
+import {Actionlogout} from '../../../redux/Action/loginAction'
+
 import {monitor} from 'react-icons-kit/feather/monitor'
 import {androidHome} from 'react-icons-kit/ionicons/androidHome'
 import {person} from 'react-icons-kit/ionicons/person'
@@ -14,6 +17,15 @@ import {iosDownloadOutline} from 'react-icons-kit/ionicons/iosDownloadOutline'
 
 
 class Menu extends Component {
+
+    constructor(prop)
+    {
+        super(prop)
+
+        this.state = {
+            classes:null,
+        }
+    }
 
    /*  componentDidMount()
     {
@@ -70,7 +82,7 @@ class Menu extends Component {
         axios.get('/user/logout').then(response=>{
             if(response.status === 200)
             {
-                return <Redirect to={"/"}></Redirect>
+                window.location.reload()
             }
         })
     }
@@ -82,7 +94,7 @@ class Menu extends Component {
                 <div className="logo">
                     <h2>NHA</h2>
                 </div>
-                <div className="menuContent">
+                <div className="login_private_menuContent">
                     <Link className="login_option" to="/Homepage" >Home</Link>
                     <Link className="login_option" to="/browse/movie">Browse</Link>
                     <Link className="login_option" to="/search/movie">Search</Link>
@@ -97,4 +109,11 @@ class Menu extends Component {
   }
 }
 
-export default Menu;
+//access all the state
+const mapToState = (state) =>{
+    return {
+        state:state
+    }
+}
+
+export default connect(mapToState,{Actionlogout}) (Menu);
