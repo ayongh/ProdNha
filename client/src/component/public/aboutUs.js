@@ -224,7 +224,9 @@ class aboutUs extends Component
                 <div className="login_nav">
                     <div className="login_nav_wrapper">
                         <div className="logo">
-                            <h2>NHA</h2>
+                            <Link to="/" className="removeHpyerLink">
+                                <h2 >NHA</h2>
+                            </Link>
                         </div>
 
                         <div className="aboutus_menuContent">

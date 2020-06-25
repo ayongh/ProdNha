@@ -278,6 +278,11 @@ body{
     cursor: pointer;
 }
 
+.removeHpyerLink
+{
+  text-decoration: none;
+}
+
 
 
 /* The Modal (background) */
