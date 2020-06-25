@@ -53,6 +53,20 @@ router.get('/findSection/public/:classID', async (req, res) =>
     })
 });
 
+router.get('/maylike/public/:classID', async (req, res) =>
+{
+    if(req.params.classID === undefined)
+    {
+        return res.status(403).send({error: "undefined ClassID"})
+    }
+
+    const classInfo = req.params.classID
+
+    axios.get(process.env.URI+"/course/maylike/public/"+classInfo, {validateStatus: function (status) { return status >= 200 && status < 600; }}).then(response=>{
+        return res.status(response.status).send(response.data)
+    })
+});
+
 router.get('/searchCourse/:categorie',checkCookie, async (req, res) =>
 {
     if(req.params.categorie === undefined)

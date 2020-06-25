@@ -18,21 +18,43 @@ class public_video extends Component
 
             url:null,
 
-            sectionContents:null
+            sectionContents:null,
+            similarSection:null
         }
 
     }
 
     componentDidMount()
     {
+
         axios.get('/course/findSection/public/'+this.props.match.params.classID,{validateStatus: function (status) { return status >= 200 && status < 600; }}).then( async res =>{ 
+
             if(res.status === 200)
             {
-                await this.setState({
-                    sectionContents: res.data.data,
-                    url: res.data.data[0].videoUrl
-                })
+                if(res.data.data.length<=0)
+                {
+                    await this.setState({
+                        sectionContents: res.data.data,
+                        similarSection: res.data.similarSection,
+                        url:false
+                    })
+                }
+                else
+                {
+                    await this.setState({
+                        sectionContents: res.data.data,
+                        similarSection: res.data.similarSection,
+                        url: res.data.data[0].videoUrl
+                    })
+                }
+               
 
+            }
+            else
+            {
+                this.setState({
+                    url:false
+                })
             }
         })
         
@@ -45,9 +67,21 @@ class public_video extends Component
         this.player.load();
     }
 
-
-
     getVideoList()
+    {
+        if(this.state.similarSection !== null)
+        {
+            var videoList = this.state.similarSection.map((val,index)=>{
+                return(
+                    <ReactPlayer key={val._id}  onClick={()=>this.playlist(val)} className="caresoleImage_episode" width = "100%" height = "auto" url={val.videoUrl}></ReactPlayer>
+                )})
+    
+            return videoList
+        }
+       
+    }
+
+    getSimilarvideoList()
     {
         if(this.state.sectionContents !== null)
         {
@@ -61,79 +95,68 @@ class public_video extends Component
        
     }
 
-    getNextPlaying()
-    {
-
-        if(this.state.section !== null)
-        {
-            return(
-                <div className="contentWraper_episode_content">
-                    <img className="caresoleImage_episode_video" src={this.state.section.thumbnail} alt={'apple'}/>
-                    <div className="caresole_episode_desc">
-                        <p className="noMargin">playing</p>
-                        <p className="noMargin">{this.state.section.name}</p>
-                        <p className="noMargin">Duration: {this.state.duration + " s"}</p>
-                    </div>
-                </div>
-            )
-        }
-        
-    }
-
-    getpauseContent()
-    {
-
-        if(this.state.section !== null)
-        {
-            return(
-                <div className="pauseContent">
-                    <h1>{this.state.section.name}</h1>
-                    <p>{this.state.section.description}</p>
-                    <p> Duration: {this.state.duration}</p>
-                </div>
-            )
-        }
-        
-    }
 
     render()
     {
-        var player = <h1>Loading</h1>
+        console.log(this.player)
+        var Videoplayer = <h1>Loading</h1>
 
         if(this.state.url !== null)
         {
-            player = <Player
-            width = {this.state.videowidth}
-            height = {100}
-            ref={player => {
-                this.player = player;
-            }}
-            >
-            <source src={this.state.url} />
-            <BigPlayButton position="center" />
-            <ControlBar autoHide={true} className="my-class">         
-                <ReplayControl seconds={10} order={2.3} />
-                <ForwardControl seconds={10} order={3.3} />
-            </ControlBar>
-    
-            </Player>
+            if(this.url === false)
+            {
+
+            }
+            else
+            {
+                Videoplayer = <Player
+                width = {this.state.videowidth}
+                height = {100}
+                ref={player => {
+                    this.player = player;
+                }}
+                >
+                <source src={this.state.url} />
+                <BigPlayButton position="center" />
+                <ControlBar autoHide={true} className="my-class">         
+                    <ReplayControl seconds={10} order={2.3} />
+                    <ForwardControl seconds={10} order={3.3} />
+                </ControlBar>
+        
+                </Player>
+            }
+           
     
         }
 
         return (
             <div className="Video_container" >
-                <div className="video_warpper" onContextMenu={(e)=> e.preventDefault()}>
+                <div className="video_warpper" >
                     <a href="/" className="videoBackButton"><Icon className="videobackbtn" size={40} icon={arrowLeft2}> </Icon> <span class="videobackHint">Back</span></a>
-                   {player}
-                    
+                   {Videoplayer}
                 </div>
+
+                <div className="video_next">
+                    <div className="video_next_left">
+                        <h3>Title</h3>
+                        <p>Description of the video goes here </p>
+                    </div>
+
+                    <div className="video_next_right">
+                        <h3>Next</h3>
+                        <h3>playing next title</h3>
+                        <p>Description of the video goes here </p>
+                    </div>
+                </div>
+ 
                 
                 <div className="NextVideo_container_wrapper">
                     <div className="NextVideo_container">
                         <div className="Next_video">                        
                             <h2>videos</h2>
-
                             {this.getVideoList()}
+                            <h2>Similar Video</h2>
+                            {this.getSimilarvideoList()}
                         </div>
 
                     </div>

@@ -109,7 +109,7 @@ class getmodel extends Component
         {
             return(
                 <div className="caresole_image_wrapper_container">
-                    <img className="popup_image" onError={this.errorImag} src={this.state.class.thumbnail} alt={'apple'}/>
+                    <img className="popup_image" onError={this.errorImag} src={this.state.class.thumbnail} loading="lazy"  alt={'apple'}/>
                     <Link to={{ pathname: "/watch/" + this.state.sectionContent.data[0]._id, state:{classID: this.state.class._id, prevPath:"/browse/movie"}}}>
                         <div className="popup_image_description">
                             <Icon className="popup_movie_btn" size={150} icon={buttonCheck}></Icon>
@@ -123,7 +123,7 @@ class getmodel extends Component
         {
             return(
                 <div className="caresole_image_wrapper_container">
-                    <img className="popup_image" onError={this.errorImag} src={this.state.class.thumbnail} alt={'apple'}/>
+                    <img className="popup_image" onError={this.errorImag} src={this.state.class.thumbnail} loading="lazy"  alt={'apple'}/>
                     <div className="popup_image_description">
                         <Icon className="popup_movie_btn" size={150} icon={buttonCheck}></Icon>
                     </div>
@@ -235,7 +235,7 @@ class getmodel extends Component
             {
                 return(
                     <div className="contentWraperSimilar" key={index} onClick={() =>this.similarMovieBotton(val)}>
-                        <img className="caresoleImage_similar_class" onError={this.errorImag} src={val.thumbnail} alt={'apple'}/>
+                        <img className="caresoleImage_similar_class" onError={this.errorImag} src={val.thumbnail} loading="lazy"  alt={'apple'}/>
                         <h3>{val.name}</h3>
                     </div>
                 )

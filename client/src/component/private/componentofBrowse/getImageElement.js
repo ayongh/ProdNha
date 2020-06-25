@@ -42,7 +42,7 @@ class getImageElement extends Component
                         
                         <div className="getElement_outerWrapper">
                             <div key= {val._id} className="new_contentWraper">
-                                <img className="caresoleImage" id={val._id} onError={this.errorImag} src={val.thumbnail} alt={'apple'}/>
+                                <img className="caresoleImage" id={val._id} onError={this.errorImag} src={val.thumbnail} loading="lazy" alt={'apple'}/>
                                 <div className="caresoleImage_description_wrapper">
                                     <div className="top_caresoleImage_description">
                                         <Icon icon={ic_play_circle_outline} size={70} style={{color:'white', marginTop:"18%", cursor:"pointer"}} onClick={()=>this.open(val)}></Icon>

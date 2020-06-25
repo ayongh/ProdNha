@@ -111,3 +111,35 @@
     display: inline;
     transform: scale(1.05)
 }
+
+.video_top_wrapper
+{
+    width: 80vw;
+    height: 100vh;
+    background: green;
+    position: absolute;
+}
+
+.video_next
+{
+    width: 80vw;
+    background: seagreen;
+    position: absolute;
+    color: aliceblue;
+    bottom: 30px;
+    display: flex;
+} 
+
+.video_next_left
+{
+    width: 50%;
+    padding: 30px;
+}
+
+.video_next_right
+{
+    width: 50%;
+    text-align: right;
+    padding: 30px;
+
+}
