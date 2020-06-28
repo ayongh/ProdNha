@@ -38,6 +38,7 @@ app.use('/user/pswdReset', require('./Routes/user_pswdReset'));
 app.use('/recomendation',require('./Routes/recommendation'));
 app.use('/render/class',require('./Routes/render_class'));
 app.use('/course', require('./Routes/course'))
+app.use('/section', require('./Routes/section'))
 app.use('/user/signup', require('./Routes/signup'))
 
 

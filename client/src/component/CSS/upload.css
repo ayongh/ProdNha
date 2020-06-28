@@ -1,6 +1,5 @@
 .upload_container
 {
-    margin-left: 135px;
 }
 
 .classCoverPic
@@ -15,15 +14,158 @@
 
 .reqired_section
 {
-    display: table-caption;
+    display: block;
     margin-bottom: 20px;
+    background: #ece9e945;
+    width: 100%;
 }
 
 .classinfo
 {
+    margin-top: 84px;
+    width: 80vw;
+    margin-left: 10%;
     display: table-caption;
+    padding: 20px;
+}
+
+.submenuActive
+{
+    background: #ffffff;
+    -webkit-box-shadow: 0px 7px 23px -4px rgba(0,0,0,0.72);
+    -moz-box-shadow: 0px 7px 23px -4px rgba(0,0,0,0.72);
+    box-shadow: 0px 7px 23px -4px rgba(0,0,0,0.72);
 }
 
 .p{
     margin-bottom: 0px;
+}
+
+
+.uploadSection_text
+{
+    display: table-caption;
+}
+
+.videoUpload
+{
+    width: 100%;
+}
+
+.display_content
+{
+    display: flex;
+}
+
+.content_one, .content_two, .content_three
+{
+    width: 30%;
+    padding: 1.5%;
+}
+
+.SectionVideo
+{
+    width: 100%;
+}
+
+.SectionPoster
+{
+    width: 100%;
+}
+
+.completeSectionVideo
+{
+    width: 100%;
+}
+
+.listofSection_holder
+{
+    width: 100%;
+    display: flex;
+}
+
+.section_video
+{
+    width: 30%;
+    padding: 20px;
+}
+
+.section_text
+{
+    width: 30%;
+    padding: 20px;
+}
+
+.uploadSubMenu
+{
+    display: flex;
+    background: gold;
+}
+
+
+.uploadSubMenu_option
+{
+    width: 33%;
+    text-align: center;
+    margin: 0px;
+    padding: 20px;
+}
+
+.create_class_inpute_wrapper
+{
+    display: flex;
+}
+
+.content_create_class
+{
+    padding: 20px;
+}
+
+.SubmitUpload, .add_section_content_wrapper
+{
+    display:none; 
+}
+
+
+.creat_class_content_wrapper
+{
+    background: #ece9e945;
+}
+
+
+.submit_create_class
+{
+    background: gold;
+    padding: 20px;
+    border: none;
+    float: right;
+    width: 30%;
+}
+
+#sectionNext, #sectionPrevious
+{
+    width: 33%;
+    padding: 20px;
+    background: gold;
+    border: none;
+}
+
+#sectionNext
+{
+    float: right;
+}
+
+#sectionPrevious
+{
+    float: left;
+}
+
+.submitButton
+{
+    padding: 20px;
+}
+
+.displayUploadProgress
+{
+    display: none;
 }

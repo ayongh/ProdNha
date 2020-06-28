@@ -98,7 +98,7 @@ class public_video extends Component
 
     render()
     {
-        console.log(this.player)
+        
         var Videoplayer = <h1>Loading</h1>
 
         if(this.state.url !== null)

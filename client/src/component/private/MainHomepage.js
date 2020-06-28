@@ -62,11 +62,16 @@ class MainHomepage extends Component
                     axios.get('/course/findSection/'+res.data.mainContent._id, {validateStatus: function (status) { return status >= 200 && status < 600; }}).then( async res =>{ 
                         if(res.status === 200)
                         {
-                            localStorage.setItem("video", JSON.stringify( res.data.data));
-                            localStorage.setItem(this.state.class._id, JSON.stringify( res.data.data));
-                            await this.setState({
-                                sectionContent: res.data
-                            })
+                            if(res.data.data.length > 0)
+                            {
+                                console.log(res.data)
+                                localStorage.setItem("video", JSON.stringify( res.data.data));
+                                localStorage.setItem(this.state.class._id, JSON.stringify( res.data.data));
+                                this.setState({
+                                    sectionContent: res.data.data
+                                })
+                            }
+                           
             
                         }
                     })
@@ -124,18 +129,37 @@ class MainHomepage extends Component
 
     }
 
+    NoSection()
+    {
+        alert("No Section to watch")
+    }
+
     getMainpageContentDetail()
     {
         var content = <h2>loading...</h2>
+
+        console.log(this.state.sectionContent)
+        var Link = <Link onClick={()=>this.NoSection()} className="homepage_link">
+                        <a className="btn">watch</a>
+                    </Link>
+
+        if( this.state.sectionContent !== null && this.state.sectionContent !== undefined)
+        {
+            if(this.state.sectionContent.length > 0)
+            {
+                Link = <Link to={{pathname:"/watch/" + this.state.class._id+"/"+this.state.sectionContent.data[0]._id, state:{classID: this.state.class._id, prevPath:"/Homepage"}}} className="homepage_link">
+                        <a className="btn">watch</a>
+                    </Link>
+            }
+          
+        }
 
         if(this.state.sectionContent !== null)
         {
             content =   <div className="header-content text-md-center">
                             <h1 className="header_type_text">{this.state.class.name}</h1>
                             <p>{this.state.class.description}</p>
-                            <Link to={{pathname:"/watch/" + this.state.class._id+"/"+this.state.sectionContent.data[0]._id, state:{classID: this.state.class._id, prevPath:"/Homepage"}}} className="homepage_link">
-                                <a className="btn">watch</a>
-                            </Link>
+                            {Link}
                         </div>
         }
 
@@ -153,9 +177,9 @@ class MainHomepage extends Component
     {
         var content = <h2>loading...</h2>
 
-        if(this.state.sectionContent !== null)
+        if(this.state.sectionContent !== null && this.state.sectionContent !== undefined)
         {
-            if(this.state.sectionContent.data.length>0)
+            if(this.state.sectionContent.length>0)
             {
                 content = <ReactPlayer className='react-player-background' playing={true} loop={true} width="100%" height="100%" muted url= {this.state.sectionContent.data[0].videoUrl}/>
             }
