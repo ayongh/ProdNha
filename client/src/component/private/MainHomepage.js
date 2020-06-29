@@ -51,10 +51,13 @@ class MainHomepage extends Component
 
             if(res.status === 200)
             {
+                this.setState({
+                    maincontent:res.data.mainContent
+                })
+
                 if(res.data.message.length>0)
                 {
                     this.setState({
-                        maincontent:res.data.mainContent,
                         class:res.data.mainContent,
                         classes:res.data.message
                     })
@@ -64,10 +67,8 @@ class MainHomepage extends Component
                         {
                             if(res.data.data.length > 0)
                             {
-                                console.log(res.data)
-                                localStorage.setItem("video", JSON.stringify( res.data.data));
-                                localStorage.setItem(this.state.class._id, JSON.stringify( res.data.data));
-                                this.setState({
+                                console.log(res.data.data)
+                                await this.setState({
                                     sectionContent: res.data.data
                                 })
                             }
@@ -138,8 +139,24 @@ class MainHomepage extends Component
     {
         var content = <h2>loading...</h2>
 
-        console.log(this.state.sectionContent)
-        var Link = <Link onClick={()=>this.NoSection()} className="homepage_link">
+        
+
+        if(this.state.sectionContent !== null)
+        {
+            content =   <div className="header-content text-md-center">
+                            <h1 className="header_type_text">{this.state.class.name}</h1>
+                            <p>{this.state.class.description}</p>
+                            {this.Link()}
+                        </div>
+        }
+
+        return content
+        
+    }
+
+    Link()
+    {
+        var WatchLink = <Link onClick={()=>this.NoSection()} className="homepage_link">
                         <a className="btn">watch</a>
                     </Link>
 
@@ -147,24 +164,14 @@ class MainHomepage extends Component
         {
             if(this.state.sectionContent.length > 0)
             {
-                Link = <Link to={{pathname:"/watch/" + this.state.class._id+"/"+this.state.sectionContent.data[0]._id, state:{classID: this.state.class._id, prevPath:"/Homepage"}}} className="homepage_link">
-                        <a className="btn">watch</a>
-                    </Link>
+                WatchLink = <Link to={{pathname:"/watch/" + this.state.class._id+"/"+this.state.sectionContent[0]._id, state:{classID: this.state.class._id, prevPath:"/Homepage"}}} className="homepage_link">
+                                <a className="btn">watch</a>
+                            </Link>
             }
           
         }
 
-        if(this.state.sectionContent !== null)
-        {
-            content =   <div className="header-content text-md-center">
-                            <h1 className="header_type_text">{this.state.class.name}</h1>
-                            <p>{this.state.class.description}</p>
-                            {Link}
-                        </div>
-        }
-
-        return content
-        
+        return WatchLink
     }
 
     errorImag(e)
@@ -177,11 +184,12 @@ class MainHomepage extends Component
     {
         var content = <h2>loading...</h2>
 
+
         if(this.state.sectionContent !== null && this.state.sectionContent !== undefined)
         {
             if(this.state.sectionContent.length>0)
             {
-                content = <ReactPlayer className='react-player-background' playing={true} loop={true} width="100%" height="100%" muted url= {this.state.sectionContent.data[0].videoUrl}/>
+                content = <ReactPlayer className='react-player-background' playing={true} loop={true} width="100%" height="100%" muted url= {this.state.sectionContent[0].videoUrl}/>
             }
             else
             {
