@@ -156,16 +156,16 @@ class MainHomepage extends Component
 
     Link()
     {
-        var WatchLink = <Link onClick={()=>this.NoSection()} className="homepage_link">
-                        <a className="btn">watch</a>
-                    </Link>
+        var WatchLink = <Link to="#" onClick={()=>this.NoSection()} className="homepage_link">
+                            <button className="btn">watch</button>
+                        </Link>
 
         if( this.state.sectionContent !== null && this.state.sectionContent !== undefined)
         {
             if(this.state.sectionContent.length > 0)
             {
                 WatchLink = <Link to={{pathname:"/watch/" + this.state.class._id+"/"+this.state.sectionContent[0]._id, state:{classID: this.state.class._id, prevPath:"/Homepage"}}} className="homepage_link">
-                                <a className="btn">watch</a>
+                                <button className="btn">watch</button>
                             </Link>
             }
           
@@ -267,9 +267,9 @@ class MainHomepage extends Component
                 </div>
 
                 {/* Pop up Modal */}
-                <div id="myModal" class="modal">
-                    <div class="modal-content">
-                        <span class="close" onClick={this.modelClose}>&times;</span>
+                <div id="myModal" className="modal">
+                    <div className="modal-content">
+                        <span className="close" onClick={this.modelClose}>&times;</span>
                         {loadModelClass}
 
                     </div>

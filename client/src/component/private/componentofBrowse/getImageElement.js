@@ -25,11 +25,24 @@ class getImageElement extends Component
         this.props.ActionInitModel(val)
     }
 
+    tagFormate(tagString)
+    {
+        console.log(tagString)
+
+        var MyArray = tagString.split(','); //splits the text up in chunks
+
+        for(var i = 0; MyArray.length < i; i++)
+        {
+            console.log(MyArray[i])
+        }
+        return "a"
+    }
     render()
     {
-        const Classes = this.props.classes
+        //this.props.classes
+        const Classes = null
 
-        var classesElement = <div className="skeleton-wrapper"><Skeleton width={250} height={300}></Skeleton> </div>
+        var classesElement = <div className="skeleton-wrapper" style={{width:"250px", height:"300px", background:"black"}}></div>
 
        
         if (Classes !== null && Classes !== undefined)
@@ -37,10 +50,10 @@ class getImageElement extends Component
             if(Classes.length > 0)
             {
                 classesElement = Classes.map( (val, index) => {
-                    var newTag= val.tag.replace(",", " #")
+                    var newTag= this.tagFormate(val.tag)
                     return (
                         
-                        <div className="getElement_outerWrapper">
+                        <div className="getElement_outerWrapper" key={val._id}>
                             <div key= {val._id} className="new_contentWraper">
                                 <img className="caresoleImage" id={val._id} onError={this.errorImag} src={val.thumbnail} loading="lazy" alt={'apple'}/>
                                 <div className="caresoleImage_description_wrapper">

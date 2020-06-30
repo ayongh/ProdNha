@@ -1,19 +1,14 @@
 import React, { Component } from 'react';
 import '../../CSS/Menu.css';
-import { Icon } from 'react-icons-kit'
-import {Link,Redirect} from 'react-router-dom'
+
+import {Link} from 'react-router-dom'
 
 import axios from 'axios'
 
 import {connect} from 'react-redux'
 import {Actionlogout} from '../../../redux/Action/loginAction'
 
-import {monitor} from 'react-icons-kit/feather/monitor'
-import {androidHome} from 'react-icons-kit/ionicons/androidHome'
-import {person} from 'react-icons-kit/ionicons/person'
-import {iosSearch} from 'react-icons-kit/ionicons/iosSearch'
-import {logOut} from 'react-icons-kit/ionicons/logOut'
-import {iosDownloadOutline} from 'react-icons-kit/ionicons/iosDownloadOutline'
+
 
 
 class Menu extends Component {
@@ -101,7 +96,7 @@ class Menu extends Component {
                     <Link className="login_option" to="/browse/movie">Browse</Link>
                     <Link className="login_option" to="/search/movie">Search</Link>
                     <Link className="login_option" to="/profile">profile</Link>
-                    <Link className="login_option" onClick={this.logOut}>Logout</Link>
+                    <Link className="login_option" to="#" onClick={this.logOut}>Logout</Link>
 
                 </div>
             </div>

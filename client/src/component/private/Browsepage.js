@@ -179,9 +179,9 @@ class BrowsePage extends Component
 
 
                 {/* Pop up Modal */}
-                <div id="myModal" class="modal">
-                    <div class="modal-content">
-                        <span class="close" onClick={this.modelClose}>&times;</span>
+                <div id="myModal" className="modal">
+                    <div className="modal-content">
+                        <span className="close" onClick={this.modelClose}>&times;</span>
                         {loadModelClass}
                     </div>
                 </div>

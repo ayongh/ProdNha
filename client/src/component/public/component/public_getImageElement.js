@@ -36,7 +36,7 @@ class public_getImageElement extends Component
                     var newTag= val.tag.replace(",", " #")
                     return (
                         
-                        <div className="getElement_outerWrapper">
+                        <div className="getElement_outerWrapper" key={val._id}>
                             <div key= {val._id} className="new_contentWraper">
                                 <img className="caresoleImage" id={val._id} onError={this.errorImag} src={val.thumbnail} alt={'apple'}/>
                                 <div className="caresoleImage_description_wrapper">

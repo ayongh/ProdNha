@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Recaptcha from 'react-google-invisible-recaptcha';
 import axios from 'axios'
 
-import ReactPlayer from 'react-player'
+// import ReactPlayer from 'react-player'
 
 import { Icon } from 'react-icons-kit'
 import {close} from 'react-icons-kit/fa/close'
@@ -17,7 +17,6 @@ import {ActionUserIntialize} from '../../redux/Action/userinfoAction'
 
 import GetImageElement from '../public/component/public_getImageElement'
 
-import Typed from 'typed.js';
 
 import ContactFooter from '../private/componentofBrowse/contactfooter'
 
@@ -61,6 +60,7 @@ class login extends Component
         this.setState({
             [e.target.id]: e.target.value
         })
+        document.getElementById('searchOptions').style.display="block"
 
         axios.get('/course/search/public/'+this.state.search).then( res =>{ 
             if(res.status === 200)
@@ -95,6 +95,12 @@ class login extends Component
 
         }
 
+    }
+
+    exitSearch()
+    {
+        alert("hello")
+        document.getElementById('searchOptions').style.display="none"
     }
 
 
@@ -174,30 +180,45 @@ class login extends Component
                 })
             }
         })
+        
+    }
 
-        if(this.props.location.pathname ==='/')
-        {
-            try
+    optionClicked(name)
+    {
+        document.getElementById('search').value = name
+        document.getElementById('searchOptions').style.display= "none"
+
+
+        axios.get('/course/search/public/'+name).then( res =>{ 
+            if(res.status === 200)
             {
-                const options = {
-                    strings: ['Welcome^3000', 'स्वागतम्^3000','أهلا بك','어서 오십시오'],
-                    typeSpeed: 100,
-                    backSpeed: 100,
-                    loop: true,
-                    cursorChar: "|",
-                };
-    
-    
-                // this.el refers to the <span> in the render() method
-                this.typed = new Typed(this.el, options);
-            }catch(e)
-            {
-                console.log(e)
+                this.setState({
+                    classes:res.data.data
+                })
             }
-            
+        })
 
+    }
+
+    getSearchOptionList()
+    {
+
+        if(this.state.classes !== null)
+        {
+            var option = this.state.classes.map((val,index)  =>
+            {
+                return(
+                    <li className="option" key={val._id} id="searchOption" onClick={()=>this.optionClicked(val.name)}>
+                        <img className="searchOptionImg" src={val.thumbnail}></img>
+                        <p className="searchOptiontxt" >{val.name}</p>
+                    </li>
+                )
+            })
         }
         
+
+        return option;
+
     }
 
     render()
@@ -247,7 +268,14 @@ class login extends Component
                         </div>
 
                         <div className="login_search">
-                            <input className="login_search_input" id="search" onChange={this.handleSearchChange} type="text" placeholder="Search"/>
+                            <input className="login_search_input" type="search" tabIndex="0" autoCorrect="off" autoCapitalize="none" spellCheck="false" 
+                            role="searchbox" aria-autocomplete="list" autoComplete="off" aria-controls="select2-vlba-results"
+                            aria-activedescendant="select2-vlba-result-oqtx-AK" id="search" onChange={this.handleSearchChange} onfocusout= {()=>this.exitSearch()} placeholder="Search"/>
+                            <div className="serachOptions" id="searchOptions">
+                                <ul className="select2-results__options" role="listbox" id="select2-vlba-results" aria-expanded="true" aria-hidden="false">
+                                    {this.getSearchOptionList()}
+                                </ul>
+                            </div>
                         </div>
 
                         <div className="menuContent">
@@ -268,8 +296,8 @@ class login extends Component
                 <ContactFooter></ContactFooter>
 
 
-                <div id="myModal" class="modal">
-                    <div class="modal-content">
+                <div id="myModal" className="modal">
+                    <div className="modal-content">
                         <div className="login_model_wrapper">
                             <div className="model_container left">
                                 <h2>Notification</h2>
@@ -277,7 +305,7 @@ class login extends Component
                             </div>
 
                             <div className="model_container right">
-                                <span class="close" onClick={this.modelClose}>&times;</span>
+                                <span className="close" onClick={this.modelClose}>&times;</span>
                                 <div className="login_right_inner_container">
                                     <h2>Login</h2>
             
@@ -322,3 +350,5 @@ const mapToState = (state) =>{
 }
 
 export default connect(mapToState,{Actionlogin,ActionLoading,ActionError,ActionUserIntialize}) (login);
+
+
