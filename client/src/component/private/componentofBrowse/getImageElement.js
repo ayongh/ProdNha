@@ -39,10 +39,9 @@ class getImageElement extends Component
     }
     render()
     {
-        //this.props.classes
-        const Classes = null
+        const Classes = this.props.classes
 
-        var classesElement = <div className="skeleton-wrapper" style={{width:"250px", height:"300px", background:"black"}}></div>
+        var classesElement = <div className="skeleton-wrapper" ><Skeleton width={250} height={300}></Skeleton> </div>
 
        
         if (Classes !== null && Classes !== undefined)
