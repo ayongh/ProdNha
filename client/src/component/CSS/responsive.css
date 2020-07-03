@@ -340,6 +340,110 @@
 
 
 
+    .upload_container .classinfo
+    {
+        margin-top: 135px;
+        padding: 0px;
+        width: 90vw;
+        margin-left: 5%;
+        margin-right: 5%;
+    }
+
+    .upload_container .classinfo .uploadSubMenu
+    {
+        display: block;
+    }
+
+    .classinfo_container .classinfo .uploadSubMenu .uploadSubMenu_option
+    {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .creat_class_content_wrapper .create_class_inpute_wrapper{
+        display: block;
+    }
+
+    .content_create_class #classDescription
+    {
+        width: 250px;
+        height: 200px;
+        max-width: 280px;
+    }
+
+    .class_cover_upload_container
+    {
+        padding: 20px;
+    }
+
+    .classCoverPic
+    {
+        margin-top: 20px;
+    }
+
+    .reqired_section .uploadSection_text
+    {
+        padding: 10px;
+    }
+    
+    #section_name
+    {
+        margin-bottom: 10px;
+    }
+
+    .reqired_section .display_content 
+    {
+        display: block;
+    }
+
+    .display_content .content_one
+    {
+        width: 100%;
+    }
+
+    .display_content .content_two
+    {
+        width: 100%;
+    }
+
+    .display_content .content_three
+    {
+        width: 100%;
+    }
+
+    .reqired_section .uploadSection_text #section_description
+    {
+        max-width: 300px;
+    }
+
+    .addedSectionList .listofSection_holder
+    {
+        display: block;
+    }
+
+    .listofSection_holder .section_video
+    {
+        width: 100%;
+    }
+
+    .listofSection_holder .section_text
+    {
+        width: 100%;
+        text-align: center;
+    }
+
+    .listofSection_holder .section_text h4 
+    {
+        margin: 0px;
+    }
+
+    .listofSection_holder .section_text p
+    {
+        margin: 0px;
+    }
+
+
+
 
 
 
