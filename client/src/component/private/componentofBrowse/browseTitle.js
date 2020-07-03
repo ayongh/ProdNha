@@ -13,13 +13,13 @@ class getImageElement extends Component
     {
         return (
             <div className="CaresoleCategorie">
-                <h2 className="rowHeader">
+                <h3 className="rowHeader">
                     <Link className="allBrowseLink" to={{pathname: "/categorie"+this.props.link}} >
                         <div className="row-header-title">{this.props.title}</div>
                         <p className="see-all-link">Explore All</p>
                         <Icon icon={angleRight}></Icon>
                     </Link>
-                </h2>
+                </h3>
             </div>
         )
         

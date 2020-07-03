@@ -97,13 +97,6 @@ class login extends Component
 
     }
 
-    exitSearch()
-    {
-        alert("hello")
-        document.getElementById('searchOptions').style.display="none"
-    }
-
-
 
     closealert(){
         document.getElementById("alert").style.display="none"
@@ -185,18 +178,26 @@ class login extends Component
 
     optionClicked(name)
     {
-        document.getElementById('search').value = name
-        document.getElementById('searchOptions').style.display= "none"
-
-
-        axios.get('/course/search/public/'+name).then( res =>{ 
-            if(res.status === 200)
-            {
-                this.setState({
-                    classes:res.data.data
-                })
-            }
-        })
+        if(name !== "empty")
+        {
+            document.getElementById('search').value = name
+            document.getElementById('searchOptions').style.display= "none"
+    
+    
+            axios.get('/course/search/public/'+name).then( res =>{ 
+                if(res.status === 200)
+                {
+                    this.setState({
+                        classes:res.data.data
+                    })
+                }
+            })
+        }
+        else
+        {
+            document.getElementById('searchOptions').style.display= "none"
+        }
+        
 
     }
 
@@ -270,7 +271,7 @@ class login extends Component
                         <div className="login_search">
                             <input className="login_search_input" type="search" tabIndex="0" autoCorrect="off" autoCapitalize="none" spellCheck="false" 
                             role="searchbox" aria-autocomplete="list" autoComplete="off" aria-controls="select2-vlba-results"
-                            aria-activedescendant="select2-vlba-result-oqtx-AK" id="search" onChange={this.handleSearchChange} onfocusout= {()=>this.exitSearch()} placeholder="Search"/>
+                            aria-activedescendant="select2-vlba-result-oqtx-AK" id="search" onChange={this.handleSearchChange} onBlur= {()=>this.optionClicked("empty")} placeholder="Search"/>
                             <div className="serachOptions" id="searchOptions">
                                 <ul className="select2-results__options" role="listbox" id="select2-vlba-results" aria-expanded="true" aria-hidden="false">
                                     {this.getSearchOptionList()}

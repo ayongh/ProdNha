@@ -3,12 +3,18 @@ import '../../CSS/Menu.css';
 
 import {Link} from 'react-router-dom'
 
+import { Icon } from 'react-icons-kit'
+import {home} from 'react-icons-kit/entypo/home'
+import {grid} from 'react-icons-kit/entypo/grid'
+import {out} from 'react-icons-kit/entypo/out'
+import {publish} from 'react-icons-kit/entypo/publish'
+import {user} from 'react-icons-kit/ikons/user'
+import {androidSearch} from 'react-icons-kit/ionicons/androidSearch'
+
 import axios from 'axios'
 
 import {connect} from 'react-redux'
 import {Actionlogout} from '../../../redux/Action/loginAction'
-
-
 
 
 class Menu extends Component {
@@ -21,57 +27,6 @@ class Menu extends Component {
             classes:null,
         }
     }
-
-   /*  componentDidMount()
-    {
-        window.addEventListener('scroll', this.listenToScroll)    
-    }
-
-    listenToScroll = () => {
-        const winScroll =
-          document.body.scrollTop || document.documentElement.scrollTop
-      
-        const height =
-          document.documentElement.scrollHeight -
-          document.documentElement.clientHeight
-      
-        const scrolled = winScroll / height
-        
-        if(document.getElementById('login_nav') !== null)
-        {
-            if(scrolled >0.026)
-            {
-                document.getElementById('login_nav').style.background="white"      
-                var loginOption = document.getElementsByClassName('login_option')
-
-                for(var i = 0; loginOption.length > i; i++)
-                {
-                    loginOption[i].style.color ="black"
-                }
-    
-        
-            }
-            else
-            {
-                document.getElementById('login_nav').style.background="none"
-                var loginOption = document.getElementsByClassName('login_option')
-
-                for(var i = 0; loginOption.length > i; i++)
-                {
-                    loginOption[i].style.color ="gold"
-                }
-            }
-
-        }
-        
-    }
-
-    componentWillUnmount()
-    {
-        window.removeEventListener('scroll', this.listenToScroll)
-
-    } */
-      
 
     logOut() {
         axios.get('/user/logout').then(response=>{
@@ -87,17 +42,17 @@ class Menu extends Component {
         <div className="login_nav">
             <div className="login_nav_wrapper">
                 <div className="logo">
-                    <Link to="/">
+                    <Link to="/" className="logo menuHover">
                         <h2>NHA</h2>
                     </Link>
                 </div>
                 <div className="login_private_menuContent">
-                    <Link className="login_option" to="/Homepage" >Home</Link>
-                    <Link className="login_option" to="/browse/movie">Browse</Link>
-                    <Link className="login_option" to="/search/movie">Search</Link>
-                    <Link className="login_option" to="/profile">profile</Link>
-                    <Link className="login_option" to="#" onClick={this.logOut}>Logout</Link>
-
+                    <Link className="login_option menuHover" to="/Homepage"> <Icon icon={home}></Icon> <span className="menuText">Home</span></Link>
+                    <Link className="login_option menuHover" to="/browse/movie"> <Icon icon={grid}></Icon> <span className="menuText">Browse</span></Link>
+                    <Link className="login_option menuHover" to="/search/movie"><Icon icon={androidSearch}></Icon> <span className="menuText">Search</span></Link>
+                    <Link className="login_option menuHover" to="/upload"> <Icon icon={publish}></Icon> <span className="menuText">Upload</span></Link>
+                    <Link className="login_option menuHover" to="/profile"> <Icon icon={user}></Icon><span className="menuText">Profile</span></Link>
+                    <Link className="login_option menuHover" to="#" onClick={this.logOut}> <Icon icon={out}></Icon><span className="menuText">logout</span></Link>
                 </div>
             </div>
         </div>

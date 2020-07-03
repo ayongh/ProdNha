@@ -1,5 +1,97 @@
 @media only screen and (max-width: 1242px) {
 
+    .login_nav .login_nav_wrapper
+    {
+        display: block;
+    }
+
+    .login_nav .login_nav_wrapper .logo{
+        width: 100%;
+    }
+
+    .login_nav .login_nav_wrapper .login_search{
+        width: 100%;
+        padding: 10px;
+    }
+
+    .login_nav .login_nav_wrapper .menuContent{
+        width: 100%;
+        padding: 10px;
+    }
+
+    .login_nav .login_nav_wrapper .menuContent .login_option{
+        padding: 15px;
+    }
+
+    .search_caresoleWrapper .login_Searchcaresole
+    {
+        margin-top: 180px;
+        flex-wrap: wrap;
+    }
+
+    .search_caresoleWrapper .login_Searchcaresole .new_contentWraper
+    {
+        width: 167px;
+        height: 268px;
+    }
+
+    .contact-footer
+    {
+        padding-top: 0px;
+        margin-top: 0px;
+    }
+
+    .contact-footer h2
+    {
+        margin: 0px;
+    }
+
+    /*     private route Menu */
+    .login_nav .login_nav_wrapper .login_private_menuContent
+    {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .login_nav .login_nav_wrapper .login_private_menuContent .login_option
+    {
+        padding: 10px;
+    }
+
+    .menuText
+    {
+        display: none;
+    }
+
+    .login_private_menuContent
+    {
+        width: 100%;
+        text-align: center;
+    }
+
+    .Homepage_mainContainer .homePage_content_container_morecontent .homePage_content_container_morecontent_wrapper
+    {
+        width: 90%;
+        margin-left: 5%;
+        margin-right: 5%;
+        margin-bottom: 20px;
+    }
+
+    .Homepage_mainContainer .homePage_content_container_morecontent .homePage_content_container_morecontent_wrapper .caresoleWrapper-homepage .Searchcaresole
+    {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    .Homepage_mainContainer .homePage_content_container_morecontent .homePage_content_container_morecontent_wrapper .caresoleWrapper-homepage .Searchcaresole .new_contentWraper
+    {
+        width: 148px;
+        height: 215px;
+    }
+
+
+
+
     .login_body
     {
         display: grid;
@@ -9,7 +101,7 @@
     {
         width: 100%;
     }
-    
+
     .login_left_outer_container {
         width: 90%;
         margin-left: 5%;
@@ -51,7 +143,7 @@
     {
         margin-bottom: 5%;
     }
-    
+
     .signup_left_outer_container
     {
         width: 100%;
@@ -117,10 +209,146 @@
     }
 
     /* ---------------------popup ----------------------- */
+
+    .popUp_img_container .popup_title
+    {
+        width: 100%;
+        text-align: center;
+    }
+
+    .modal
+    {
+        padding-top: 10px;
+    }
+
+    .caresole_image_wrapper .caresole_image_wrapper_container .popup_image
+    {
+        max-height:300px ;
+    }
+
+    .caresole_popup_container h1
+    {
+        margin: 0px;
+        font-size: 20px;
+    }
+
+    .popup_content_wraper nav
+    {
+        padding: 10px;
+    }
+
+    .contentWraper_episode_content .episode_link .caresoleImage_episode
+    {
+        width: 100px;
+        height: 110px;
+    }
+
+    .caresole_popup_container p
+    {
+        width: 100%;
+    }
+
+    .caresole_episode_desc .noMargin
+    {
+        font-size: 15px;
+        text-align: left;
+    }
+
+    .contentWraperSimilar
+    {
+        width: 90px;
+    }
+
+    .contentWraperSimilar .caresoleImage_similar_class
+    {
+        max-height: 120px;
+        min-height: 120px;
+    }
+
+    .contentWraperSimilar h3
+    {
+        font-size: 12px;
+        font-weight: lighter;
+    }
+
+
+    /* -----------------------------------------Browse --------------------------------------*/
+
+    .browsePage-content
+    {
+        padding-top: 140px;
+        width: 100vw;
+        height: auto;
+        overflow: hidden;
+    }
+
+    .caresole .new_contentWraper
+    {
+        width: 150px;
+        height: 230px;
+    }
+
+    .caresoleWrapper .caresole 
+    {
+        padding: 10px;
+    }
+
+    .description_text .caresole_title
+    {
+        font-size: 12px;
+    }
+
+
+    .tag_wrapper i p{
+        font-size: 10px
+    }
+
+
+   /* --------------------- profile ---------------------------------- */
+
+    .userprofile_main_container .user_info_container
+    {
+        padding-top: 126px;
+        margin-left: 5%;
+        margin-right: 5%;
+        width: 90%;
+    }
+
+
+    .userinfo_detail .popUp_img_container{
+        font-size: 12px;
+    }
+
+
+    /* --------------------------------------- search  */
+
+    .search
+    {
+        margin-top: 130px;
+        border-radius: 4rem;
+        padding: 5px 10px 5px 10px;
+        outline: none;
+        font-size: 15px;
+        font-weight: lighter;
+    }
+
+    .Searchcaresole .new_contentWraper
+    {
+        width: 150px;
+        height: 200px;
+    }
+
+
+
+
+
+
+
     .styles_overlay__CLSq-
     {
         padding: 0%;
     }
+
 
     .styles_modal__gNwvD 
     {
@@ -147,17 +375,14 @@
         text-align: center;
     }
 
-    .contentWraperSimilar
-    {
-        width: 100px;
-    }
+  
 
 
     .search_home_main_container
     {
         height: auto;
     }
-    
+
     .caresoleImage_episode
     {
         width: 100px;

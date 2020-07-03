@@ -4,12 +4,10 @@ import {Link} from 'react-router-dom'
 
 import ReactPlayer from 'react-player'
 
-import {buttonCheck} from 'react-icons-kit/metrize/buttonCheck'
-import {buttonAdd} from 'react-icons-kit/metrize/buttonAdd'
+import {bookmark} from 'react-icons-kit/icomoon/bookmark'
 import {heartOutline} from 'react-icons-kit/typicons/heartOutline'
 import {heart} from 'react-icons-kit/typicons/heart'
 
-import {cross} from 'react-icons-kit/metrize/cross'
 import { Icon } from 'react-icons-kit'
 
 import NoImageFound from '../../img/nophoto.png'
@@ -110,12 +108,6 @@ class getmodel extends Component
             return(
                 <div className="caresole_image_wrapper_container">
                     <img className="popup_image" onError={this.errorImag} src={this.state.class.thumbnail} loading="lazy"  alt={'apple'}/>
-                    <Link to={{ pathname: "/watch/" + this.state.sectionContent.data[0]._id, state:{classID: this.state.class._id, prevPath:"/browse/movie"}}}>
-                        <div className="popup_image_description">
-                            <Icon className="popup_movie_btn" size={150} icon={buttonCheck}></Icon>
-                        </div>
-                    </Link>
-                    
                 </div>
             )
         }
@@ -124,9 +116,6 @@ class getmodel extends Component
             return(
                 <div className="caresole_image_wrapper_container">
                     <img className="popup_image" onError={this.errorImag} src={this.state.class.thumbnail} loading="lazy"  alt={'apple'}/>
-                    <div className="popup_image_description">
-                        <Icon className="popup_movie_btn" size={150} icon={buttonCheck}></Icon>
-                    </div>
                 </div>
             )
         }
@@ -234,7 +223,7 @@ class getmodel extends Component
             similarContentElement = this.state.recomendationSimilar.map((val,index) =>
             {
                 return(
-                    <div className="contentWraperSimilar" key={index} onClick={() =>this.similarMovieBotton(val)}>
+                    <div id ="contentWraperSimilar" className="contentWraperSimilar" key={index} onClick={() =>this.similarMovieBotton(val)}>
                         <img className="caresoleImage_similar_class" onError={this.errorImag} src={val.thumbnail} loading="lazy"  alt={'apple'}/>
                         <h3>{val.name}</h3>
                     </div>
@@ -259,12 +248,11 @@ class getmodel extends Component
                 return (
                     <div key= {val._id} className="contentWraper_episode_content">
                         <Link to={{pathname:"/watch/" + this.state.class._id+"/"+val._id, state:{classID: this.state.class._id, prevPath:"/browse/movie"}}} className="episode_link">
-                            <ReactPlayer playing={false} className="caresoleImage_episode" width = {this.state.videowidth} height = "auto" url={val.videoUrl} light={true} ></ReactPlayer>
+                            <img className="caresoleImage_episode" src={val.poster}></img>
                         </Link>
 
                         <div className="caresole_episode_desc">
                             <h2 className="noMargin nohref">{val.name}</h2>
-                            <p className="noMargin nohref">Episode {index+1}</p>
                         </div>
                     </div>
                 )
@@ -442,6 +430,9 @@ class getmodel extends Component
 
     similarMovieBotton(value)
     {
+        var myDiv = document.getElementById('myModal');
+        myDiv.scrollTop = 0;
+
         this.setState
         ({
             class:value
@@ -498,6 +489,9 @@ class getmodel extends Component
                 })
             }
         })
+
+      
+
     }
 
     render()
@@ -522,12 +516,12 @@ class getmodel extends Component
                                     {this.state.class.description}
                                 </p>
                                 <div className="popup_action">
-                                    <Icon className="popup_movie_btn liked" style={{display:"none"}} id={"liked"+this.state.class._id} size={40} icon={heartOutline} onClick={() =>this.removeLikeAction(this.state.class)}></Icon>
-                                    <Icon className="popup_movie_btn" id={"like"+this.state.class._id} style={{display:"none", color:"pink"}} size={40} icon={heart} onClick={() =>this.LikeAction(this.state.class)}></Icon>
+                                    <Icon className="popup_movie_btn liked" style={{display:"none" , color:"pink" }} id={"liked"+this.state.class._id} size={40} icon={heart} onClick={() =>this.removeLikeAction(this.state.class)}></Icon>
+                                    <Icon className="popup_movie_btn" id={"like"+this.state.class._id} style={{display:"none"}} size={40} icon={heartOutline} onClick={() =>this.LikeAction(this.state.class)}></Icon>
                                     {this.RenderLikeButton(this.state.class)}
 
-                                    <Icon className="popup_movie_btn" id={"add"+this.state.class._id} size={40} icon={buttonAdd} onClick={() =>this.addlist(this.state.class)}></Icon>
-                                    <Icon className="popup_movie_btn" id={"remove"+this.state.class._id}  size={40} icon={cross} onClick={() =>this.removeList(this.state.class)}></Icon>
+                                    <Icon className="popup_movie_btn" id={"add"+this.state.class._id} size={30} icon={bookmark} style={{display:"none", padding:'5px'  }} onClick={() =>this.addlist(this.state.class)}></Icon>
+                                    <Icon className="popup_movie_btn" id={"remove"+this.state.class._id}  size={30} icon={bookmark} style={{display:"none" , color:"pink", padding:'5px' }} onClick={() =>this.removeList(this.state.class)}></Icon>
                                     {this.Renderwatchlistbutton(this.state.class)}
 
                                 </div>

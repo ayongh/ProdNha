@@ -2,10 +2,11 @@
 {
     width: 100vw;
     height: 100vh;
-    background: url(../img/login_background.jpg);
     display: flex;
+    background: url(../img/login_background.jpg);
     background-repeat: no-repeat;
     background-size: cover;
+
 }
 
 .signup_left
@@ -23,7 +24,7 @@
     height: 100%;
     position: relative;
     -webkit-animation-name: animatetop;
-    -webkit-animation-duration: .8s;
+    -webkit-animation-duration: .4s;
     animation-name: animatetop;
 }
 
@@ -38,20 +39,15 @@
 
 /* Add Animation */
 @-webkit-keyframes animatetop {
-    0%   {top: -50px; opacity: 0;}
-    25%  {top: -30px; opacity: .25;}
-    50%  {top: -20px; opacity: .50;}
-    75%  {top: -10px; opacity: .75;}
-    100% {top: 0px; opacity: 1;}
-    
+    from {top: -30px; opacity: .5;}
+    50%  {top: -15px; opacity: .75;}
+    to   {top: 0px; opacity: 1;}
   }
   
   @keyframes animatetop {
-    0%   {top: -50px; opacity: 0;}
-    25%  {top: -35px; opacity: .25;}
-    50%  {top: -20px; opacity: .50;}
-    75%  {top: -10px; opacity: .75;}
-    100% {top: 0px; opacity: 1;}
+    from {top: -30px; opacity: .5;}
+    50%  {top: -15px; opacity: .75;} 
+    to   {top: 0px; opacity: 1;}
   }
 
 .signup_right_outer_container

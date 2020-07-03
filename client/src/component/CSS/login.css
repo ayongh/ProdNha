@@ -253,13 +253,6 @@ body{
     color:#fff;
   }
   
-  @media(max-width:960px){
-    .container{
-      padding-right:3rem;
-      padding-left:3rem;
-    }
-  }
-
 
 .login_option, .navLogo
 {

@@ -9,6 +9,8 @@
     background: white;
     text-align: right;
     padding: 2px;
+    border-bottom-style:solid ;
+    border-bottom-width: 1px ;
 }
 
 .login_nav_wrapper
@@ -51,14 +53,24 @@
   padding: 30px;
 }
 
+.logo
+{
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.menuHover:hover{
+  color: darkgray;
+}
+
 .serachOptions
 {
   position: absolute;
   width: 49.6%;
   display: none;
   -webkit-box-shadow: -8px 21px 26px -21px rgba(0,0,0,0.75);
--moz-box-shadow: -8px 21px 26px -21px rgba(0,0,0,0.75);
-box-shadow: -8px 21px 26px -21px rgba(0,0,0,0.75);
+  -moz-box-shadow: -8px 21px 26px -21px rgba(0,0,0,0.75);
+  box-shadow: -8px 21px 26px -21px rgba(0,0,0,0.75);
 
 }
 .option

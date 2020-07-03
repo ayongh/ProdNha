@@ -1,0 +1,158 @@
+.new_contentWraper
+{
+    z-index: 0;
+    width: 250px;
+    height:350px;
+    display: block;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    transition: all .2s ease-in-out ; 
+    transform: translate(10px, 10px);
+    -webkit-box-shadow: 10px 17px 77px -20px rgba(0,0,0,0.75);
+    -moz-box-shadow: 10px 17px 77px -20px rgba(0,0,0,0.75);
+    box-shadow: 10px 17px 77px -20px rgba(0,0,0,0.75);
+}
+
+.new_contentWraper:hover 
+{
+    transform: scale(1.08, ); 
+}
+
+.caresoleImage
+{
+    width: 100%;
+    height: 100%;
+}
+
+
+
+
+.caresoleImage_description_wrapper
+{
+    visibility: visible;
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+}
+
+
+
+
+.playIconImageElement
+{
+    width: 100%;
+    text-align: center;
+    outline: none;
+    border: none;
+    color: black;
+    cursor: pointer;
+    border-radius: .2rem;
+}
+
+
+.playIconImageElement:hover
+{
+    color: #254f66;
+}
+
+
+.description
+{
+    position: absolute;
+    width: 100%;
+    height: 86%;
+    color: black;
+}
+
+.bottom_caresoleImage_description
+{
+    width: 100%;
+    height: 100%;
+}
+
+
+.caresole_title
+{
+    margin: 0px;
+    cursor: pointer;
+}
+
+.description_text:hover  .tagParagraph
+{
+    display: contents;
+    transition: all 2s;
+    animation: slideup 5s;
+}
+
+@keyframes slideup {
+    0%   {top: 10px;}
+    25%  {top: -5px;}
+    50%  {top: -10px;}
+    75%  {top: -15px;}
+    100% {top: -20px;}
+  }
+
+.top_caresoleImage_description
+{
+    width: 100%;
+    height: 17%;
+    background: white;
+    padding: 7px;
+    display: flex;
+}
+
+.top_caresoleImage_description:hover
+{
+    color: #254f66;
+}
+
+.tagParagraph{
+    margin: 0px;
+    display: none;
+}
+
+.description_text
+{
+    width: 100%;
+    position: absolute;
+    bottom: 0px;
+    padding: 10px;
+    background:white ;
+    border-top-left-radius: .4rem;
+    border-top-right-radius: .4rem;
+}
+
+.tag_wrapper
+{
+    width:100%;
+    display: inline;
+}
+
+.likecountp
+{
+    margin: 0px;
+}
+
+.likeCount
+{
+    position: absolute;
+    float: right;
+    right: 0px;
+    padding-top: 10px;
+    padding-right: 5px;
+    width: 100px;
+    text-align: center;
+    color: white;
+}
+
+
+
+.tag
+{
+    font-size: small;
+    margin: 0;
+    padding: 0;
+}
