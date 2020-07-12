@@ -83,7 +83,7 @@ class BrowsePage extends Component
         })
 
         var educationpayload= {
-            categorie:"education",
+            categorie:"Education",
             pagination: 20
         }
         axios.post('/render/class/categorie',educationpayload).then( res =>{ 

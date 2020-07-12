@@ -263,7 +263,7 @@ class login extends Component
                 <div className="login_nav">
                     <div className="login_nav_wrapper">
                         <div className="logo">
-                        <Link to="/">
+                        <Link to="/" className="Videolink">
                             <h2>NHA</h2>
                         </Link>
                         </div>

@@ -55,7 +55,7 @@ class getImageElement extends Component
                         
                         <div key= {val._id} className="new_contentWraper">
                             <img className="caresoleImage" id={val._id} onError={this.errorImag} src={val.thumbnail} loading="lazy" alt={'apple'}/>
-                            <div className="caresoleImage_description_wrapper">                            
+                            <div className="caresoleImage_description_wrapper">  
                                 <div className="description" >
                                     <div className="bottom_caresoleImage_description">
                                         <div className="description_text">

@@ -1,11 +1,31 @@
 import React, { Component } from 'react'
 import ReactPlayer from 'react-player'
-
-import axios from 'axios'
-import { Player,BigPlayButton,ControlBar, ReplayControl,ForwardControl } from 'video-react';
+import screenfull from 'screenfull'
 
 import { Icon } from 'react-icons-kit'
 import {arrowLeft2} from 'react-icons-kit/icomoon/arrowLeft2'
+import {ic_play_arrow} from 'react-icons-kit/md/ic_play_arrow'
+import {ic_pause} from 'react-icons-kit/md/ic_pause'
+
+import {ic_forward_10} from 'react-icons-kit/md/ic_forward_10'
+import {ic_replay_10} from 'react-icons-kit/md/ic_replay_10'
+
+import {ic_volume_down} from 'react-icons-kit/md/ic_volume_down'
+import {ic_volume_mute} from 'react-icons-kit/md/ic_volume_mute'
+import {ic_volume_off} from 'react-icons-kit/md/ic_volume_off'
+import {ic_volume_up} from 'react-icons-kit/md/ic_volume_up'
+import {ic_fullscreen} from 'react-icons-kit/md/ic_fullscreen'
+import {ic_subject} from 'react-icons-kit/md/ic_subject'
+import {xCircle} from 'react-icons-kit/feather/xCircle'
+import {ic_skip_next} from 'react-icons-kit/md/ic_skip_next'
+
+import { findDOMNode } from 'react-dom'
+import Duration from './componentofBrowse/duration'
+import {Link} from 'react-router-dom'
+
+import axios from 'axios'
+
+
 
 
 class video extends Component
@@ -19,7 +39,26 @@ class video extends Component
             url:null,
 
             sectionContents:null,
-            similarSection:null
+            similarSection:null,
+            section:null,
+            recomendationSimilar:null,
+
+            playing: true,
+            duration: 0,
+
+            hasNext:false,
+
+            volume: 1,
+            muted:false,
+
+            onplayedProgress: 0,
+
+            played:0,
+            pausePlayIcon: ic_pause,
+
+            volumeIcon: ic_volume_up,
+            previousVolumeIcon:ic_volume_up
+
         }
 
     }
@@ -46,6 +85,25 @@ class video extends Component
                         similarSection: res.data.similarSection,
                         url: res.data.data[0].videoUrl
                     })
+
+                    var sections = res.data.data
+                    var foundaMatch = false
+                    var indexouter = 0
+                    sections.forEach(async (value,index)=>{
+                        if(value._id === this.props.match.params.videoID)
+                        {
+                            indexouter =index
+                            foundaMatch=true
+                        }
+                    })
+
+                    
+                    await this.setState({
+                        section:res.data.data[indexouter]
+                    })
+                    
+
+
                 }
                
 
@@ -57,24 +115,59 @@ class video extends Component
                 })
             }
         })
+
+
+        var data={
+            classID:this.props.match.params.classID
+        }
+        axios.post("/recomendation/content",data,{withCredentials: true, validateStatus: function (status) { return status >= 200 && status < 600; }}).then( async res =>{
+            if(res.data.message.length>0)
+            {
+                this.setState({
+                    recomendationSimilar:res.data.message
+                })
+            }
+        })
         
     }
 
-    playlist(val){
-        this.setState({
-            url: val.videoUrl
-        })
-        this.player.load();
+    changeNav(id)
+    {
+        if(id === "btnSection")
+        {
+            document.getElementById("btnSection").style.borderBottom="solid"
+            document.getElementById("btnSimilar").style.borderBottom="none"
+
+            document.getElementById("section").style.display = "block"
+            document.getElementById("similar").style.display = "none"
+        }
+
+        if(id==="btnSimilar")
+        {
+            document.getElementById("btnSection").style.borderBottom="none"
+            document.getElementById("btnSimilar").style.borderBottom="solid"
+            document.getElementById("section").style.display = "none"
+            document.getElementById("similar").style.display = "inline-flex"
+        }
     }
 
-    getVideoList()
+    getSimilarVideoList()
     {
         var videoList = null
-        if(this.state.similarSection !== null)
+        if(this.state.recomendationSimilar !== null)
         {
-            videoList = this.state.similarSection.map((val,index)=>{
+            videoList = this.state.recomendationSimilar.map((val,index)=>{
                 return(
-                    <ReactPlayer key={val._id}  onClick={()=>this.playlist(val)} className="caresoleImage_episode" width = "100%" height = "auto" url={val.videoUrl}></ReactPlayer>
+                    <a href={"/watch/"+val._id+"/none"} className="videoHref">
+                        <div className="video_similar_ClassList">
+                            <img key={val._id} src={val.thumbnail} className="caresoleImageClass"></img>
+                            <div className="similarClassContent">
+                                <h3>{val.name}</h3>
+                                <p>{val.description}</p>
+                            </div>
+                        </div>
+
+                    </a>
                 )})
     
         }
@@ -83,82 +176,379 @@ class video extends Component
        
     }
 
-    getSimilarvideoList()
+    getSectionList()
     {
+        var videoList = null
         if(this.state.sectionContents !== null)
         {
-            var videoList = this.state.sectionContents.map((val,index)=>{
+            videoList = this.state.sectionContents.map((val,index)=>{
                 return(
-                    <ReactPlayer key={val._id}  onClick={()=>this.playlist(val)} className="caresoleImage_episode" width = "100%" height = "auto" url={val.videoUrl}></ReactPlayer>
+                    <Link className="Videolink" to={"/watch/"+this.props.match.params.classID+"/"+val._id} onClick={()=>this.playlist(val)}>
+                        
+                        <div className="SectionContentWraper" key={val._id}>
+                            <img src={val.poster} className="sectionImage"></img>
+                            <div className="sectionContent">
+                                <h3>{val.name}</h3>
+                                <p>{val.description}</p>
+                            </div>
+                        </div>
+                    
+                    </Link>
                 )})
     
-            return videoList
         }
+
+        return videoList
        
     }
 
 
-    render()
-    {
-        
-        var Videoplayer = <h1>Loading</h1>
+    handlePlayPause = () => {
 
-        if(this.state.url !== null)
+        this.setState({
+            playing: !this.state.playing
+        })
+
+        if(this.state.pausePlayIcon === ic_pause)
         {
-            if(this.url === false)
-            {
+            this.setState({
+                pausePlayIcon: ic_play_arrow
+            })
+        }
+        else
+        {
+            this.setState({
+                pausePlayIcon: ic_pause
+            })
+        }
+       
+    }
 
-            }
-            else
-            {
-                Videoplayer = <Player
-                width = {this.state.videowidth}
-                height = {100}
-                ref={player => {
-                    this.player = player;
-                }}
-                >
-                <source src={this.state.url} />
-                <BigPlayButton position="center" />
-                <ControlBar autoHide={true} className="my-class">         
-                    <ReplayControl seconds={10} order={2.3} />
-                    <ForwardControl seconds={10} order={3.3} />
-                </ControlBar>
-        
-                </Player>
-            }
-           
-    
+    handlePlay = () => {
+        console.log('onPlay')
+        this.setState({ playing: true })
+    }
+
+    handlePause = () => {
+        console.log('onPause')
+        this.setState({ playing: false })
+    }
+
+    playlist(val)
+    {
+        this.setState({
+            section: val,
+            playing: true
+        })
+    }
+
+    handleDuration = (duration) => {
+        this.setState({ duration })
+    }
+
+    handleVolumeChange = e => {
+        this.setState({ 
+            volume: parseFloat(e.target.value),
+            muted:false
+        })
+
+        if(e.target.value >= 0.50)
+        {
+            this.setState({
+                volumeIcon:ic_volume_up
+            })
+        }
+        else if(e.target.value < 0.20)
+        {
+            this.setState({
+                volumeIcon:ic_volume_mute
+            })
+        }
+        else if(e.target.value <= 0.50)
+        {
+            this.setState({
+                volumeIcon:ic_volume_down
+            })
+        }
+       
+    }
+
+    MuteVolume=()=>
+    {
+        if(this.state.muted === false)
+        {
+            this.setState({
+                muted:true,
+                previousVolumeIcon:this.state.volumeIcon,
+                volumeIcon:ic_volume_off
+            })
+        }
+        else
+        {
+            this.setState({
+                muted:false,
+                volumeIcon:this.state.previousVolumeIcon
+            })
+        }
+       
+    }
+
+    handleProgress = state => {
+        if (!this.state.seeking) {
+          this.setState(state)
+        }
+    }
+
+    handleSeekMouseDown = e => {
+        this.setState({ seeking: true })
+    }
+
+    handleSeekChange = (e)=>
+    {
+        this.setState({ played: parseFloat(e.target.value), playing:true })
+    }
+
+    handleSeekMouseUp = e => {
+        this.setState({ seeking: false })
+        this.player.seekTo(parseFloat(e.target.value))
+    }
+
+    backward10Sec =()=>
+    {
+        if(parseFloat(this.state.played - 0.010) > 0.009)
+        {
+            this.setState({ seeking: true })
+            this.setState({ played: parseFloat(this.state.played - 0.010), playing:true })
+            this.setState({ seeking: false })
+            this.player.seekTo(parseFloat(this.state.played - 0.01))
+        }
+        else
+        {
+            this.setState({ seeking: true })
+            this.setState({ played: parseFloat(0), playing:true })
+            this.setState({ seeking: false })
+            this.player.seekTo(parseFloat(0))
+        }
+       
+    }
+
+    forward10Sec =()=>
+    {
+        if(parseFloat(this.state.played + 0.010) < 0.999)
+        {
+            this.setState({ seeking: true })
+            this.setState({ played: parseFloat(this.state.played + 0.010), playing:true })
+            this.setState({ seeking: false })
+            this.player.seekTo(parseFloat(this.state.played + 0.01))
+        }
+        else
+        {
+            this.setState({ seeking: true })
+            this.setState({ played: parseFloat(0.9999), playing:true })
+            this.setState({ seeking: false })
+            this.player.seekTo(parseFloat(0.9999))
+        }
+       
+    }
+
+    openSectionList=()=>
+    {
+        document.getElementById('sectionwrapper').style.display="block"
+    }
+
+    closeSectionList =()=>
+    {
+        document.getElementById('sectionwrapper').style.display="none"
+    }
+
+    handleClickFullscreen = () => {
+
+        var fullVideoPlayer = document.getElementById('videoPlayerall')
+
+        if(fullVideoPlayer.clientWidth === window.innerWidth && fullVideoPlayer.clientHeight === window.innerHeight )
+        {
+            document.exitFullscreen()
+        }
+        else
+        {
+            fullVideoPlayer.requestFullscreen()
         }
 
+    }
+
+    ref = player => {
+        this.player = player
+    }
+
+    hasNext(videoID)
+    {
+        if(this.state.sectionContents.length >1)
+        {
+            var hasNext = false
+
+            this.state.sectionContents.forEach((val,index)=>
+            {
+                console.log(val)
+            })
+        }
+        
+    }
+
+    render()
+    {
+        const {volume, onplayedProgress, muted, duration, played} = this.state
+
+        var volumeinhundreds = volume*100
+        volumeinhundreds = Math.trunc(volumeinhundreds)
+
+        var url = false;
+        var title = "None"
+
+        if(this.state.section !== null)
+        {
+            url = this.state.section.videoUrl
+            title = this.state.section.name
+        }
+
+        var nextIcon= null
+        if(this.state.sectionContents !== null)
+        {
+            if(this.state.sectionContents.length>1)
+            {
+                nextIcon = <Icon className="nextSection" icon={ic_skip_next} size={25}></Icon>
+
+            }
+        }
+      
         return (
-            <div className="Video_container" >
-                <div className="video_warpper" >
-                    <a href="/" className="videoBackButton"><Icon className="videobackbtn" size={40} icon={arrowLeft2}> </Icon> <span class="videobackHint">Back</span></a>
-                   {Videoplayer}
-                </div>
+            <div className="Video_container" id="videoContainer">
+                <div className="video_warpper" id="videoPlayerall">
+                    <a href="/" className="videoBackButton"><Icon className="videobackbtn" size={40} icon={arrowLeft2}> </Icon> <span className="videobackHint">Back</span></a>
+                    <ReactPlayer
+                        ref={this.ref}
+                        className='react-player'
+                        url={url}
+                        playing={this.state.playing}
 
-                <div className="video_next">
-                    <div className="video_next_left">
-                        <h3>Title</h3>
-                        <p>Description of the video goes here </p>
-                    </div>
+                        volume={this.state.volume}
+                        muted={muted}
+                        
+                        controls = {false}
+                        pip={false}
 
-                    <div className="video_next_right">
-                        <h3>Next</h3>
-                        <h3>playing next title</h3>
-                        <p>Description of the video goes here </p>
-                    </div>
-                </div>
- 
-                
-                <div className="NextVideo_container_wrapper">
-                    <div className="NextVideo_container">
-                        <div className="Next_video">                        
-                            <h2>videos</h2>
-                            {this.getVideoList()}
+                        config={{ file: { 
+                            attributes: {
+                              controlsList: 'nodownload'
+                            }
+                        }}}
+                        width='100%'
+                        height='100%'
+
+                        onDuration={this.handleDuration}
+                        onProgress={this.handleProgress}
+                        onPlay={this.handlePlay}
+                        onPause={this.handlePause}
+                    />
+
+                    <div className="Player_controller">
+                        <div className="topVideoControllerWrapper progress">
+                            <p className="playDuration" id="progressbarDuration"><Duration seconds={duration} /></p>
+                            <input id="progressbar" className="slider" type="range" max={1} step='any' value={played}  
+                                onMouseDown={this.handleSeekMouseDown}
+                                onChange={this.handleSeekChange}
+                                onMouseUp={this.handleSeekMouseUp}/>
+
+                            <p className="playDuration" id="progressbarDuration"><Duration seconds={duration * (1 - played)} /></p>
+
                         </div>
+                        <div className="buttomVideoControllerWrapper">
+                            <div className="pause_play">
+                                <Icon className="pausePlayIcon scale" icon={this.state.pausePlayIcon} onClick={this.handlePlayPause}  size={30} ></Icon>
+                            </div>
+                            <div className="backwardWrapper">
+                                <Icon className="backward scale" icon={ic_replay_10}  size={25} onClick={this.backward10Sec}></Icon>
+                            </div>
 
+                            <div className="forwardWrapper">
+                                <Icon className="forward scale" icon={ic_forward_10} onClick={this.forward10Sec}  size={25} ></Icon>
+                            </div>
+
+                            <div className="volumewrapper">
+                                <div className="videovolumeLogowrapper">
+                                    <div className="volumesliderWrapper">
+                                        <p className="volumeAmount">{volumeinhundreds}</p>
+                                        <input id="volumeprogressbar" className="volumeSlider" step='any' type="range" min="0" max="1" onChange={this.handleVolumeChange} />
+                                    </div>
+                                    <Icon className="volumelogo" icon={this.state.volumeIcon} size={25} onClick={this.MuteVolume}></Icon>
+                                </div>
+                               
+                            </div>
+
+                            <div className="videoTitle">
+                                <p>{title}</p>
+                            </div>
+
+                            <div className="listofVideo">
+
+                                <div className="sectionwrapper" id="sectionwrapper">
+                                    <Icon icon={xCircle} className="closeVideo" size={40} onClick={this.closeSectionList}></Icon>
+                                    <div className="listofVideoContentWrapper">
+                                        
+                                        <h4 className="sectionTitle">Section</h4>
+                                        {this.getSectionList()}
+    
+                                    </div>
+                                </div>
+                                
+                                <Icon className="listofVideoLogo scale" icon={ic_subject} size={25} onClick={this.openSectionList}></Icon>
+                            </div>
+
+                            <div className="hasNext scale">
+                                {nextIcon}
+                            </div>
+
+                            <div className="fullscreen">
+                                <Icon className="fullscreenlogo scale" onClick={()=>this.handleClickFullscreen()} icon={ic_fullscreen} size={25}></Icon>
+                            </div>
+
+                        </div>
+                        
+                    </div>
+                </div>
+                <div className="NextVideo_container_wrapper">
+                    <div className="videoWrappercontainer">
+                        <nav className="videoNavBar">
+                            <button id="btnSection" onClick={()=>this.changeNav("btnSection")} href="#section">Section <span id="spanSection"></span></button>
+                            <button id="btnSimilar" onClick={()=>this.changeNav("btnSimilar")} href="#similar">Commments<span id="spanSimilar"></span></button>
+                        </nav>
+
+                        <div className="popupSectionContent">
+                            <section id="section" className="smilarclass">
+                                { this.getSimilarVideoList()}
+                            </section>
+
+                            <section id="similar" className="commmentSection">
+                                <div className="chatWrapper">
+                                    <div className="chatcomp">
+                                        <div className="Userchat">
+                                            <div className="userInfo">
+                                                <p>Abhishek</p>
+                                                <p>04:20 pm</p>
+                                            </div>
+                                            <p>Welcome To the chat section of the application</p>
+                                        </div>
+                                    </div>
+                                    <div className="chatSubmit">
+                                        <form>
+                                            <input type="text" className="chatinpute"></input>
+                                            <button type="submit" className="submitbutton">send</button>
+                                        </form>
+                                    </div>
+                                </div>
+                               
+                            </section>
+                        </div>
+                    
                     </div>
                 </div>
 

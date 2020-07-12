@@ -39,6 +39,7 @@
     "react-router-dom": "^5.2.0",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
+    "screenfull": "^5.0.2",
     "style-loader": "^1.2.1",
     "typed.js": "^2.0.11",
     "video-react": "^0.14.1"

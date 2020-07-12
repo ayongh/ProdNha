@@ -9,6 +9,7 @@
 {
     width: 80vw;
     height: 100vh;
+    position: relative;
 }
 
 .NextVideo_container_wrapper
@@ -91,7 +92,7 @@
 .videoBackButton
 {
     font-size: medium;
-    color:white;
+    color:#4186ead6;
     z-index: 1000;
     position: absolute;
     margin-top: 2%;
@@ -142,4 +143,400 @@
     text-align: right;
     padding: 30px;
 
+}
+
+
+
+
+.volumeAmount
+{
+    margin: 0px;
+    margin-bottom: 2px;
+    font-size: 10px;
+    text-align: center;
+    width: 100%;
+}
+
+.Player_controller
+{
+    width: 100%;
+    height: 80px;
+    background: #4186ea;
+    position: absolute;
+    bottom: 0px;
+    display: block;
+}
+
+.pause_play 
+{
+    width: 50px;
+    padding: 10px;
+    outline: white;
+    color: aliceblue;
+    cursor: pointer;
+    transition: scale 1s;
+
+}
+
+
+
+.pause_play:hover
+{
+    scale: 2;
+
+}
+
+.progress
+{
+    width: 98%;
+    padding-left: 1%;
+    padding-right: 1%;
+    color:white;
+    display: flex;
+}
+
+.playDuration
+{
+    margin: 0px;
+}
+
+.slider {
+    width: 100%;
+    height: 2px;
+    outline: none;
+    -webkit-transition: .2s;
+    margin-top: 12px;
+    margin-left: 1%;
+    background: gold;
+}
+  
+
+.slider:hover {
+    cursor: pointer;
+    color: gold;
+}
+  
+
+
+.forward_backward
+{
+    color: white;
+    display: flex;
+    padding-top: 12px;
+}
+
+
+
+.volumewrapper
+{
+    display: flow-root;
+    position: relative;
+    width: 50px;
+}
+
+
+.videovolumeLogowrapper
+{
+    width: 50px;
+    padding: 10px;
+    outline: white;
+    color: aliceblue;
+    border-width: 2px;
+    cursor: pointer;
+    position: absolute;
+    bottom: 2px;
+
+}
+
+.Videolink
+{
+    text-decoration: none;
+    color: black;
+}
+
+.Videolink:active
+{
+    color: black;
+}
+
+.buttomVideoControllerWrapper
+{
+    display: flex;
+}
+
+.scale
+{
+    transition: all .5s;
+}
+
+.scale:hover
+{
+    transform: scale(1.3); /* Equal to scaleX(2) scaleY(0.5) */
+}
+
+.backward, .forward, .listofVideoLogo, .hasNext
+{
+    padding: 10px;
+    width: 50px;
+    cursor: pointer;
+    color: white;
+}
+
+.smilarclass
+{
+    padding: 10px;
+}
+
+.popupSectionContent
+{
+    width: 100%;
+    height: 90%;
+}
+
+.videoWrappercontainer
+{
+    width: 100%;
+    height: 100%;
+}
+
+.commmentSection
+{
+    width: 100%;
+    height: 95%;
+}
+.videoTitle
+{
+    color: white;
+    margin: 0px;
+    width: 60%;
+    font-size: medium;
+    font-weight: bold;
+    padding-top: 20px;
+}
+
+.chatWrapper
+{
+    width: 100%;
+    height: 100%;
+}
+
+.userInfo
+{
+    display: flex;
+}
+
+.userInfo p
+{
+    margin-right: 10px;
+}
+
+
+.videoNavBar
+{
+    text-align: center;
+}
+
+.chatcomp
+{
+    width: 100%;
+    height: 90%;
+    padding: 10px;
+}
+
+.submitbutton
+{
+    position: absolute;
+}
+
+.chatinpute
+{
+    padding: 5px;
+    border-radius: 20px;
+    outline: none;
+    padding-left: 10px;
+}
+
+.chatSubmit
+{
+    width: 100%;
+    padding: 10px;
+}
+
+.volumeSlider
+{
+    writing-mode: bt-lr; /* IE */
+    -webkit-appearance: slider-vertical; /* WebKit */
+    width: 2px;
+    height: 100px;
+    margin: 0px 10px;
+}
+
+
+.videovolumeLogowrapper:hover  .volumesliderWrapper
+{
+    display: block;
+}
+
+.volumesliderWrapper
+{
+    width: 30px;
+    height: 135px;
+    padding-top: 10px;
+    padding-left: 4px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background-color: rgba(48, 47, 47, 0.918);
+    display: none;
+}
+
+.fullscreen
+{
+    width: 50px;
+    padding: 10px 80px 10px 10px;
+    color: white;
+    cursor: pointer;
+    position: absolute;
+    float: right;
+    text-align: right;
+    right: 0px;
+}
+
+.listofVideoLogo
+{
+    position: absolute;
+    float: right;
+    right: 85px;
+}
+
+.sectionTitle
+{
+    margin: 0px;
+    width: 100%;
+    text-align: center;
+    padding: 2px;
+    background-color: antiquewhite;
+    margin-bottom: 10px;
+}
+
+.closeVideo
+{
+    width: 40px;
+    height: 40px;
+    color: aliceblue;
+    background: goldenrod;
+    margin-left: 43%;
+    position: absolute;
+    top: -24px;
+    border-radius: 50rem;
+}
+
+.video_similar_ClassList
+{
+    width: 100%;
+    display: flex;
+    margin-top: 5px;
+}
+
+.videoHref
+{
+    text-decoration: none;
+    color: black;
+}
+
+.caresoleImageClass
+{
+    width: 50%;
+    height: 100px;
+}
+
+.similarClassContent
+{
+    padding: 0px 5px 5px 5px;
+}
+
+.similarClassContent h3
+{
+    margin: 0px;
+    font-size: 11px;
+    text-decoration: none;
+}
+.sectionwrapper
+{
+    display: block;
+    width: 300px;
+    height: 400px;
+    position: absolute;
+    bottom: 90px;
+    right: 10px;
+    display: none;
+}
+
+.listofVideoContentWrapper
+{
+    width: 300px;
+    height: 400px;
+    background: gold;
+    padding: 10px;
+    overflow: auto;
+    padding-top: 20px;
+    /*  */
+}
+
+
+.closeSectionContent
+{
+    width: 40px;
+    height: 40px;
+    top: 0px;
+    background: ghostwhite;
+    border-radius: 50%;
+    position: absolute;
+    margin: 5px 10px 10px 10px;
+}
+
+.SectionContentWraper
+{
+    width: 100%;
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.SectionContentWraper:hover
+{
+    color: rgba(114, 113, 113, 0.781);
+    cursor: pointer;
+}
+
+.sectionImage
+{
+    width: 50%;
+    height: 80px;
+}
+
+.sectionContent
+{
+    width: 50%;
+    padding-left: 20px;
+}
+.sectionContent h3
+{
+    font-size: 13px;
+    margin: 0px;
+}
+
+.sectionContent p
+{
+    font-size: 11px;
+    margin: 0px;
+    height: 50px;
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.hasNext
+{
+    position: absolute;
+    width: 50px;
+    right: 130px;
 }
