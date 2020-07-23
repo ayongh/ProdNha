@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import ReactPlayer from 'react-player'
-import screenfull from 'screenfull'
 
 import { Icon } from 'react-icons-kit'
 import {arrowLeft2} from 'react-icons-kit/icomoon/arrowLeft2'
@@ -19,7 +18,6 @@ import {ic_subject} from 'react-icons-kit/md/ic_subject'
 import {xCircle} from 'react-icons-kit/feather/xCircle'
 import {ic_skip_next} from 'react-icons-kit/md/ic_skip_next'
 
-import { findDOMNode } from 'react-dom'
 import Duration from './componentofBrowse/duration'
 import {Link} from 'react-router-dom'
 
@@ -87,13 +85,11 @@ class video extends Component
                     })
 
                     var sections = res.data.data
-                    var foundaMatch = false
                     var indexouter = 0
                     sections.forEach(async (value,index)=>{
                         if(value._id === this.props.match.params.videoID)
                         {
                             indexouter =index
-                            foundaMatch=true
                         }
                     })
 

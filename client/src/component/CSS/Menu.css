@@ -1,16 +1,16 @@
 .login_nav
 {
-    text-decoration: none;
-    width: 100%;
-    height: auto;
-    color: black;
-    position: fixed;
-    z-index: 10;
-    background: white;
-    text-align: right;
-    padding: 2px;
-    border-bottom-style:solid ;
-    border-bottom-width: 1px ;
+  text-decoration: none;
+  width: 100%;
+  height: auto;
+  color: black;
+  position: fixed;
+  z-index: 10;
+  background: white;
+  text-align: right;
+  padding: 2px;
+  top: 0px;
+  box-shadow: 0 2px 4px rgba(0,0,0,.08), 0 4px 12px rgba(0,0,0,.08);
 }
 
 .login_nav_wrapper
@@ -26,9 +26,9 @@
 
 .menuContent
 {
-  width: 30%;
+  width: 70%;
   padding: 30px;
-  text-align: center;
+  text-align: right;
 }
 
 .login_nav_wrapper a{

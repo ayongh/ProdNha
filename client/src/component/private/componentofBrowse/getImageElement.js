@@ -1,10 +1,6 @@
 import React, { Component } from 'react'
 import NoImageFound from '../../img/nophoto.png'
 
-
-import {heart} from 'react-icons-kit/typicons/heart'
-import { Icon } from 'react-icons-kit'
-
 import {connect} from 'react-redux'
 import {ActionInitModel} from '../../../redux/Action/ModelAction'
 

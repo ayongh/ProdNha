@@ -41,6 +41,8 @@ import Main_Browse_Show from './component/private/allBrowseContent';
 import Video from './component/private/video'
 import Upload from './component/private/upload'
 import AboutUs from './component/public/aboutUs'
+import Detail from './component/public/detailpage'
+
 import publicVideo from './component/public/public_video'
 
 // private
@@ -100,8 +102,10 @@ class App extends Component
             <Route exact path="/signup" component={Signup}/>
 
             <Route  exact path="/pswdreset" component={UserID}/>
-            <Route  exact path="/aboutus" component={AboutUs}/>
-            <Route  exact path="/video/:classID" component={publicVideo}/>
+            <Route  exact path="/course/search/:searchtext" component={AboutUs}/>
+            <Route  exact path="/course/detail/:courseID" component={Detail}/>
+
+            <Route  exact path="/video/:classID/:videoID" component={publicVideo}/>
 
             <ProtectedRoute  exact path="/pswdreset/NewPswd" loggedIn={this.props.state.loginFlag} component={PasswordReset}/>               
 

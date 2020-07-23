@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import './CSS/fileNot_found.css';
 import Menu from '../component/private/componentofBrowse/Menu'
 
-import { Icon } from 'react-icons-kit'
-import {grav} from 'react-icons-kit/fa/grav'
 
 export default class fileNotfound extends Component {
     render() {

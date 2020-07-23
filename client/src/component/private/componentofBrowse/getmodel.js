@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
 
-import ReactPlayer from 'react-player'
-
 import {bookmark} from 'react-icons-kit/icomoon/bookmark'
 import {heartOutline} from 'react-icons-kit/typicons/heartOutline'
 import {heart} from 'react-icons-kit/typicons/heart'

@@ -1,14 +1,12 @@
 import React, { Component } from 'react'
 import Recaptcha from 'react-google-invisible-recaptcha';
 import axios from 'axios'
-
-import ReactPlayer from 'react-player'
-
+ 
 import { Icon } from 'react-icons-kit'
+import {bookmark} from 'react-icons-kit/icomoon/bookmark'
 import {close} from 'react-icons-kit/fa/close'
 import {spinner2} from 'react-icons-kit/icomoon/spinner2'
-import {embed2} from 'react-icons-kit/icomoon/embed2'
-import {u1F4BB} from 'react-icons-kit/noto_emoji_regular/u1F4BB'
+import {androidSearch} from 'react-icons-kit/ionicons/androidSearch'
 
 import {Link, Redirect} from 'react-router-dom'
 
@@ -16,13 +14,7 @@ import {connect} from 'react-redux'
 import {Actionlogin, ActionLoading, ActionError} from '../../redux/Action/loginAction'
 import {ActionUserIntialize} from '../../redux/Action/userinfoAction'
 
-import GetImageElement from '../private/componentofBrowse/getImageElement'
-
-import Typed from 'typed.js';
-
-import ContactFooter from '../private/componentofBrowse/contactfooter'
-
-const image = require('../img/coding.jpg')
+import noImage from '../img/nophoto.png'
 
 class aboutUs extends Component
 {
@@ -35,12 +27,20 @@ class aboutUs extends Component
             username:null,
             password:null,
             userError: null,
+            search:null,
 
             redirectSearch: false,
+            class:null,
 
-            typed:undefined,
+            searchValue:null,
+            classes:null,
+            popularClasses:null,
 
-            value: '' 
+            activeOption: null,
+            showOptions: false,
+            redirect:false,
+            userInput: ''
+
             
         }
         this.onResolved = this.onResolved.bind( this );
@@ -77,12 +77,184 @@ class aboutUs extends Component
 
     }
 
+    handleSearchChange=(e)=>
+    {
+        this.setState({
+            searchValue: e.target.value
+        })
 
+        axios.get('/course/search/public/'+this.state.searchValue).then( res =>{ 
+            if(res.status === 200)
+            {
+                this.setState({
+                    classes:res.data.data
+                })
+            }
+        })
 
-    closealert(){
-        document.getElementById("alert").style.display="none"
+        this.setState({
+            activeOption: null,
+            showOptions: true,
+            userInput: e.currentTarget.value
+        });
+
     }
 
+    enterOption()
+    {
+        var searchVal = document.getElementById('search').value
+
+        axios.get('/course/search/public/'+searchVal).then( res =>{ 
+            if(res.status === 200)
+            {
+                this.setState({
+                    classes:res.data.data
+                })
+            }
+        })
+
+        this.setState({
+            activeOption: null,
+            showOptions: false,
+            userInput: searchVal
+        });
+    }
+
+    onKeyDown=(e)=>
+    {
+        const { activeOption, classes } = this.state;
+
+
+        if(classes.length >= 1)
+        {
+            if (e.keyCode === 13) {
+                if(activeOption !== null)
+                {
+                   this.enterOption()
+                }
+               
+            } else if (e.keyCode === 38) {
+    
+                if(this.state.activeOption !== null)
+                {
+    
+                    if (activeOption === 0) {
+                      return;
+                    }
+                    this.setState({ activeOption: activeOption - 1, searchValue:classes[activeOption-1].name});
+                }
+    
+    
+    
+            } else if (e.keyCode === 40) {
+    
+                if(this.state.activeOption === null)
+                {
+                    if (activeOption === classes.length - 1) {
+                      return;
+                    }
+                    this.setState({ activeOption: 0, searchValue:classes[0].name });
+                }
+                else
+                {
+                    if (activeOption === classes.length - 1) {
+                        return;
+                    }
+                    this.setState({ activeOption: activeOption + 1,searchValue:classes[activeOption+1].name });
+                }
+    
+            }
+        }
+       
+    }
+
+    handlesearchSubmit=(e)=>
+    {
+        e.preventDefault()
+        this.setState({
+            class:this.state.classes[this.state.activeOption],
+            redirect:true
+        })
+    }
+
+    handleBlur=(e)=>
+    {
+        setTimeout(() => {
+            if(document.getElementById('searchOptions') !== null)
+            {
+                document.getElementById('searchOptions').style.display="none"
+            }
+        }, 300);
+      
+    }
+
+    onClick(a)
+    {
+
+        var searchVal = a.name
+
+        axios.get('/course/search/public/'+searchVal).then( res =>{ 
+            if(res.status === 200)
+            {
+                this.setState({
+                    classes:res.data.data
+                })
+            }
+        })
+
+        this.setState({
+            activeOption: null,
+            showOptions: false,
+            searchValue:searchVal
+        });
+    }
+
+    searchFocus = (e) =>
+    {
+        document.getElementById('searchOptions').style.display="block"
+
+        this.setState({
+            searchValue: e.target.value,
+            showOptions: true
+
+        })
+
+        axios.get('/course/search/public/'+this.state.searchValue).then( res =>{ 
+            if(res.status === 200)
+            {
+                this.setState({
+                    classes:res.data.data
+                })
+            }
+        })
+
+        this.setState({
+            activeOption: 0,
+            showOptions: true,
+            userInput: e.currentTarget.value
+        });
+    }
+
+    getSearchOptionList()
+    {
+
+        if(this.state.classes !== null)
+        {
+            var option = this.state.classes.map((val,index)  =>
+            {
+                return(
+                    <li className="option" key={val._id} id="searchOption">
+                        <img className="searchOptionImg" src={val.thumbnail}></img>
+                        <p className="searchOptiontxt" >{val.name}</p>
+                    </li>
+                )
+            })
+        }
+        
+
+        return option;
+
+    }
 
     //When recaptcha is resolved
     onResolved() {
@@ -102,7 +274,6 @@ class aboutUs extends Component
                 axios.post('/user/login', payload, {validateStatus: function (status) { return status >= 200 && status < 600; }}).then( res =>{
                     if(res.status === 200)
                     {   
-                        localStorage.setItem("watchhistory", JSON.stringify( res.data.message.watchHistory))
                         document.getElementById('loginLoad').style.display = "none"
                         document.getElementById('loginText').style.display= "block"
                         this.props.Actionlogin()
@@ -142,45 +313,142 @@ class aboutUs extends Component
 
     componentDidMount()
     {
-        var popularpayload= {
-            pagination: 20
+        if(this.props.match.params.searchtext !== undefined)
+        {
+            this.setState({
+                searchValue:this.props.match.params.searchtext
+            })
+
+            axios.get('/course/search/public/'+this.props.match.params.searchtext).then( res =>{ 
+                if(res.status === 200)
+                {
+                    this.setState({
+                        classes:res.data.data
+                    })
+                }
+            })
+    
         }
 
-        if(this.props.location.pathname ==='/aboutus')
+        var popularpayload= {
+            pagination: 5
+        }
+        axios.post('  /render/class/popular/public',popularpayload).then( res =>{ 
+            if(res.status === 200)
+            {
+                this.setState({
+                    popularClasses:res.data
+                })
+            }
+        })
+      
+
+    }
+
+    tagFormate(tagString)
+    {
+        var MyArray = tagString.split(','); //splits the text up in chunks
+        var newString = ""
+
+        for(var i = 0; MyArray.length > i; i++)
         {
-            try
+            newString = newString + "#"+MyArray[i].trim() + ' '
+        }
+        return newString
+    }
+
+    getPopularClass()
+    {
+        var classesElement = <h1>Loading</h1>
+        var Classes = this.state.popularClasses
+       
+        if (Classes !== null && Classes !== undefined)
+        {
+            if(Classes.length > 0)
             {
-                const options = {
-                    strings: ['Welcome^3000', 'स्वागतम्^3000','أهلا بك','어서 오십시오'],
-                    typeSpeed: 100,
-                    backSpeed: 100,
-                    loop: true,
-                    cursorChar: "|",
-                };
-    
-    
-                // this.el refers to the <span> in the render() method
-                this.typed = new Typed(this.el, options);
-            }catch(e)
+                classesElement = Classes.map( (val, index) => {
+                    var newTag= this.tagFormate(val.tag)
+
+                    return (
+                            <div className="contentFirst">
+                                <Link to={"/course/detail/"+val._id} className="linkNOwater" key={val._id}>
+
+                                <div className="contentFirstImageTop">
+                                    <img className="contentImageFirst" src={val.thumbnail}></img>
+                                </div>
+                                <div className="contentFirstImageBottom">
+                                    <h3 className="contentTitle">{val.name}</h3>
+                                    <div className="bottomSaveAndTimeContent">
+                                        <p className="time">{val.director}</p>
+                                        <Icon className="saveicon" icon={bookmark} size={15}></Icon>
+                                    </div>
+                                </div>
+                                </Link>
+
+                            </div>
+                    )
+                }) 
+            }
+            else
             {
-                console.log(e)
+                classesElement = <div style={{width: "100%", textAlign:"center"}}><h1>No content Found "{this.state.searchValue}" </h1></div> 
             }
             
-
         }
-        
+
+        return classesElement;
     }
 
-    searchClicked()
+    getSearchClasses()
     {
-        this.setState({
-            redirectSearch: true
-        })
+        var classesElement = <h1>Loading</h1>
+        var Classes = this.state.classes
+       
+        if (Classes !== null && Classes !== undefined)
+        {
+            if(Classes.length > 0)
+            {
+                classesElement = Classes.map( (val, index) => {
+                    var newTag= this.tagFormate(val.tag)
+
+                    return (
+                        <Link to={"/course/detail/"+val._id} className="linkNOwater" key={val._id}>
+                            <div className="mainContent" key={val._id}>
+                                <div className="mainClassleft">
+                                    <img className="MainContentleftImg" src={val.thumbnail}></img>
+                                </div>
+                                <div className="mainClassRight">
+                                    <div className="mainClassRightContainer">
+                                        <h3 className="noMargin">{val.name}</h3>
+                                        <p  className="directorName">{newTag}</p>
+                                        <p className="noMargin">{val.description}</p>
+                                        <p className="directorName">{val.director}</p>
+                                    
+                                    </div>
+                                    <div className="bottomSaveAndTime">
+                                        <p className="time">1 hrs 2 min</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </Link>
+                    )
+                }) 
+            }
+            else
+            {
+                classesElement = <div style={{width: "100%", textAlign:"center"}}><h1>No content Found "{this.state.searchValue}" </h1></div> 
+            }
+            
+        }
+
+        return classesElement;
     }
+
 
     render()
     {
-        //Checks error and display it errorElement
+
+        
         let errorElement = null
         
         if(this.state.userError !== null)
@@ -214,13 +482,55 @@ class aboutUs extends Component
             }   
         }
 
-        if (this.state.redirectSearch === true)
+        if(document.getElementById('search') !== null && this.state.searchValue !== null)
         {
-            return <Redirect to="/"></Redirect>
+            document.getElementById('search').value  = this.state.searchValue
         }
 
+        const {
+            onChange,
+            onClick,
+            onKeyDown,
+      
+            state: { activeOption, classes, showOptions, userInput }
+          } = this;
+          let optionList;
+          if(this.state.classes !== null)
+          {
+
+              if (showOptions && userInput) {
+                if (classes.length) {
+                  optionList = (
+                    <ul className="searchoptionUL" id="searchlistOptions">
+                      {classes.map((optionName, index) => {
+                        let className;
+                        if (index === activeOption) {
+                          className = 'option_select';
+                        }
+                        return (
+                          <li className={"searchoptionList "+className} key={optionName._id} onClick={()=>this.onClick(optionName)} value={optionName.name}>
+                              <Icon icon={androidSearch} size={15} className="searchOptionIcon"/>
+                            {optionName.name}
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  );
+                } else {
+                  optionList = (
+                    <ul className="searchoptionUL" id="searchlistOptions">
+                        <li className="li" onClick={onClick}>
+                            <Icon icon={androidSearch} size={15} className="searchOptionIcon"/>
+                            No Result Found
+                        </li>
+                    </ul>
+                  );
+                }
+            }
+          }
+
         return (
-            <div>
+            <div className="aboutUsBody">
                 <div className="login_nav">
                     <div className="login_nav_wrapper">
                         <div className="logo">
@@ -237,75 +547,74 @@ class aboutUs extends Component
                     </div>
                 </div>
 
-                <header className="v-header container">
-                    <div className="fullscreen-video-wrap">
-                        <ReactPlayer className='react-player-background' playing={true} loop={true} width="100%" height="100%" muted url="https://firebasestorage.googleapis.com/v0/b/nhadb-c07ce.appspot.com/o/video%2Fvideoplayback%20(1).mp4?alt=media&token=012d7e51-680a-4773-b9ae-1b483e4966ae" />
-                    </div>
-                    <div className="header-overlay"></div>
-                    <div className="header-content text-md-center">
-                    <h1 className="header_type_text">
-                        <>
-                        <span
-                        style={{ whiteSpace: "pre" }}
-                        ref={(el) => {
-                            this.el = el;
-                        }}
-                        />
-                        </>
-                    </h1>
-                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Id temporibus perferendis necessitatibus numquam amet impedit explicabo? Debitis quasi ullam aperiam!</p>
-                        <a className="btn" href="#about">Find Out More</a>
-                    </div>
-                </header>
-        
-                <section className="section section-a" id="about">
-                    <div className="container_section_A A_left">
-                        <img src={image} className="A_left_image"></img>
-                    </div>
 
-                    <div className="container_section_A A_right">
-                        <div className="A_right_comp1">
-                            <div className="A_right_comp1_warpper">
-                                <div className="A_right_comp1_part one">
-                                    <Icon icon={embed2} size={50} className="A_right_content_icon"></Icon>
-                                    <div className="A_right_content">
-                                        <h2> About Application</h2>
-                                        <p>Bases of this application is to share knowledge wither it is small or big. 
-                                            In the ongoing fight with COVID 19 we are in need of platform were we can share our ideas on protecting our love once,
-                                            help our young once with School learning and college advice, provide advices to once that are in need of counsoling, and entertainment for once that needs to 
-                                            relax. Our application provides this content to help you in the time of emergency. 
-                                            We belive no infromation is too small you dont have to be educated college student to share knowledge you have learned from 
-                                            expirence, your love once
-                                            
-                                            .Therefore we leave what content gets to be shared to you. you are the teacher, mentor, guide to once that need the help you might have already percevired in your life time.
-                                        </p>
-                                    </div>
-                                </div>
+              {/*   Section for the detail page for the section  */}
+                <header className="searchResult">
+                    <div className="searchResultWrapper">
+                        <div className="searchLeftMenu">
+                            <div className="mandatoryMenuContent">
+                                <Link to={"/course/categorie/all"} className="removeHpyerLink sidemenu"><h4 className="mandatoryContent noMargin hover">All Classes</h4></Link>
+                                <Link to={"/course/categorie/popular"} className="removeHpyerLink sidemenu"><h4 className="mandatoryContent noMargin hover">popular</h4></Link>
+                                <Link to={"/course/categorie/newlyAdded"} className="removeHpyerLink sidemenu"><h4 className="mandatoryContent noMargin hover">Newly Added</h4></Link>
 
-                                <div className="A_right_comp1_part three">
-                                <Icon icon={u1F4BB} size={50} className="A_right_content_icon"></Icon>
-                                    <div className="A_right_content">
-                                        <h2> Technical Detail</h2>
-                                        <p>Goal of this application is to provide user with content that enrich their daily life. the intention of this project was to share and </p>
-                                    </div>
-                                </div>
+                            </div>
+
+                            <div className="MenuContent">
+                                <h4 className="label">Main Menu</h4>
+                                <Link to={"/course/categorie/education"} className="removeHpyerLink sidemenu"><p className="menuLabelContent noMargin hover">Education</p></Link>
+                                <Link to={"/course/categorie/sport"} className="removeHpyerLink sidemenu"><p className="menuLabelContent noMargin hover">Sport</p></Link>
+                                <Link to={"/course/categorie/language"} className="removeHpyerLink sidemenu"><p className="menuLabelContent noMargin hover">Language</p></Link>
+                                <Link to={"/course/categorie/health"} className="removeHpyerLink sidemenu"><p className="menuLabelContent noMargin hover">Health</p></Link>
                             </div>
                         </div>
-                    
+
+                        <div className="searchrightContent">
+                            <div className="SearchHeaderresult">
+                                <div className="searchResultSearch label">
+                                    <p className="noMargin">Searching For</p>
+                                    <h3 className="noMargin">"{this.state.searchValue}"</h3>
+                                    <form onSubmit={this.handlesearchSubmit}>
+                                        <div className="searchMenuHomePage">
+                                            <input className="publicSearch" placeholder="What do you want to learn?" id="search" onChange={this.handleSearchChange} onKeyDown={this.onKeyDown} onBlur={this.handleBlur} onFocus={this.searchFocus}  autoComplete="off" />
+                                            <Icon icon={androidSearch} size={25} className="searchIcon"/>
+                                        </div>
+                                    </form>
+                                    <div className="searchOptions" id="searchOptions">
+                                        {optionList}
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div className="DetailSearchMainContentWrapper">
+                                <div className="mainContentWrapper">
+
+                                    {/* Main Content for the movie */}
+                                    { this.getSearchClasses()}
+
+                                </div>
+                                
+
+                                <div className="otherContent">
+                                    <div className="otherContentTitle">
+                                        <h2>Featured Popular Classes</h2>
+                                        <Link to={"/course/categorie/popular"} className="removeHpyerLink sidemenu">
+                                            <button className="viewAllBtn">View All</button>
+                                        </Link>
+                                    </div>
+                                    <div className="content_wrapper">
+                                       {this.getPopularClass()}
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
                     </div>
-                </section>
-        
-                <section className="section section-b">
-                    <div className="container">
                    
-                    </div>
-                </section>
+                </header>
 
-                <ContactFooter></ContactFooter>
-
-
-                <div id="myModal" class="modal">
-                    <div class="modal-content">
+                <div id="myModal" className="modal">
+                    <div className="modal-content">
                         <div className="login_model_wrapper">
                             <div className="model_container left">
                                 <h2>Notification</h2>
@@ -313,7 +622,7 @@ class aboutUs extends Component
                             </div>
 
                             <div className="model_container right">
-                                <span class="close" onClick={this.modelClose}>&times;</span>
+                                <span className="close" onClick={this.modelClose}>&times;</span>
                                 <div className="login_right_inner_container">
                                     <h2>Login</h2>
             

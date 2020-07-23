@@ -761,12 +761,17 @@ nav
     padding-left: 5%;
     padding-right: 5%;
     width: 100%;
-    margin-top: 50px;
     text-align: center;
     background-color: #254f66;
     color: white;
 }
 
+.HomepageWave
+{
+    position: absolute;
+    width: 100%;
+    bottom: 0px;
+}
 .contatct_icon
 {
     margin: 10px;

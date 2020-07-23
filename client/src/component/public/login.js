@@ -2,12 +2,15 @@ import React, { Component } from 'react'
 import Recaptcha from 'react-google-invisible-recaptcha';
 import axios from 'axios'
 
-// import ReactPlayer from 'react-player'
-
 import { Icon } from 'react-icons-kit'
 import {close} from 'react-icons-kit/fa/close'
 import {spinner2} from 'react-icons-kit/icomoon/spinner2'
-
+import {androidSearch} from 'react-icons-kit/ionicons/androidSearch'
+import {basic_book} from 'react-icons-kit/linea/basic_book'
+import {basic_keyboard} from 'react-icons-kit/linea/basic_keyboard'
+import {basic_gear} from 'react-icons-kit/linea/basic_gear'
+import {basic_hammer} from 'react-icons-kit/linea/basic_hammer'
+import {basic_settings} from 'react-icons-kit/linea/basic_settings'
 
 import {Link, Redirect} from 'react-router-dom'
 
@@ -15,12 +18,11 @@ import {connect} from 'react-redux'
 import {Actionlogin, ActionLoading, ActionError} from '../../redux/Action/loginAction'
 import {ActionUserIntialize} from '../../redux/Action/userinfoAction'
 
-import GetImageElement from '../public/component/public_getImageElement'
-
-
 import ContactFooter from '../private/componentofBrowse/contactfooter'
 
-const image = require('../img/coding.jpg')
+const image = require('../img/nophoto.png')
+
+const backgroundVideo = require('../img/mainbackground.mp4')
 
 class login extends Component
 {
@@ -35,14 +37,16 @@ class login extends Component
             userError: null,
             search:null,
 
-            classes:null,
-
-
-            safaribrowser:false,
-
             typed:undefined,
 
-            value: '' 
+            value: '',
+
+            classes:[],
+
+            activeOption: null,
+            showOptions: false,
+            redirect:false,
+            userInput: ''
             
         }
         this.onResolved = this.onResolved.bind( this );
@@ -60,7 +64,6 @@ class login extends Component
         this.setState({
             [e.target.id]: e.target.value
         })
-        document.getElementById('searchOptions').style.display="block"
 
         axios.get('/course/search/public/'+this.state.search).then( res =>{ 
             if(res.status === 200)
@@ -71,7 +74,87 @@ class login extends Component
             }
         })
 
+        this.setState({
+            activeOption: null,
+            showOptions: true,
+            userInput: e.currentTarget.value
+        });
+
     }
+
+    onKeyDown=(e)=>
+    {
+        const { activeOption, classes } = this.state;
+
+
+        if(classes.length >= 1)
+        {
+            if (e.keyCode === 13) {
+                if(activeOption !== null)
+                {
+                    document.getElementById('search').value = classes[activeOption].name
+                    this.setState({
+                        class:classes[activeOption],
+                        redirect:true
+                    })
+                }
+            
+            } else if (e.keyCode === 38) {
+
+                if(this.state.activeOption !== null)
+                {
+
+                    if (activeOption === 0) {
+                    return;
+                    }
+                    document.getElementById('search').value = classes[activeOption-1].name
+                    this.setState({ activeOption: activeOption - 1});
+                }
+
+
+
+            } else if (e.keyCode === 40) {
+
+                if(this.state.activeOption === null)
+                {
+                    if (activeOption === classes.length - 1) {
+                    return;
+                    }
+                    document.getElementById('search').value = classes[0].name
+                    this.setState({ activeOption: 0 });
+                }
+                else
+                {
+                    if (activeOption === classes.length - 1) {
+                        return;
+                    }
+                    document.getElementById('search').value = classes[activeOption + 1].name
+                    this.setState({ activeOption: activeOption + 1 });
+                }
+
+            }
+        }
+
+    }
+
+    handlesearchSubmit=(e)=>
+    {
+        e.preventDefault()
+        this.setState({
+            class:this.state.classes[this.state.activeOption],
+            redirect:true
+        })
+    }
+
+    onClick(a)
+    {
+        document.getElementById('search').value = a.name
+        this.setState({
+            class:a,
+            redirect:true
+        })
+    }
+
     
     handleSubmit = (e)=>
     {
@@ -121,7 +204,6 @@ class login extends Component
                 axios.post('/user/login', payload, {validateStatus: function (status) { return status >= 200 && status < 600; }}).then( res =>{
                     if(res.status === 200)
                     {   
-                        localStorage.setItem("watchhistory", JSON.stringify( res.data.message.watchHistory))
                         document.getElementById('loginLoad').style.display = "none"
                         document.getElementById('loginText').style.display= "block"
                         this.props.Actionlogin()
@@ -159,58 +241,48 @@ class login extends Component
         document.getElementById('myModal').style.display="block"
     }
 
-    componentDidMount()
+    handleBlur=(e)=>
     {
-        var popularpayload= {
-            pagination: 20
-        }
+        setTimeout(() => {
+            this.setState({
+                classes: null
+            })
+        }, 300);
+      
+    }
 
-        axios.post('/render/class/popular/public',popularpayload, {validateStatus: function (status) { return status >= 200 && status < 600; }}).then( res =>{ 
+    searchFocus = (e) =>
+    {
+        this.setState({
+            [e.target.id]: e.target.value
+        })
+
+        axios.get('/course/search/public/'+this.state.search).then( res =>{ 
             if(res.status === 200)
             {
                 this.setState({
-                    classes:res.data
+                    classes:res.data.data
                 })
             }
         })
-        
-    }
 
-    optionClicked(name)
-    {
-        if(name !== "empty")
-        {
-            document.getElementById('search').value = name
-            document.getElementById('searchOptions').style.display= "none"
-    
-    
-            axios.get('/course/search/public/'+name).then( res =>{ 
-                if(res.status === 200)
-                {
-                    this.setState({
-                        classes:res.data.data
-                    })
-                }
-            })
-        }
-        else
-        {
-            document.getElementById('searchOptions').style.display= "none"
-        }
-        
-
+        this.setState({
+            activeOption: 0,
+            showOptions: true,
+            userInput: e.currentTarget.value
+        });
     }
 
     getSearchOptionList()
     {
-
+        var option = null
         if(this.state.classes !== null)
         {
-            var option = this.state.classes.map((val,index)  =>
+            option = this.state.classes.map((val,index)  =>
             {
                 return(
-                    <li className="option" key={val._id} id="searchOption" onClick={()=>this.optionClicked(val.name)}>
-                        <img className="searchOptionImg" src={val.thumbnail}></img>
+                    <li className="option" key={val._id} id="searchOption">
+                        <img className="searchOptionImg" src={val.thumbnail} alt='searchoption' onError={image}></img>
                         <p className="searchOptiontxt" >{val.name}</p>
                     </li>
                 )
@@ -224,6 +296,15 @@ class login extends Component
 
     render()
     {
+
+        //Send to the about page if redirect is true
+        if(this.state.redirect)
+        {
+            const search = "/course/search/"+document.getElementById('search').value
+            return <Redirect to={{pathname:search}}></Redirect>
+        }
+
+
         //Checks error and display it errorElement
         let errorElement = null
         
@@ -258,41 +339,155 @@ class login extends Component
             }   
         }
 
+
+        const {
+            onClick,      
+            state: { activeOption, classes, showOptions, userInput }
+          } = this;
+          let optionList;
+          if(this.state.classes !== null)
+          {
+
+              if (showOptions && userInput) {
+                if (classes.length) {
+                  optionList = (
+                    <ul className="searchoptionUL" id="searchlistOptions">
+                      {classes.map((optionName, index) => {
+                        let className;
+                        if (index === activeOption) {
+                          className = 'option_select';
+                        }
+                        return (
+                          <li className={"searchoptionList "+className} key={optionName._id} onClick={()=>this.onClick(optionName)} value={optionName.name}>
+                              <Icon icon={androidSearch} size={15} className="searchOptionIcon"/>
+                            {optionName.name}
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  );
+                } else {
+                  optionList = (
+                    <ul className="searchoptionUL" id="searchlistOptions">
+                        <li className="li" onClick={onClick}>
+                            <Icon icon={androidSearch} size={15} className="searchOptionIcon"/>
+                            No Result Found
+                        </li>
+                    </ul>
+                  );
+                }
+            }
+          }
+
         return (
             <div>
                 <div className="login_nav">
                     <div className="login_nav_wrapper">
                         <div className="logo">
-                        <Link to="/" className="Videolink">
-                            <h2>NHA</h2>
-                        </Link>
-                        </div>
-
-                        <div className="login_search">
-                            <input className="login_search_input" type="search" tabIndex="0" autoCorrect="off" autoCapitalize="none" spellCheck="false" 
-                            role="searchbox" aria-autocomplete="list" autoComplete="off" aria-controls="select2-vlba-results"
-                            aria-activedescendant="select2-vlba-result-oqtx-AK" id="search" onChange={this.handleSearchChange} onBlur= {()=>this.optionClicked("empty")} placeholder="Search"/>
-                            <div className="serachOptions" id="searchOptions">
-                                <ul className="select2-results__options" role="listbox" id="select2-vlba-results" aria-expanded="true" aria-hidden="false">
-                                    {this.getSearchOptionList()}
-                                </ul>
-                            </div>
+                            <Link to="/" className="Videolink">
+                                <h2>NHA</h2>
+                            </Link>
                         </div>
 
                         <div className="menuContent">
-                            <a className="login_option" onClick={this.loginModelOpen}>Login</a>
+                            <a className="login_option loginBtn" onClick={this.loginModelOpen}>Login</a>
                             <a className="login_option" href="/signup">Signup</a>
-                            <a className="login_option" href="/aboutus">About us</a>
-
                         </div>
                     </div>
                 </div>
 
-                <div className="search_caresoleWrapper login_searchWrapper">
-                    <div className="login_Searchcaresole">
-                        <GetImageElement classes = {this.state.classes}></GetImageElement>
+                {/* -- This is where the landing page will go -- */}
+                <header className="v-header">
+                    <div className="fullscreen-video-wrap">
+                        <video loop={true} muted={true} autoPlay className="fullscreen-bg__video" src={backgroundVideo}/>
                     </div>
+
+                    <div className="header-overlay"></div>
+                    <div className="header-content">
+                        <h1>YOUR LEARNING STARTS HERE.</h1>
+                        <p>Our organization promotes sharing knowledge of any magnitude.</p>
+                        <form onSubmit={this.handlesearchSubmit}>
+                            <div className="searchMenuHomePage">
+                                <input className="publicSearch" placeholder="What do you want to learn?" id="search" onChange={this.handleSearchChange} onKeyDown={this.onKeyDown} onBlur={this.handleBlur} onFocus={this.searchFocus}  autoComplete="off" />
+                                <Icon icon={androidSearch} size={25} className="searchIcon"/>
+                            </div>
+                        </form>
+                        <div className="searchOptions">
+                            {optionList}
+                        </div>
+
+                    </div>
+                    <div style={{height: "150px", overflow: "hidden"}} className="HomepageWave">
+                        <svg viewBox="0 0 500 150" preserveAspectRatio="none" style={{height: "100%", width: "100%"}}>
+                            <path d="M0.00,49.98 C149.99,150.00 349.20,-49.98 500.00,49.98 L500.00,150.00 L0.00,150.00 Z" style={{stroke: "none", fill: "#f4f4f4"}}></path>
+                        </svg>
+                    </div>
+                </header>
+
+                <div className="introductionHomepage">
+                    {/* This is the Goal section of the page */}
+                    <div className="innnerContainerHomepage">
+                        <div className="HighSchoolContainer">
+                            <div className="highSchoolImageWrapper">
+                                <img className="imageHighschool" src="https://firebasestorage.googleapis.com/v0/b/nhadb-c07ce.appspot.com/o/stackskills-work-smarter.jpg?alt=media&token=97dc698b-371f-408b-9d5c-680b1edfdafc" alt='teamMember img' onError={image}></img>
+                            </div>
+
+                            <div className="highSchoolContent">
+                                <h1 className="noMargin">Our Goal</h1>
+                                <p className="noMargin">We are small group of teams who believes any information is useful in life wither its fixing simple fence or building a spaceship. We believe experience can teach lot in life and we want to provide this platform to share people experience so other can learn from them. This learning experience is applicable to old or young because we provide variety of content to help different demographic.</p>
+
+                                <h1>Varity of Content</h1>
+                                <p>We deliver varity of content that can help prek school with learning Nepali and English Ryhms, high school student with college application, collage student with various courses, and lastly adult with billing, application, technology etc</p>
+                            
+                                <div className="listOfIconContent">
+                                    <Icon icon={basic_book} size={30} className="iconPadding"/>
+                                    <Icon icon={basic_gear} size={30} className="iconPadding"/>
+                                    <Icon icon={basic_hammer} size={30} className="iconPadding"/>
+                                    <Icon icon={basic_keyboard} size={30} className="iconPadding"/>
+                                    <Icon icon={basic_settings} size={30} className="iconPadding"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* This is the developer section of the page */}
+                    <div className="TeamContainer">
+                        <div className="firstDiv">
+                            <img className="firstDivImg developerimgMargin" src="https://firebasestorage.googleapis.com/v0/b/nhadb-c07ce.appspot.com/o/1.jpg?alt=media&token=b980954e-50dc-4dd7-942e-48a613c5517f" alt='teamMember img' onError={image}></img>
+                            <img className="secDivImg developerimgMargin" src="https://firebasestorage.googleapis.com/v0/b/nhadb-c07ce.appspot.com/o/1.jpg?alt=media&token=b980954e-50dc-4dd7-942e-48a613c5517f" alt='teamMember img' onError={image}></img>
+                        </div>
+
+                        <div className="secoundDivWrapper">
+                            <div className="secoundDiv">
+                                <div className="secDivfirstDivImg developerimgMargin" >
+                                    <h2>Team Member</h2>
+                                    <p>Our team consist of individual who are attending college, former graduates in multiple disiplines and High school Students</p>
+                                    <button className="landingpageContatctButton">Contact</button>
+                                </div>
+                                <img className="secDivsecDivImg developerimgMargin" src="https://firebasestorage.googleapis.com/v0/b/nhadb-c07ce.appspot.com/o/1.jpg?alt=media&token=b980954e-50dc-4dd7-942e-48a613c5517f" alt='teamMember img' onError={image} ></img>
+                                <img className="secDivsthirdDivImg developerimgMargin" src="https://firebasestorage.googleapis.com/v0/b/nhadb-c07ce.appspot.com/o/1.jpg?alt=media&token=b980954e-50dc-4dd7-942e-48a613c5517f" alt='teamMember img' onError={image} ></img>
+                            </div>
+
+                            <div className="thirdDivWrapper">
+                                <div className="thirdDiv">
+                                    <img className="thirdDivThirdDivImg developerimgMargin" src="https://firebasestorage.googleapis.com/v0/b/nhadb-c07ce.appspot.com/o/1.jpg?alt=media&token=b980954e-50dc-4dd7-942e-48a613c5517f" alt='teamMember img' onError={image} ></img>
+                                </div>
+
+                                <div className="fourthDIv">
+                                    <img className="fourthDivfirstDivImg developerimgMargin" src="https://firebasestorage.googleapis.com/v0/b/nhadb-c07ce.appspot.com/o/1.jpg?alt=media&token=b980954e-50dc-4dd7-942e-48a613c5517f" alt='teamMember img' onError={image} ></img>
+                                    <img className="fourthDivsecDivImg fourthDivfirstDivImg developerimgMargin" src="https://firebasestorage.googleapis.com/v0/b/nhadb-c07ce.appspot.com/o/1.jpg?alt=media&token=b980954e-50dc-4dd7-942e-48a613c5517f" alt='teamMember img' onError={image} ></img>
+                                </div>
+
+                                <div className="fithDiv">
+                                    <img className="fifthDivfirstDivImg fourthDivfirstDivImg developerimgMargin" src="https://firebasestorage.googleapis.com/v0/b/nhadb-c07ce.appspot.com/o/1.jpg?alt=media&token=b980954e-50dc-4dd7-942e-48a613c5517f" alt='teamMember img' onError={image} ></img>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
+              
 
                 <ContactFooter></ContactFooter>
 
