@@ -440,6 +440,8 @@ class public_video extends Component
                                 width='100%'
                                 height='100%'
 
+                                webkit-playsinline="true" 
+                                playsinline="true"
                                 onDuration={this.handleDuration}
                                 onProgress={this.handleProgress}
                                 onPlay={this.handlePlay}

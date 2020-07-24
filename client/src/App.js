@@ -102,7 +102,7 @@ class App extends Component
             <Route exact path="/signup" component={Signup}/>
 
             <Route  exact path="/pswdreset" component={UserID}/>
-            <Route  exact path="/course/search/:searchtext" component={AboutUs}/>
+            <Route  exact path="/course/search/class/:searchtext" component={AboutUs}/>
             <Route  exact path="/course/detail/:courseID" component={Detail}/>
 
             <Route  exact path="/video/:classID/:videoID" component={publicVideo}/>

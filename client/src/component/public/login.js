@@ -300,7 +300,7 @@ class login extends Component
         //Send to the about page if redirect is true
         if(this.state.redirect)
         {
-            const search = "/course/search/"+document.getElementById('search').value
+            const search = "/course/search/class/"+document.getElementById('search').value
             return <Redirect to={{pathname:search}}></Redirect>
         }
 
