@@ -42,6 +42,7 @@ import Video from './component/private/video'
 import Upload from './component/private/upload'
 import AboutUs from './component/public/aboutUs'
 import Detail from './component/public/detailpage'
+import Categorie from './component/public/categorie'
 
 import publicVideo from './component/public/public_video'
 
@@ -104,6 +105,7 @@ class App extends Component
             <Route  exact path="/pswdreset" component={UserID}/>
             <Route  exact path="/course/search/class/:searchtext" component={AboutUs}/>
             <Route  exact path="/course/detail/:courseID" component={Detail}/>
+            <Route  exact path="/course/categorieinfo/:categorie" component={Categorie}/>
 
             <Route  exact path="/video/:classID/:videoID" component={publicVideo}/>
 

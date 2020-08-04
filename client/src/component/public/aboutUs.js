@@ -14,6 +14,9 @@ import {connect} from 'react-redux'
 import {Actionlogin, ActionLoading, ActionError} from '../../redux/Action/loginAction'
 import {ActionUserIntialize} from '../../redux/Action/userinfoAction'
 
+import ImageLoad from './component/imageload'
+import LoadMainImage from './loadingMainImage'
+
 import noImage from '../img/nophoto.png'
 
 class aboutUs extends Component
@@ -83,20 +86,26 @@ class aboutUs extends Component
             searchValue: e.target.value
         })
 
-        axios.get('/course/search/public/'+this.state.searchValue).then( res =>{ 
-            if(res.status === 200)
-            {
-                this.setState({
-                    classes:res.data.data
-                })
-            }
-        })
+        console.log( this.state.searchValue === "")
 
-        this.setState({
-            activeOption: null,
-            showOptions: true,
-            userInput: e.currentTarget.value
-        });
+        if(this.state.searchValue !== "")
+        {
+
+            axios.get('/course/search/public/'+this.state.searchValue).then( res =>{ 
+                if(res.status === 200)
+                {
+                    this.setState({
+                        classes:res.data.data
+                    })
+                }
+            })
+    
+            this.setState({
+                activeOption: null,
+                showOptions: true,
+                userInput: e.currentTarget.value
+            });
+        }
 
     }
 
@@ -326,6 +335,8 @@ class aboutUs extends Component
                         classes:res.data.data
                     })
                 }
+            }).catch((error)=>{
+                console.log("error")
             })
     
         }
@@ -367,25 +378,9 @@ class aboutUs extends Component
             if(Classes.length > 0)
             {
                 classesElement = Classes.map( (val, index) => {
-                    var newTag= this.tagFormate(val.tag)
 
                     return (
-                            <div className="contentFirst">
-                                <Link to={"/course/detail/"+val._id} className="linkNOwater" key={val._id}>
-
-                                <div className="contentFirstImageTop">
-                                    <img className="contentImageFirst" src={val.thumbnail}></img>
-                                </div>
-                                <div className="contentFirstImageBottom">
-                                    <h3 className="contentTitle">{val.name}</h3>
-                                    <div className="bottomSaveAndTimeContent">
-                                        <p className="time">{val.director}</p>
-                                        <Icon className="saveicon" icon={bookmark} size={15}></Icon>
-                                    </div>
-                                </div>
-                                </Link>
-
-                            </div>
+                        <ImageLoad val={val} key={val._id}/>
                     )
                 }) 
             }
@@ -412,25 +407,7 @@ class aboutUs extends Component
                     var newTag= this.tagFormate(val.tag)
 
                     return (
-                        <Link to={"/course/detail/"+val._id} className="linkNOwater" key={val._id}>
-                            <div className="mainContent" key={val._id}>
-                                <div className="mainClassleft">
-                                    <img className="MainContentleftImg" src={val.thumbnail}></img>
-                                </div>
-                                <div className="mainClassRight">
-                                    <div className="mainClassRightContainer">
-                                        <h3 className="noMargin">{val.name}</h3>
-                                        <p  className="directorName">{newTag}</p>
-                                        <p className="noMargin">{val.description}</p>
-                                        <p className="directorName">{val.director}</p>
-                                    
-                                    </div>
-                                    <div className="bottomSaveAndTime">
-                                        <p className="time">1 hrs 2 min</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </Link>
+                        <LoadMainImage val={val} tag={newTag} key={val._id}/>
                     )
                 }) 
             }
@@ -519,7 +496,7 @@ class aboutUs extends Component
                 } else {
                   optionList = (
                     <ul className="searchoptionUL" id="searchlistOptions">
-                        <li className="li" onClick={onClick}>
+                        <li className="li">
                             <Icon icon={androidSearch} size={15} className="searchOptionIcon"/>
                             No Result Found
                         </li>
@@ -553,18 +530,18 @@ class aboutUs extends Component
                     <div className="searchResultWrapper">
                         <div className="searchLeftMenu">
                             <div className="mandatoryMenuContent">
-                                <Link to={"/course/categorie/all"} className="removeHpyerLink sidemenu"><h4 className="mandatoryContent noMargin hover">All Classes</h4></Link>
-                                <Link to={"/course/categorie/popular"} className="removeHpyerLink sidemenu"><h4 className="mandatoryContent noMargin hover">popular</h4></Link>
-                                <Link to={"/course/categorie/newlyAdded"} className="removeHpyerLink sidemenu"><h4 className="mandatoryContent noMargin hover">Newly Added</h4></Link>
+                                <Link to={"/course/categorieinfo/all"} className="removeHpyerLink sidemenu"><h4 className="mandatoryContent noMargin hover">All Classes</h4></Link>
+                                <Link to={"/course/categorieinfo/popular"} className="removeHpyerLink sidemenu"><h4 className="mandatoryContent noMargin hover">popular</h4></Link>
+                                <Link to={"/course/categorieinfo/newlyAdded"} className="removeHpyerLink sidemenu"><h4 className="mandatoryContent noMargin hover">Newly Added</h4></Link>
 
                             </div>
 
                             <div className="MenuContent">
                                 <h4 className="label">Main Menu</h4>
-                                <Link to={"/course/categorie/education"} className="removeHpyerLink sidemenu"><p className="menuLabelContent noMargin hover">Education</p></Link>
-                                <Link to={"/course/categorie/sport"} className="removeHpyerLink sidemenu"><p className="menuLabelContent noMargin hover">Sport</p></Link>
-                                <Link to={"/course/categorie/language"} className="removeHpyerLink sidemenu"><p className="menuLabelContent noMargin hover">Language</p></Link>
-                                <Link to={"/course/categorie/health"} className="removeHpyerLink sidemenu"><p className="menuLabelContent noMargin hover">Health</p></Link>
+                                <Link to={"/course/categorieinfo/Education"} className="removeHpyerLink sidemenu"><p className="menuLabelContent noMargin hover">Education</p></Link>
+                                <Link to={"/course/categorieinfo/sport"} className="removeHpyerLink sidemenu"><p className="menuLabelContent noMargin hover">Sport</p></Link>
+                                <Link to={"/course/categorieinfo/language"} className="removeHpyerLink sidemenu"><p className="menuLabelContent noMargin hover">Language</p></Link>
+                                <Link to={"/course/categorieinfo/health"} className="removeHpyerLink sidemenu"><p className="menuLabelContent noMargin hover">Health</p></Link>
                             </div>
                         </div>
 
@@ -582,6 +559,9 @@ class aboutUs extends Component
                                     <div className="searchOptions" id="searchOptions">
                                         {optionList}
                                     </div>
+                                    <div className="search-count">
+                                        <p className="search-result-count">You found <span className="result-count">{this.state.classes !== null? this.state.classes.length + " iteams": 0 + " iteam"}</span>  </p>
+                                    </div>
                                 </div>
 
                             </div>
@@ -597,7 +577,7 @@ class aboutUs extends Component
                                 <div className="otherContent">
                                     <div className="otherContentTitle">
                                         <h2>Featured Popular Classes</h2>
-                                        <Link to={"/course/categorie/popular"} className="removeHpyerLink sidemenu">
+                                        <Link to={"/course/categorieinfo/popular"} className="removeHpyerLink sidemenu">
                                             <button className="viewAllBtn">View All</button>
                                         </Link>
                                     </div>

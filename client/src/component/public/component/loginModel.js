@@ -20,8 +20,7 @@ class loginModel extends Component
 
     render()
     {
-        
-
+    
         return (
             <div className="login_model_container">
                 <div className="login_model_left_container">

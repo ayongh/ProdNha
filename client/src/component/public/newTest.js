@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
 import Recaptcha from 'react-google-invisible-recaptcha';
 import axios from 'axios'
-
+ 
 import { Icon } from 'react-icons-kit'
 import {bookmark} from 'react-icons-kit/icomoon/bookmark'
-import {heartOutline} from 'react-icons-kit/typicons/heartOutline'
 import {close} from 'react-icons-kit/fa/close'
 import {spinner2} from 'react-icons-kit/icomoon/spinner2'
-import {arrows_keyboard_right} from 'react-icons-kit/linea/arrows_keyboard_right'
+import {androidSearch} from 'react-icons-kit/ionicons/androidSearch'
 
 import {Link, Redirect} from 'react-router-dom'
 
@@ -15,9 +14,13 @@ import {connect} from 'react-redux'
 import {Actionlogin, ActionLoading, ActionError} from '../../redux/Action/loginAction'
 import {ActionUserIntialize} from '../../redux/Action/userinfoAction'
 
-const image = require('../img/coding.jpg')
+import ImageLoad from './component/imageload'
+import LoadMainImage from './loadingMainImage'
 
-class detailpage extends Component
+import noImage from '../img/nophoto.png'
+import '../CSS/loading.css';
+
+class categorie extends Component
 {
     
     constructor(props)
@@ -28,12 +31,9 @@ class detailpage extends Component
             username:null,
             password:null,
             userError: null,
-
-            sectionContent:null,
-            similarClass:null,
-            countLike:null,
-
-            class:null
+          
+            classes:null,
+            popular:null
             
         }
         this.onResolved = this.onResolved.bind( this );
@@ -69,7 +69,6 @@ class detailpage extends Component
         }
 
     }
-
 
     //When recaptcha is resolved
     onResolved() {
@@ -128,46 +127,74 @@ class detailpage extends Component
 
     componentDidMount()
     {
-        axios.get('/course/findSection/public/'+this.props.match.params.courseID,{withCredentials: true, validateStatus: function (status) { return status >= 200 && status < 600; }}).then( async res =>{ 
-            if(res.status === 200)
+  
+      
+        if(this.props.match.params !== null)
+        {
+            if(this.props.match.params.categorie === "popular")
             {
-                await this.setState({
-                    sectionContent: res.data.data
+                var popularpayload= {
+                    pagination: 100
+                }
+                axios.post('/render/class/popular/public',popularpayload).then( res =>{ 
+                    if(res.status === 200)
+                    {
+                        this.setState({
+                            popular: res.data.splice(0,1),
+                            classes:res.data.splice(1,res.data.length)
+                        })
+                    }
                 })
-
             }
-        })
-
-        axios.get('/course/likeCount/'+this.props.match.params.courseID,{withCredentials: true, validateStatus: function (status) { return status >= 200 && status < 600; }}).then( async res =>{ 
-            if(res.status === 200)
+            else if(this.props.match.params.categorie === "all")
             {
-                this.setState({
-                    countLike:res.data.message
+                var popularpayload= {
+                    pagination: 100
+                }
+                
+                axios.post('/render/class/all/public',popularpayload).then( res =>{ 
+                    if(res.status === 200)
+                    {
+                        this.setState({
+                            popular: res.data.splice(0,1),
+                            classes:res.data.splice(1,res.data.length)
+                        })
+                    }
                 })
-
             }
-        })
-
-        axios.get('/course/findCourse/'+this.props.match.params.courseID,{withCredentials: true, validateStatus: function (status) { return status >= 200 && status < 600; }}).then( async res =>{ 
-            if(res.status === 200)
+            else if(this.props.match.params.categorie === "newlyAdded")
             {
-                await this.setState({
-                    class: res.data.data
+                var newlyaddedpayload= {
+                    pagination: 100
+                }
+                axios.post('/render/class/newlyadded',newlyaddedpayload).then( res =>{ 
+                    if(res.status === 200)
+                    {
+                        this.setState({
+                            popular:res.data.splice(0,1),
+                            classes:res.data.splice(1,res.data.length)
+                        })
+                    }
                 })
-
             }
-        })
-
-        axios.get('/course/maylike/public/'+this.props.match.params.courseID,{withCredentials: true, validateStatus: function (status) { return status >= 200 && status < 600; }}).then( async res =>{ 
-            if(res.status === 200)
+            else
             {
-                await this.setState({
-                    similarClass: res.data.message
+                var healthpayload= {
+                    categorie: this.props.match.params.categorie,
+                    pagination: 20
+                }
+                axios.post('/render/class/categorie',healthpayload).then( res =>{ 
+                    if(res.status === 200)
+                    {
+                        this.setState({
+                            classes:res.data.classes,
+                            popular: res.data.popular
+                        })
+                    }
                 })
-
             }
-        })
-        
+        }
+      
     }
 
     tagFormate(tagString)
@@ -182,10 +209,36 @@ class detailpage extends Component
         return newString
     }
 
-    getSimilarClass()
+    getPopularClass()
     {
         var classesElement = <h1>Loading</h1>
-        var Classes = this.state.similarClass
+        var Classes = this.state.classes
+       
+        if (Classes !== null && Classes !== undefined)
+        {
+            if(Classes.length > 0)
+            {
+                classesElement = Classes.map( (val, index) => {
+
+                    return (
+                        <ImageLoad val={val}/>
+                    )
+                }) 
+            }
+            else
+            {
+                classesElement = <div style={{width: "100%", textAlign:"center"}}><h1>No content Found "{this.state.searchValue}" </h1></div> 
+            }
+            
+        }
+
+        return classesElement;
+    }
+
+    getSearchClasses()
+    {
+        var classesElement = <h1>Loading</h1>
+        var Classes = this.state.popular
        
         if (Classes !== null && Classes !== undefined)
         {
@@ -195,26 +248,13 @@ class detailpage extends Component
                     var newTag= this.tagFormate(val.tag)
 
                     return (
-                        <div className="contentFirst">
-                            <a href={"/course/detail/"+val._id} className="linkNOwater" key={val._id}>
-                                <div className="contentFirstImageTop">
-                                    <img className="contentImageFirst" src={val.thumbnail}></img>
-                                </div>
-                                <div className="contentFirstImageBottom">
-                                    <h3 className="contentTitle">{val.name}</h3>
-                                    <div className="bottomSaveAndTimeContent">
-                                        <p className="time">{val.director}</p>
-                                        <Icon className="saveicon" icon={bookmark} size={15}></Icon>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
+                        <LoadMainImage val={val} tag={newTag}/>
                     )
                 }) 
             }
             else
             {
-                classesElement = <div style={{width: "100%", textAlign:"center"}}><h1>No Similar class Available </h1></div> 
+                classesElement = <div style={{width: "100%", textAlign:"center"}}><h1>No content Found "{this.state.searchValue}" </h1></div> 
             }
             
         }
@@ -222,109 +262,11 @@ class detailpage extends Component
         return classesElement;
     }
 
-    getClassElement()
-    {
-        var classElement = <h1>Loading</h1>
-        var Class = this.state.class
-
-        var likeCount = 0
-        if(this.state.countLike !== null)
-        {
-            likeCount = this.state.countLike.length
-        }
-       
-        if (Class !== null && Class !== undefined)
-        {
-            var Date = Class.date.split("T");
-
-            classElement = 
-            <div className="detail_container_top">
-                <div className="detail_content">
-                    <h1>{Class.name}</h1>
-                    <p>{Class.description}</p>
-                    
-                    <div className="detailAction">
-                        <Icon icon={heartOutline} size={35}></Icon>
-                        <p className="noMargin classLikeCount">{likeCount}</p>
-
-                        {/* <div className="listofuserLiked">
-                            <div className="listLiked">
-                                <div className="likeList">
-                                    <div className="listofUser">
-                                      {this.getUserlikedList()}
-                                    </div>
-                                </div>
-                            </div>
-                        </div> */}
-                    </div>
-
-                    <p className="directorName">{Class.director}</p>
-                    <p className="lastUpdated">Last Update <span className="updatedDate">{Date[0]}</span></p>
-                
-                </div>
-                <div className="detail_image">
-                    <div className="detail_image_wrapper">
-                        <img src={Class.thumbnail} className="detail_class_img"></img>
-                    </div>
-
-                </div>
-            </div>
-            
-        }
-
-        return classElement;
-    }
-
-    getUserlikedList()
-    {
-        var userLike = <p>None</p>
-        if(this.state.countLike !== null)
-        {
-            userLike = this.state.countLike.map((val,index)=>{
-                return(
-                    <p>{val.userID}</p>
-                )
-            })
-        }
-        return userLike
-    }
-
-
-
-    getSectionElement()
-    {
-        var sectionElement = <h1>Loading</h1>
-        var section = this.state.sectionContent
-       
-        if (section !== null && section !== undefined)
-        {
-            if(section.length > 0)
-            {
-                sectionElement = section.map( (val, index) => {
-                    return (
-                        <Link to={"/video/"+this.props.match.params.courseID+"/"+val._id} className="linkNOwater" key={val._id}>
-                            <div className="sectonContent">
-                                <Icon icon={arrows_keyboard_right} size={30}></Icon>
-                                <p className="noMargin sectioncontentTitle">{val.name}</p>
-                            </div>
-                        </Link>
-                    )
-                }) 
-            }
-            else
-            {
-                sectionElement = <div style={{width: "100%", textAlign:"center"}}><h1>Section Not Available </h1></div> 
-            }
-            
-        }
-
-        return sectionElement;
-    }
 
     render()
     {
-        console.log(this.state.countLike)
-        //Checks error and display it errorElement
+
+        
         let errorElement = null
         
         if(this.state.userError !== null)
@@ -358,8 +300,13 @@ class detailpage extends Component
             }   
         }
 
+        if(document.getElementById('search') !== null && this.state.searchValue !== null)
+        {
+            document.getElementById('search').value  = this.state.searchValue
+        }
+
         return (
-            <div>
+            <div className="aboutUsBody">
                 <div className="login_nav">
                     <div className="login_nav_wrapper">
                         <div className="logo">
@@ -378,31 +325,52 @@ class detailpage extends Component
 
 
               {/*   Section for the detail page for the section  */}
-                <header className="aboutBody">
-                    {this.getClassElement()}
+                <header className="searchResult">
+                    <div className="searchResultWrapper">
+                        <div className="searchLeftMenu">
+                            <div className="mandatoryMenuContent">
+                                <a href={"/course/categorieinfo/all"} className="removeHpyerLink sidemenu"><h4 className="mandatoryContent noMargin hover">All Classes</h4></a>
+                                <a href={"/course/categorieinfo/popular"} className="removeHpyerLink sidemenu"><h4 className="mandatoryContent noMargin hover">popular</h4></a>
+                                <a href={"/course/categorieinfo/newlyAdded"} className="removeHpyerLink sidemenu"><h4 className="mandatoryContent noMargin hover">Newly Added</h4></a>
 
-
-                    <div className="detail_container_bottom">
-                        <h4>Section</h4>
-                        {this.getSectionElement()}
-                     
-
-                        <div class="otherContent">
-                            <div className="otherContentTitle">
-                                <h4>Similar Classes</h4>
                             </div>
 
-                            <div className="content_wrapper">
-                               
-                                {this.getSimilarClass()}
-                                        
+                            <div className="MenuContent">
+                                <h4 className="label">Main Menu</h4>
+                                <a href={"/course/categorieinfo/Education"} className="removeHpyerLink sidemenu"><p className="menuLabelContent noMargin hover">Education</p></a>
+                                <a href={"/course/categorieinfo/Sport"} className="removeHpyerLink sidemenu"><p className="menuLabelContent noMargin hover">Sport</p></a>
+                                <a href={"/course/categorieinfo/Health"} className="removeHpyerLink sidemenu"><p className="menuLabelContent noMargin hover">Health</p></a>
                             </div>
                         </div>
+
+                        <div className="searchrightContent">
+                            <div className="DetailSearchMainContentWrapper">
+                                <div className="mainContentWrapper">
+
+                                    {/* Main Content for the movie */}
+                                    { this.getSearchClasses()}
+
+                                </div>
+                                
+
+                                <div className="otherContent">
+                                    <div className="otherContentTitle">
+                                        <h2>Other Class</h2>
+                                    </div>
+                                    <div className="content_wrapper">
+                                       {this.getPopularClass()}
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
                     </div>
+                   
                 </header>
 
-                <div id="myModal" class="modal">
-                    <div class="modal-content">
+                <div id="myModal" className="modal">
+                    <div className="modal-content">
                         <div className="login_model_wrapper">
                             <div className="model_container left">
                                 <h2>Notification</h2>
@@ -410,7 +378,7 @@ class detailpage extends Component
                             </div>
 
                             <div className="model_container right">
-                                <span class="close" onClick={this.modelClose}>&times;</span>
+                                <span className="close" onClick={this.modelClose}>&times;</span>
                                 <div className="login_right_inner_container">
                                     <h2>Login</h2>
             
@@ -454,4 +422,4 @@ const mapToState = (state) =>{
     }
 }
 
-export default connect(mapToState,{Actionlogin,ActionLoading,ActionError,ActionUserIntialize}) (detailpage);
+export default connect(mapToState,{Actionlogin,ActionLoading,ActionError,ActionUserIntialize}) (categorie);

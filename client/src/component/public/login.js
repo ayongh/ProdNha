@@ -12,6 +12,11 @@ import {basic_gear} from 'react-icons-kit/linea/basic_gear'
 import {basic_hammer} from 'react-icons-kit/linea/basic_hammer'
 import {basic_settings} from 'react-icons-kit/linea/basic_settings'
 
+
+import {weatherCloudy} from 'react-icons-kit/typicons/weatherCloudy'
+import {weatherShower} from 'react-icons-kit/typicons/weatherShower'
+import {weatherPartlySunny} from 'react-icons-kit/typicons/weatherPartlySunny'
+
 import {Link, Redirect} from 'react-router-dom'
 
 import {connect} from 'react-redux'
@@ -41,6 +46,8 @@ class login extends Component
 
             value: '',
 
+            videoLoading:false,
+
             classes:[],
 
             activeOption: null,
@@ -50,6 +57,53 @@ class login extends Component
             
         }
         this.onResolved = this.onResolved.bind( this );
+    }
+
+    componentDidMount()
+    {
+        const MainVideo = document.getElementById('video')
+
+        MainVideo.onloadeddata=()=>
+        {
+            document.getElementById('title1').innerHTML = "YOUR"
+            document.getElementById('title1').className = " "
+
+            document.getElementById('title2').innerHTML = "LEARNING"
+            document.getElementById('title2').className = " "
+
+            document.getElementById('title3').innerHTML = "STARTS HERE"
+            document.getElementById('title3').className = " "
+
+            document.getElementById('description1').innerHTML = 'Our organization promotes sharing'
+            document.getElementById('description1').className = " "
+            document.getElementById('description1').style.padding = "0px"
+            document.getElementById('description1').style.margin = "0px"
+
+            document.getElementById('description2').innerHTML = 'knowledge of any magnitude.';
+            document.getElementById('description2').className = " ";
+            document.getElementById('description2').style.padding = "0px";
+            document.getElementById('description2').style.marginTop = "0px";
+            document.getElementById('description2').style.marginBottom = "2rem";
+
+        }
+        
+    }
+
+    componentWillUnmount()
+    {
+        clearTimeout(this.clearTimeout)
+    }
+
+    hoverBrowseMenu()
+    {
+        document.getElementById('browseMenu').style.display = "flex"
+    }
+
+    hoverOutBrowseMenu()
+    {
+        setTimeout(function(){
+            document.getElementById('browseMenu').style.display = "none"
+        },500)
     }
 
     handleChange = (e) =>{
@@ -264,6 +318,8 @@ class login extends Component
                     classes:res.data.data
                 })
             }
+        }).catch((error)=>{
+            console.log("error")
         })
 
         this.setState({
@@ -294,6 +350,12 @@ class login extends Component
 
     }
 
+    imageError=(e)=>
+    {
+        e.target.src={image}
+    }
+
+
     render()
     {
 
@@ -303,7 +365,6 @@ class login extends Component
             const search = "/course/search/class/"+document.getElementById('search').value
             return <Redirect to={{pathname:search}}></Redirect>
         }
-
 
         //Checks error and display it errorElement
         let errorElement = null
@@ -377,7 +438,7 @@ class login extends Component
                   );
                 }
             }
-          }
+        }
 
         return (
             <div>
@@ -390,22 +451,42 @@ class login extends Component
                         </div>
 
                         <div className="menuContent">
+                            <a className="login_option browse" onMouseOver={()=>this.hoverBrowseMenu()}>Browse</a>
                             <a className="login_option loginBtn" onClick={this.loginModelOpen}>Login</a>
                             <a className="login_option" href="/signup">Signup</a>
+                        </div>
+
+                        <div className="browseMenu" id="browseMenu">
+                            <div className="browseMainMenu">
+                                <Link to={"/course/categorieinfo/all"} className="removeHpyerLink sidemenu"><h4 className="mandatoryContent noMargin hover">All Classes</h4></Link>
+                                <Link to={"/course/categorieinfo/popular"} className="removeHpyerLink sidemenu"><h4 className="mandatoryContent noMargin hover">popular</h4></Link>
+                                <Link to={"/course/categorieinfo/newlyAdded"} className="removeHpyerLink sidemenu"><h4 className="mandatoryContent noMargin hover">Newly Added</h4></Link>
+
+                            </div>
+                            <div className="browseSubMenu">
+                                <Link to={"/course/categorieinfo/Education"} className="removeHpyerLink sidemenu"><p className="menuLabelContent noMargin hover">Education</p></Link>
+                                <Link to={"/course/categorieinfo/sport"} className="removeHpyerLink sidemenu"><p className="menuLabelContent noMargin hover">Sport</p></Link>
+                                <Link to={"/course/categorieinfo/language"} className="removeHpyerLink sidemenu"><p className="menuLabelContent noMargin hover">Language</p></Link>
+                                <Link to={"/course/categorieinfo/health"} className="removeHpyerLink sidemenu"><p className="menuLabelContent noMargin hover">Health</p></Link>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 {/* -- This is where the landing page will go -- */}
-                <header className="v-header">
+                <header className="v-header" onMouseOver={()=>this.hoverOutBrowseMenu()}>
                     <div className="fullscreen-video-wrap">
-                        <video loop={true} muted={true} autoPlay className="fullscreen-bg__video" src={backgroundVideo}/>
+                        <video id="video" loop={true} muted={true} autoPlay className="fullscreen-bg__video" src={backgroundVideo}/>
                     </div>
 
                     <div className="header-overlay"></div>
-                    <div className="header-content">
-                        <h1>YOUR LEARNING STARTS HERE.</h1>
-                        <p>Our organization promotes sharing knowledge of any magnitude.</p>
+                    <div className="header-content" id="mainContainerTest">
+                        <h1 id="title1" className="loading loginTitle1"></h1>
+                        <h1 id="title2" className="loading loginTitle2"></h1>
+                        <h1 id="title3" className="loading loginTitle3"></h1>
+
+                        <p id="description1" className="loading descriptionTitle1"></p>
+                        <p id="description2" className="loading descriptionTitle2"></p>
                         <form onSubmit={this.handlesearchSubmit}>
                             <div className="searchMenuHomePage">
                                 <input className="publicSearch" placeholder="What do you want to learn?" id="search" onChange={this.handleSearchChange} onKeyDown={this.onKeyDown} onBlur={this.handleBlur} onFocus={this.searchFocus}  autoComplete="off" />
@@ -415,8 +496,8 @@ class login extends Component
                         <div className="searchOptions">
                             {optionList}
                         </div>
-
                     </div>
+
                     <div style={{height: "150px", overflow: "hidden"}} className="HomepageWave">
                         <svg viewBox="0 0 500 150" preserveAspectRatio="none" style={{height: "100%", width: "100%"}}>
                             <path d="M0.00,49.98 C149.99,150.00 349.20,-49.98 500.00,49.98 L500.00,150.00 L0.00,150.00 Z" style={{stroke: "none", fill: "#f4f4f4"}}></path>
@@ -429,7 +510,7 @@ class login extends Component
                     <div className="innnerContainerHomepage">
                         <div className="HighSchoolContainer">
                             <div className="highSchoolImageWrapper">
-                                <img className="imageHighschool" src="https://firebasestorage.googleapis.com/v0/b/nhadb-c07ce.appspot.com/o/stackskills-work-smarter.jpg?alt=media&token=97dc698b-371f-408b-9d5c-680b1edfdafc" alt='teamMember img' onError={image}></img>
+                                <img className="imageHighschool" src="https://firebasestorage.googleapis.com/v0/b/nhadb-c07ce.appspot.com/o/stackskills-work-smarter.jpg?alt=media&token=97dc698b-371f-408b-9d5c-680b1edfdafc" alt='teamMember img' onError = {(e)=>{e.target.src= image}}></img>
                             </div>
 
                             <div className="highSchoolContent">
@@ -453,8 +534,8 @@ class login extends Component
                     {/* This is the developer section of the page */}
                     <div className="TeamContainer">
                         <div className="firstDiv">
-                            <img className="firstDivImg developerimgMargin" src="https://firebasestorage.googleapis.com/v0/b/nhadb-c07ce.appspot.com/o/1.jpg?alt=media&token=b980954e-50dc-4dd7-942e-48a613c5517f" alt='teamMember img' onError={image}></img>
-                            <img className="secDivImg developerimgMargin" src="https://firebasestorage.googleapis.com/v0/b/nhadb-c07ce.appspot.com/o/1.jpg?alt=media&token=b980954e-50dc-4dd7-942e-48a613c5517f" alt='teamMember img' onError={image}></img>
+                            <img className="firstDivImg developerimgMargin" src="https://firebasestorage.googleapis.com/v0/b/nhadb-c07ce.appspot.com/o/1.jpg?alt=media&token=b980954e-50dc-4dd7-942e-48a613c5517f" alt='teamMember img' onError = {(e)=>{e.target.src= image}}></img>
+                            <img className="secDivImg developerimgMargin" src="https://firebasestorage.googleapis.com/v0/b/nhadb-c07ce.appspot.com/o/1.jpg?alt=media&token=b980954e-50dc-4dd7-942e-48a613c5517f" alt='teamMember img' onError = {(e)=>{e.target.src= image}}></img>
                         </div>
 
                         <div className="secoundDivWrapper">
@@ -464,22 +545,22 @@ class login extends Component
                                     <p>Our team consist of individual who are attending college, former graduates in multiple disiplines and High school Students</p>
                                     <button className="landingpageContatctButton">Contact</button>
                                 </div>
-                                <img className="secDivsecDivImg developerimgMargin" src="https://firebasestorage.googleapis.com/v0/b/nhadb-c07ce.appspot.com/o/1.jpg?alt=media&token=b980954e-50dc-4dd7-942e-48a613c5517f" alt='teamMember img' onError={image} ></img>
-                                <img className="secDivsthirdDivImg developerimgMargin" src="https://firebasestorage.googleapis.com/v0/b/nhadb-c07ce.appspot.com/o/1.jpg?alt=media&token=b980954e-50dc-4dd7-942e-48a613c5517f" alt='teamMember img' onError={image} ></img>
+                                <img className="secDivsecDivImg developerimgMargin" src="https://firebasestorage.googleapis.com/v0/b/nhadb-c07ce.appspot.com/o/1.jpg?alt=media&token=b980954e-50dc-4dd7-942e-48a613c5517f" alt='teamMember img' onError = {(e)=>{e.target.src= image}} ></img>
+                                <img className="secDivsthirdDivImg developerimgMargin" src="https://firebasestorage.googleapis.com/v0/b/nhadb-c07ce.appspot.com/o/1.jpg?alt=media&token=b980954e-50dc-4dd7-942e-48a613c5517f" alt='teamMember img' onError = {(e)=>{e.target.src= image}}></img>
                             </div>
 
                             <div className="thirdDivWrapper">
                                 <div className="thirdDiv">
-                                    <img className="thirdDivThirdDivImg developerimgMargin" src="https://firebasestorage.googleapis.com/v0/b/nhadb-c07ce.appspot.com/o/1.jpg?alt=media&token=b980954e-50dc-4dd7-942e-48a613c5517f" alt='teamMember img' onError={image} ></img>
+                                    <img className="thirdDivThirdDivImg developerimgMargin" src="https://firebasestorage.googleapis.com/v0/b/nhadb-c07ce.appspot.com/o/1.jpg?alt=media&token=b980954e-50dc-4dd7-942e-48a613c5517f" alt='teamMember img' onError = {(e)=>{e.target.src= image}} ></img>
                                 </div>
 
                                 <div className="fourthDIv">
-                                    <img className="fourthDivfirstDivImg developerimgMargin" src="https://firebasestorage.googleapis.com/v0/b/nhadb-c07ce.appspot.com/o/1.jpg?alt=media&token=b980954e-50dc-4dd7-942e-48a613c5517f" alt='teamMember img' onError={image} ></img>
-                                    <img className="fourthDivsecDivImg fourthDivfirstDivImg developerimgMargin" src="https://firebasestorage.googleapis.com/v0/b/nhadb-c07ce.appspot.com/o/1.jpg?alt=media&token=b980954e-50dc-4dd7-942e-48a613c5517f" alt='teamMember img' onError={image} ></img>
+                                    <img className="fourthDivfirstDivImg developerimgMargin" src="https://firebasestorage.googleapis.com/v0/b/nhadb-c07ce.appspot.com/o/1.jpg?alt=media&token=b980954e-50dc-4dd7-942e-48a613c5517f" alt='teamMember img' onError = {(e)=>{e.target.src= image}}></img>
+                                    <img className="fourthDivsecDivImg fourthDivfirstDivImg developerimgMargin" src="https://firebasestorage.googleapis.com/v0/b/nhadb-c07ce.appspot.com/o/1.jpg?alt=media&token=b980954e-50dc-4dd7-942e-48a613c5517f" alt='teamMember img' onError = {(e)=>{e.target.src= image}} ></img>
                                 </div>
 
                                 <div className="fithDiv">
-                                    <img className="fifthDivfirstDivImg fourthDivfirstDivImg developerimgMargin" src="https://firebasestorage.googleapis.com/v0/b/nhadb-c07ce.appspot.com/o/1.jpg?alt=media&token=b980954e-50dc-4dd7-942e-48a613c5517f" alt='teamMember img' onError={image} ></img>
+                                    <img className="fifthDivfirstDivImg fourthDivfirstDivImg developerimgMargin" src="https://firebasestorage.googleapis.com/v0/b/nhadb-c07ce.appspot.com/o/1.jpg?alt=media&token=b980954e-50dc-4dd7-942e-48a613c5517f" alt='teamMember img' onError = {(e)=>{e.target.src= image}} ></img>
 
                                 </div>
                             </div>

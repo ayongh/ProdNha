@@ -5,3 +5,86 @@
     text-align: center;
 }
 
+
+.loading
+{
+    background: #e1e1e1;
+}
+
+
+
+.title
+{
+    height: 28px;
+}
+
+.header-content .loginTitle1
+{
+    width: 150px;
+    height: 60px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.header-content .loginTitle2
+{
+    width: 250px;
+    height: 60px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.header-content .loginTitle3
+{
+    width: 100%;
+    height: 60px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.header-content .descriptionTitle1
+{
+    width: 100%;
+    height: 25px;
+    margin: 0px;
+    padding: 0px;
+}
+
+.header-content .descriptionTitle2
+{
+    width: 100%;
+    height: 25px;
+    margin-top: 2px;
+    margin-bottom: 2rem;
+    padding: 0px;
+}
+
+.smallMargin
+{
+    margin-bottom: 5px;
+}
+
+.tag
+{
+    width: 100%;
+    height: 16px;
+}
+
+.desc
+{
+    width: 100%;
+    height: 24px;
+}
+
+.dirName
+{
+    width: 50%;
+    height: 16px;
+}
+
+
+.time
+{
+    width: 30%;
+    height: 16px;
+}
