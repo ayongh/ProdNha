@@ -101,9 +101,8 @@ class login extends Component
 
     hoverOutBrowseMenu()
     {
-        setTimeout(function(){
-            document.getElementById('browseMenu').style.display = "none"
-        },500)
+       
+        document.getElementById('browseMenu').style.display = "none"
     }
 
     handleChange = (e) =>{
@@ -430,7 +429,7 @@ class login extends Component
                 } else {
                   optionList = (
                     <ul className="searchoptionUL" id="searchlistOptions">
-                        <li className="li" onClick={onClick}>
+                        <li className="li">
                             <Icon icon={androidSearch} size={15} className="searchOptionIcon"/>
                             No Result Found
                         </li>
@@ -452,29 +451,31 @@ class login extends Component
 
                         <div className="menuContent">
                             <a className="login_option browse" onMouseOver={()=>this.hoverBrowseMenu()}>Browse</a>
-                            <a className="login_option loginBtn" onClick={this.loginModelOpen}>Login</a>
-                            <a className="login_option" href="/signup">Signup</a>
+                            <a className="login_option loginBtn" onClick={this.loginModelOpen} onMouseOver={()=>this.hoverOutBrowseMenu()}>Login</a>
+                            <a className="login_option" href="/signup" onMouseOver={()=>this.hoverOutBrowseMenu()}>Signup</a>
                         </div>
 
-                        <div className="browseMenu" id="browseMenu">
-                            <div className="browseMainMenu">
-                                <Link to={"/course/categorieinfo/all"} className="removeHpyerLink sidemenu"><h4 className="mandatoryContent noMargin hover">All Classes</h4></Link>
-                                <Link to={"/course/categorieinfo/popular"} className="removeHpyerLink sidemenu"><h4 className="mandatoryContent noMargin hover">popular</h4></Link>
-                                <Link to={"/course/categorieinfo/newlyAdded"} className="removeHpyerLink sidemenu"><h4 className="mandatoryContent noMargin hover">Newly Added</h4></Link>
+                        <div className="browseMenuWrapper" id="browseMenu" onMouseLeave={()=>this.hoverOutBrowseMenu()}>
+                            <div className="browseMenu">
+                                <div className="browseMainMenu">
+                                    <Link to={"/course/categorieinfo/all"} className="removeHpyerLink sidemenu"><h4 className="mandatoryContent noMargin hover">All Classes</h4></Link>
+                                    <Link to={"/course/categorieinfo/popular"} className="removeHpyerLink sidemenu"><h4 className="mandatoryContent noMargin hover">popular</h4></Link>
+                                    <Link to={"/course/categorieinfo/newlyAdded"} className="removeHpyerLink sidemenu"><h4 className="mandatoryContent noMargin hover">Newly Added</h4></Link>
 
-                            </div>
-                            <div className="browseSubMenu">
-                                <Link to={"/course/categorieinfo/Education"} className="removeHpyerLink sidemenu"><p className="menuLabelContent noMargin hover">Education</p></Link>
-                                <Link to={"/course/categorieinfo/sport"} className="removeHpyerLink sidemenu"><p className="menuLabelContent noMargin hover">Sport</p></Link>
-                                <Link to={"/course/categorieinfo/language"} className="removeHpyerLink sidemenu"><p className="menuLabelContent noMargin hover">Language</p></Link>
-                                <Link to={"/course/categorieinfo/health"} className="removeHpyerLink sidemenu"><p className="menuLabelContent noMargin hover">Health</p></Link>
+                                </div>
+                                <div className="browseSubMenu">
+                                    <Link to={"/course/categorieinfo/Education"} className="removeHpyerLink sidemenu"><p className="menuLabelContent noMargin hover">Education</p></Link>
+                                    <Link to={"/course/categorieinfo/sport"} className="removeHpyerLink sidemenu"><p className="menuLabelContent noMargin hover">Sport</p></Link>
+                                    <Link to={"/course/categorieinfo/language"} className="removeHpyerLink sidemenu"><p className="menuLabelContent noMargin hover">Language</p></Link>
+                                    <Link to={"/course/categorieinfo/health"} className="removeHpyerLink sidemenu"><p className="menuLabelContent noMargin hover">Health</p></Link>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 {/* -- This is where the landing page will go -- */}
-                <header className="v-header" onMouseOver={()=>this.hoverOutBrowseMenu()}>
+                <header className="v-header">
                     <div className="fullscreen-video-wrap">
                         <video id="video" loop={true} muted={true} autoPlay className="fullscreen-bg__video" src={backgroundVideo}/>
                     </div>

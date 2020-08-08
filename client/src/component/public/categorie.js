@@ -8,6 +8,7 @@ import {close} from 'react-icons-kit/fa/close'
 import {spinner2} from 'react-icons-kit/icomoon/spinner2'
 import {androidSearch} from 'react-icons-kit/ionicons/androidSearch'
 
+
 import {Link, Redirect} from 'react-router-dom'
 
 import {connect} from 'react-redux'
@@ -15,11 +16,11 @@ import {Actionlogin, ActionLoading, ActionError} from '../../redux/Action/loginA
 import {ActionUserIntialize} from '../../redux/Action/userinfoAction'
 
 import ImageLoad from './component/imageload'
-import LoadMainImage from './loadingMainImage'
+import LoadMainImage from './component/loadingMainImage'
 
 import noImage from '../img/nophoto.png'
 import '../CSS/loading.css';
-
+import SideMenu from './component/sideMenu'
 class categorie extends Component
 {
     
@@ -211,19 +212,23 @@ class categorie extends Component
 
     getPopularClass()
     {
-        var classesElement = <h1>Loading</h1>
+        var classesElement
         var Classes = this.state.classes
        
         if (Classes !== null && Classes !== undefined)
         {
             if(Classes.length > 0)
             {
+                
                 classesElement = Classes.map( (val, index) => {
+                    var newTag= this.tagFormate(val.tag)
 
                     return (
-                        <ImageLoad val={val}/>
+                        <ImageLoad val={val} tag={newTag}/>
                     )
                 }) 
+
+                document.getElementById('otherClassID').innerHTML="Other Classses"
             }
             else
             {
@@ -237,7 +242,7 @@ class categorie extends Component
 
     getSearchClasses()
     {
-        var classesElement = <h1>Loading</h1>
+        var classesElement
         var Classes = this.state.popular
        
         if (Classes !== null && Classes !== undefined)
@@ -327,36 +332,22 @@ class categorie extends Component
               {/*   Section for the detail page for the section  */}
                 <header className="searchResult">
                     <div className="searchResultWrapper">
-                        <div className="searchLeftMenu">
-                            <div className="mandatoryMenuContent">
-                                <a href={"/course/categorieinfo/all"} className="removeHpyerLink sidemenu"><h4 className="mandatoryContent noMargin hover">All Classes</h4></a>
-                                <a href={"/course/categorieinfo/popular"} className="removeHpyerLink sidemenu"><h4 className="mandatoryContent noMargin hover">popular</h4></a>
-                                <a href={"/course/categorieinfo/newlyAdded"} className="removeHpyerLink sidemenu"><h4 className="mandatoryContent noMargin hover">Newly Added</h4></a>
-
-                            </div>
-
-                            <div className="MenuContent">
-                                <h4 className="label">Main Menu</h4>
-                                <a href={"/course/categorieinfo/Education"} className="removeHpyerLink sidemenu"><p className="menuLabelContent noMargin hover">Education</p></a>
-                                <a href={"/course/categorieinfo/Sport"} className="removeHpyerLink sidemenu"><p className="menuLabelContent noMargin hover">Sport</p></a>
-                                <a href={"/course/categorieinfo/Health"} className="removeHpyerLink sidemenu"><p className="menuLabelContent noMargin hover">Health</p></a>
-                            </div>
-                        </div>
-
+                        <SideMenu></SideMenu>
                         <div className="searchrightContent">
-                            <div className="DetailSearchMainContentWrapper">
+                            <div className="CategorieDetailSearchMainContentWrapper">
                                 <div className="mainContentWrapper">
                                     {/* Main Content for the movie */}
                                     { this.getSearchClasses()}
                                 </div>
                                 
 
+
                                 <div className="otherContent">
                                     <div className="otherContentTitle">
-                                        <h2>Other Class</h2>
+                                        <h2 id="otherClassID">Other Class</h2>
                                     </div>
                                     <div className="content_wrapper">
-                                       {this.getPopularClass()}
+                                        {this.getPopularClass()}
                                     </div>
                                 </div>
 

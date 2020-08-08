@@ -33,6 +33,19 @@
     background: #06b6c9;
 }
 
+.MainTitleImage
+{
+    -webkit-line-clamp: 2;
+    max-height: 50px;
+    overflow: hidden;
+    font-size: var(1rem, 1.8rem);
+    font-weight: 400;
+    line-height: normal;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    white-space: normal;
+    display: -webkit-box;
+}
 
 .caresoleImage_description_wrapper
 {
@@ -98,7 +111,7 @@
     50%  {top: -10px;}
     75%  {top: -15px;}
     100% {top: -20px;}
-  }
+}
 
 .top_caresoleImage_description
 {
@@ -131,6 +144,19 @@
     border-top: solid;
     border-top-color: #06b6c9;
     border-top-width:5px ;
+}
+
+.classInfoData
+{
+    font-size: 15px;
+    -webkit-line-clamp: 2;
+    max-height: 50px;
+    overflow: hidden;
+    line-height: normal;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    white-space: normal;
+    display: -webkit-box;
 }
 
 .tag_wrapper
