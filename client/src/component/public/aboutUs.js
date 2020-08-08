@@ -15,7 +15,8 @@ import {Actionlogin, ActionLoading, ActionError} from '../../redux/Action/loginA
 import {ActionUserIntialize} from '../../redux/Action/userinfoAction'
 
 import ImageLoad from './component/imageload'
-import LoadMainImage from './loadingMainImage'
+import LoadMainImage from './component/loadingMainImage'
+import SideMenu from './component/sideMenu'
 
 import noImage from '../img/nophoto.png'
 
@@ -528,23 +529,7 @@ class aboutUs extends Component
               {/*   Section for the detail page for the section  */}
                 <header className="searchResult">
                     <div className="searchResultWrapper">
-                        <div className="searchLeftMenu">
-                            <div className="mandatoryMenuContent">
-                                <Link to={"/course/categorieinfo/all"} className="removeHpyerLink sidemenu"><h4 className="mandatoryContent noMargin hover">All Classes</h4></Link>
-                                <Link to={"/course/categorieinfo/popular"} className="removeHpyerLink sidemenu"><h4 className="mandatoryContent noMargin hover">popular</h4></Link>
-                                <Link to={"/course/categorieinfo/newlyAdded"} className="removeHpyerLink sidemenu"><h4 className="mandatoryContent noMargin hover">Newly Added</h4></Link>
-
-                            </div>
-
-                            <div className="MenuContent">
-                                <h4 className="label">Main Menu</h4>
-                                <Link to={"/course/categorieinfo/Education"} className="removeHpyerLink sidemenu"><p className="menuLabelContent noMargin hover">Education</p></Link>
-                                <Link to={"/course/categorieinfo/sport"} className="removeHpyerLink sidemenu"><p className="menuLabelContent noMargin hover">Sport</p></Link>
-                                <Link to={"/course/categorieinfo/language"} className="removeHpyerLink sidemenu"><p className="menuLabelContent noMargin hover">Language</p></Link>
-                                <Link to={"/course/categorieinfo/health"} className="removeHpyerLink sidemenu"><p className="menuLabelContent noMargin hover">Health</p></Link>
-                            </div>
-                        </div>
-
+                        <SideMenu></SideMenu>
                         <div className="searchrightContent">
                             <div className="SearchHeaderresult">
                                 <div className="searchResultSearch label">

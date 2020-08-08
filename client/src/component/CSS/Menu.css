@@ -27,9 +27,11 @@
 .menuContent
 {
   width: 70%;
+  float: right;
   padding: 30px;
-  text-align: right;
+  right: 0px;
 }
+
 
 .login_nav_wrapper a{
   color:  black;

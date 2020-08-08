@@ -25,7 +25,7 @@ class loadingMainImage extends Component {
         {
 
             document.getElementById(titleID).innerHTML = this.props.val.name
-            document.getElementById(titleID).className = "smallMargin"
+            document.getElementById(titleID).className = "smallMargin MainTitleImage"
     
             document.getElementById(tag).innerHTML = this.props.tag
             document.getElementById(tag).className = "directorName"
@@ -33,7 +33,10 @@ class loadingMainImage extends Component {
             document.getElementById(description).innerHTML = this.props.val.description
             document.getElementById(description).className = "noMargin"
     
-            document.getElementById(directorName).innerHTML = this.props.val.director
+
+            document.getElementById('dir'+this.props.val._id).innerHTML = this.props.val.director
+            document.getElementById('categ'+this.props.val._id).innerHTML = this.props.val.categorie
+            document.getElementById('date'+this.props.val._id).innerHTML = this.props.val.date
             document.getElementById(directorName).className = "directorName"
     
             document.getElementById(time).innerHTML = "1hrs 2min"
@@ -46,7 +49,6 @@ class loadingMainImage extends Component {
 
   render() {
     const { val } = this.props;
-
     return (
         <Link to={"/course/detail/"+val._id} className="linkNOwater" key={val._id}>
             <div className="mainContent">
@@ -55,10 +57,10 @@ class loadingMainImage extends Component {
                 </div>
                 <div className="mainClassRight">
                     <div className="mainClassRightContainer">
-                        <h3 className="smallMargin loading title" id={"title"+val._id}> </h3>
-                        <p  className="directorName smallMargin loading tag" id={"tag"+val._id}></p>
-                        <p className="noMargin loading desc" id={"description"+val._id}> </p>
-                        <p className="directorName loading dirName" id={"director"+val._id}> </p>
+                        <h3 className="smallMargin MainTitleImage loading title" id={"title"+val._id}> </h3>
+                        <p  className="directorName smallMargin loading tag" id={"director"+val._id}><span id={"dir"+val._id} className="directorSpan"></span> <span id={"categ"+val._id} className="directorSpan"></span> <span id={"date"+val._id}></span> </p>
+                        <p className="noMargin MainDescription loading desc" id={"description"+val._id}> </p>
+                        <p className="directorName loading dirName" id={"tag"+val._id} > </p>
                     </div>
                     <div className="bottomSaveAndTime" >
                         <p className="time loading time" id={"time"+val._id}> </p>

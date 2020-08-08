@@ -15,6 +15,7 @@ import {connect} from 'react-redux'
 import {Actionlogin, ActionLoading, ActionError} from '../../redux/Action/loginAction'
 import {ActionUserIntialize} from '../../redux/Action/userinfoAction'
 
+import ImageLoad from './component/imageload'
 const image = require('../img/coding.jpg')
 
 class detailpage extends Component
@@ -195,20 +196,7 @@ class detailpage extends Component
                     var newTag= this.tagFormate(val.tag)
 
                     return (
-                        <div className="contentFirst">
-                            <a href={"/course/detail/"+val._id} className="linkNOwater" key={val._id}>
-                                <div className="contentFirstImageTop">
-                                    <img className="contentImageFirst" src={val.thumbnail}></img>
-                                </div>
-                                <div className="contentFirstImageBottom">
-                                    <h3 className="contentTitle">{val.name}</h3>
-                                    <div className="bottomSaveAndTimeContent">
-                                        <p className="time">{val.director}</p>
-                                        <Icon className="saveicon" icon={bookmark} size={15}></Icon>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
+                        <ImageLoad val={val} key={val._id} tag={newTag}></ImageLoad>
                     )
                 }) 
             }
@@ -241,7 +229,7 @@ class detailpage extends Component
             <div className="detail_container_top">
                 <div className="detail_content">
                     <h1>{Class.name}</h1>
-                    <p>{Class.description}</p>
+                    <p className="deatialDescription">{Class.description}</p>
                     
                     <div className="detailAction">
                         <Icon icon={heartOutline} size={35}></Icon>
