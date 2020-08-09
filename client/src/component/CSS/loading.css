@@ -15,7 +15,18 @@
     background: #e1e1e1;
 }
 
-
+.mainDescription
+{
+    font-size: 15px;
+    -webkit-line-clamp: 4;
+    max-height: 80px;
+    overflow: hidden;
+    line-height: normal;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    white-space: normal;
+    display: -webkit-box;
+}
 
 .title
 {

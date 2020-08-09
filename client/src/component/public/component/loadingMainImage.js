@@ -31,7 +31,7 @@ class loadingMainImage extends Component {
             document.getElementById(tag).className = "directorName"
     
             document.getElementById(description).innerHTML = this.props.val.description
-            document.getElementById(description).className = "noMargin"
+            document.getElementById(description).className = "noMargin mainDescription"
     
 
             document.getElementById('dir'+this.props.val._id).innerHTML = this.props.val.director

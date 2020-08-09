@@ -16,7 +16,6 @@ class imageload extends Component {
         var tag = "subtag"+this.props.val._id
         var description = "subdescription"+this.props.val._id
         var directorName = "subdirector"+this.props.val._id
-        var time = "subtime"+this.props.val._id
 
         if(document.getElementById(titleID) !== null)
         {
@@ -44,11 +43,10 @@ class imageload extends Component {
 
   render() {
     const { val } = this.props;
-    const { isLoaded } = this.state;
 
     return (
       <div className="contentFirst">
-        <Link to={"/course/detail/"+val._id} className="linkNOwater" key={val._id}>
+        <a href={"/course/detail/"+val._id} className="linkNOwater" key={val._id}>
 
           <div className="contentFirstImageTop">
               <img src={val.thumbnail} className="contentImageFirst"></img>
@@ -62,7 +60,7 @@ class imageload extends Component {
               <p className="directorName loading dirName" id={"subtag"+val._id} > </p>
             </div>
           </div>
-        </Link>
+        </a>
       </div>
     )
     }

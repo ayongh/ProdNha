@@ -33,6 +33,7 @@ class detailpage extends Component
             sectionContent:null,
             similarClass:null,
             countLike:null,
+            Loading:false,
 
             class:null
             
@@ -152,10 +153,16 @@ class detailpage extends Component
         axios.get('/course/findCourse/'+this.props.match.params.courseID,{withCredentials: true, validateStatus: function (status) { return status >= 200 && status < 600; }}).then( async res =>{ 
             if(res.status === 200)
             {
-                await this.setState({
-                    class: res.data.data
-                })
-
+             
+                const image = new Image();
+                image.onload = async () =>
+                {
+                    await this.setState({
+                        class: res.data.data,
+                        lodingFinish:true
+                    })
+                }
+                image.src = res.data.data.thumbnail
             }
         })
 
@@ -168,7 +175,8 @@ class detailpage extends Component
 
             }
         })
-        
+
+   
     }
 
     tagFormate(tagString)
@@ -234,16 +242,6 @@ class detailpage extends Component
                     <div className="detailAction">
                         <Icon icon={heartOutline} size={35}></Icon>
                         <p className="noMargin classLikeCount">{likeCount}</p>
-
-                        {/* <div className="listofuserLiked">
-                            <div className="listLiked">
-                                <div className="likeList">
-                                    <div className="listofUser">
-                                      {this.getUserlikedList()}
-                                    </div>
-                                </div>
-                            </div>
-                        </div> */}
                     </div>
 
                     <p className="directorName">{Class.director}</p>
