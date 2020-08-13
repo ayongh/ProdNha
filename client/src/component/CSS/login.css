@@ -740,6 +740,10 @@ body
   display: block;
 }
 
+.link{
+  color: white;
+}
+
 .listofuserLiked
 {
   position: absolute;
@@ -805,14 +809,6 @@ body
   display: block;
 }
 
-.detail_class_img
-{
-  width: 100%;
-  height: 90%;
-  padding-top: 8%;
-  padding-bottom: 2%;
-}
-
 .updatedDate
 {
   font-size: 12px;
@@ -826,6 +822,11 @@ body
 }
 
 
+.iconlike
+{
+  height: 35px;
+  width: 10%;
+}
 
 .sectonContent
 {

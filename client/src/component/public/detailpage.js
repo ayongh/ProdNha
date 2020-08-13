@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import Recaptcha from 'react-google-invisible-recaptcha';
 import axios from 'axios'
 
+import '../CSS/detailpage.css'
 import { Icon } from 'react-icons-kit'
-import {bookmark} from 'react-icons-kit/icomoon/bookmark'
 import {heartOutline} from 'react-icons-kit/typicons/heartOutline'
 import {close} from 'react-icons-kit/fa/close'
 import {spinner2} from 'react-icons-kit/icomoon/spinner2'
@@ -16,7 +16,6 @@ import {Actionlogin, ActionLoading, ActionError} from '../../redux/Action/loginA
 import {ActionUserIntialize} from '../../redux/Action/userinfoAction'
 
 import ImageLoad from './component/imageload'
-const image = require('../img/coding.jpg')
 
 class detailpage extends Component
 {
@@ -153,6 +152,7 @@ class detailpage extends Component
         axios.get('/course/findCourse/'+this.props.match.params.courseID,{withCredentials: true, validateStatus: function (status) { return status >= 200 && status < 600; }}).then( async res =>{ 
             if(res.status === 200)
             {
+<<<<<<< HEAD
              
                 const image = new Image();
                 image.onload = async () =>
@@ -163,6 +163,53 @@ class detailpage extends Component
                     })
                 }
                 image.src = res.data.data.thumbnail
+=======
+                const image = new Image();
+                image.onload = () =>
+                {
+                    var titleID = "detailTitle"+res.data.data._id
+                    var description = "detailDescription"+res.data.data._id
+                    var stylelikeCount = "detailLikeCount"+res.data.data._id
+                    var directorName = "detailDirectorName"+res.data.data._id
+                    var lastUpdate = "detailLastUpdate"+res.data.data._id
+                    var tag = "detailTag"+res.data.data._id
+                    var image = "detailImage"+res.data.data._id
+
+                    var newTag= this.tagFormate(res.data.data.tag)
+                    var Date = res.data.data.date.split("T");
+
+
+                    var likeCount = 0
+                    if(this.state.countLike !== null)
+                    {
+                        likeCount = this.state.countLike.length
+                    }
+
+                    document.getElementById(titleID).innerHTML = res.data.data.name
+                    document.getElementById(titleID).className = " "
+
+                    document.getElementById(description).innerHTML = res.data.data.description
+                    document.getElementById(description).className = "deatialDescription"
+                                   
+                    document.getElementById(directorName).innerHTML = res.data.data.director
+                    document.getElementById(directorName).className = "directorName"
+                               
+                    document.getElementById(tag).innerHTML = newTag
+                    document.getElementById(tag).className = "directorName"
+
+                    document.getElementById(image).src = res.data.data.thumbnail
+
+                    document.getElementById(lastUpdate).innerHTML = "Last Update "+ Date[0]
+                    document.getElementById(lastUpdate).className = "lastUpdated"
+                               
+                }
+                image.src = res.data.data.thumbnail
+
+                await this.setState({
+                    class: res.data.data
+                })
+
+>>>>>>> Abhishek
             }
         })
 
@@ -175,8 +222,13 @@ class detailpage extends Component
 
             }
         })
+<<<<<<< HEAD
 
    
+=======
+        
+        
+>>>>>>> Abhishek
     }
 
     tagFormate(tagString)
@@ -193,7 +245,7 @@ class detailpage extends Component
 
     getSimilarClass()
     {
-        var classesElement = <h1>Loading</h1>
+        var classesElement
         var Classes = this.state.similarClass
        
         if (Classes !== null && Classes !== undefined)
@@ -207,11 +259,14 @@ class detailpage extends Component
                         <ImageLoad val={val} key={val._id} tag={newTag}></ImageLoad>
                     )
                 }) 
+
             }
             else
             {
                 classesElement = <div style={{width: "100%", textAlign:"center"}}><h1>No Similar class Available </h1></div> 
             }
+
+            document.getElementById('SimilarClass').innerHTML="Similar Classes"
             
         }
 
@@ -220,15 +275,9 @@ class detailpage extends Component
 
     getClassElement()
     {
-        var classElement = <h1>Loading</h1>
+        var classElement 
         var Class = this.state.class
 
-        var likeCount = 0
-        if(this.state.countLike !== null)
-        {
-            likeCount = this.state.countLike.length
-        }
-       
         if (Class !== null && Class !== undefined)
         {
             var Date = Class.date.split("T");
@@ -236,26 +285,35 @@ class detailpage extends Component
             classElement = 
             <div className="detail_container_top">
                 <div className="detail_content">
-                    <h1>{Class.name}</h1>
-                    <p className="deatialDescription">{Class.description}</p>
+                    <h1 id={"detailTitle"+Class._id} className="loading titleh1"> </h1>
+                    <p id={"detailTag"+Class._id} className="directorName loading direcertorNameloadingWidth"></p>
+
+                    <p id={"detailDescription"+Class._id} className="deatialDescription loadingDesc">
+                        <span className="fakeLoadingParagraph loading"></span>
+                        <span className="fakeLoadingParagraph loading"></span>
+                        <span className="fakeLoadingParagraph loading"></span>
+                    </p>
                     
-                    <div className="detailAction">
+                    <div id={"detailLikeCount"+Class._id} className="detailAction loading iconlike">
                         <Icon icon={heartOutline} size={35}></Icon>
+<<<<<<< HEAD
                         <p className="noMargin classLikeCount">{likeCount}</p>
+=======
+                        <p className="noMargin classLikeCount"></p>
+>>>>>>> Abhishek
                     </div>
 
-                    <p className="directorName">{Class.director}</p>
-                    <p className="lastUpdated">Last Update <span className="updatedDate">{Date[0]}</span></p>
-                
+                    <p id={"detailDirectorName"+Class._id} className="directorName loading direcertorNameloadingWidth"></p>
+                    <p id={"detailLastUpdate"+Class._id} className="lastUpdated loading lastUpdatedloading"></p>
                 </div>
                 <div className="detail_image">
                     <div className="detail_image_wrapper">
-                        <img src={Class.thumbnail} className="detail_class_img"></img>
+                        <img id={"detailImage"+Class._id} className="detail_class_img loading imagedetailPage"></img>
                     </div>
 
                 </div>
             </div>
-            
+        
         }
 
         return classElement;
@@ -279,7 +337,7 @@ class detailpage extends Component
 
     getSectionElement()
     {
-        var sectionElement = <h1>Loading</h1>
+        var sectionElement
         var section = this.state.sectionContent
        
         if (section !== null && section !== undefined)
@@ -301,7 +359,8 @@ class detailpage extends Component
             {
                 sectionElement = <div style={{width: "100%", textAlign:"center"}}><h1>Section Not Available </h1></div> 
             }
-            
+
+            document.getElementById('section').innerHTML = "Section"
         }
 
         return sectionElement;
@@ -309,7 +368,6 @@ class detailpage extends Component
 
     render()
     {
-        console.log(this.state.countLike)
         //Checks error and display it errorElement
         let errorElement = null
         
@@ -369,19 +427,17 @@ class detailpage extends Component
 
 
                     <div className="detail_container_bottom">
-                        <h4>Section</h4>
+                        <h4 id="section"></h4>
                         {this.getSectionElement()}
                      
 
                         <div class="otherContent">
                             <div className="otherContentTitle">
-                                <h4>Similar Classes</h4>
+                                <h4 id="SimilarClass"></h4>
                             </div>
 
                             <div className="content_wrapper">
-                               
-                                {this.getSimilarClass()}
-                                        
+                                {this.getSimilarClass()}        
                             </div>
                         </div>
                     </div>
@@ -422,11 +478,14 @@ class detailpage extends Component
                         </div>
                     </div>
                 </div>
+
+
                 <Recaptcha
                 ref={ ref => this.recaptcha = ref }
                 //**************************************************DANGER remove site key to saftey *********************************************************************
                 sitekey='6LdhWNsUAAAAAKIeVaOGdY3HCKy5Siva9emmZDl6'
-                onResolved={ this.onResolved } />
+                onResolved={ this.onResolved }/>
+
             </div>
             
         )//return

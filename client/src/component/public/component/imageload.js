@@ -12,6 +12,7 @@ class imageload extends Component {
     const image = new Image();
     image.onload = () =>
     {
+<<<<<<< HEAD
         var titleID = "subtitle"+this.props.val._id
         var tag = "subtag"+this.props.val._id
         var description = "subdescription"+this.props.val._id
@@ -36,6 +37,33 @@ class imageload extends Component {
             document.getElementById(directorName).className = "directorName classInfoData"
     
         }
+=======
+      var titleID = "subtitle"+this.props.val._id
+      var tag = "subtag"+this.props.val._id
+      var description = "subdescription"+this.props.val._id
+      var directorName = "subdirector"+this.props.val._id
+      var time = "subtime"+this.props.val._id
+
+      if(document.getElementById(titleID) !== null)
+      {
+
+        document.getElementById(titleID).innerHTML = this.props.val.name
+        document.getElementById(titleID).className = "smallMargin subTitle MainTitleImage"
+
+        document.getElementById(tag).innerHTML = this.props.tag
+        document.getElementById(tag).className = "directorName classInfoData"
+
+        document.getElementById(description).innerHTML = this.props.val.description
+        document.getElementById(description).className = "noMargin subDescription"
+
+
+        document.getElementById('subdir'+this.props.val._id).innerHTML = this.props.val.director
+        document.getElementById('subcateg'+this.props.val._id).innerHTML = this.props.val.categorie
+        document.getElementById('subdate'+this.props.val._id).innerHTML = this.props.val.date
+        document.getElementById(directorName).className = "directorName classInfoData"
+  
+      }
+>>>>>>> Abhishek
     }
 
     image.src = this.props.val.thumbnail;

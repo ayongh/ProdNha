@@ -1,0 +1,69 @@
+.direcertorNameloadingWIdth
+{
+    width: 40%;
+}
+
+
+.lastUpdated
+{
+    width: 50%;
+}
+
+
+.titleh1
+{
+    height: 48px;
+}
+
+.detailParaph
+{
+    height: 200px;
+}
+
+.fakeLoadingParagraph
+{
+    height: 24px;
+    width: 100%;
+    margin-top:5px ;
+
+}
+
+.deatialDescription
+{
+    width: 100%;
+}
+
+.loadingDesc
+{
+    display: inline-grid;
+}
+
+.detail_class_img {
+    width: 100%;
+    height: 90%;
+    margin-top: 12%;
+    margin-bottom: 8%;
+}
+
+.iconlike
+{
+    width: 10%;
+    height: 35px;
+}
+
+.direcertorNameloadingWidth
+{
+    height: 16px;
+    width: 80%;
+}
+
+.lastUpdatedloading
+{
+    height: 24px;
+    width: 100%;
+}
+
+.dot::after
+{
+    
+}

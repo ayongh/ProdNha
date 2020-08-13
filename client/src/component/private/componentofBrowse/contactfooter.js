@@ -25,12 +25,8 @@ class contactfooter extends Component {
             </div>
 
             <div className="contact_wrapper_policy">
-                <div className="privacy">
-                    <a href="/">About</a>
-                </div>
-                <div className="privacy">
-                    <a href="/term/policy">Term & Policies</a>
-                </div>
+                <a href="/" className="linkNOwater link dot">About</a>
+                <a href="/term/policy" className="linkNOwater link">Term & Policies</a>
             </div>
 
         </div>
