@@ -140,51 +140,55 @@ class login extends Component
         const { activeOption, classes } = this.state;
 
 
-        if(classes.length >= 1)
+        if(classes !== null)
         {
-            if (e.keyCode === 13) {
-                if(activeOption !== null)
-                {
-                    document.getElementById('search').value = classes[activeOption].name
-                    this.setState({
-                        class:classes[activeOption],
-                        redirect:true
-                    })
-                }
-            
-            } else if (e.keyCode === 38) {
 
-                if(this.state.activeOption !== null)
-                {
-
-                    if (activeOption === 0) {
-                    return;
+            if(classes.length >= 1)
+            {
+                if (e.keyCode === 13) {
+                    if(activeOption !== null)
+                    {
+                        document.getElementById('search').value = classes[activeOption].name
+                        this.setState({
+                            class:classes[activeOption],
+                            redirect:true
+                        })
                     }
-                    document.getElementById('search').value = classes[activeOption-1].name
-                    this.setState({ activeOption: activeOption - 1});
-                }
-
-
-
-            } else if (e.keyCode === 40) {
-
-                if(this.state.activeOption === null)
-                {
-                    if (activeOption === classes.length - 1) {
-                    return;
-                    }
-                    document.getElementById('search').value = classes[0].name
-                    this.setState({ activeOption: 0 });
-                }
-                else
-                {
-                    if (activeOption === classes.length - 1) {
+                
+                } else if (e.keyCode === 38) {
+    
+                    if(this.state.activeOption !== null)
+                    {
+    
+                        if (activeOption === 0) {
                         return;
+                        }
+                        document.getElementById('search').value = classes[activeOption-1].name
+                        this.setState({ activeOption: activeOption - 1});
                     }
-                    document.getElementById('search').value = classes[activeOption + 1].name
-                    this.setState({ activeOption: activeOption + 1 });
+    
+    
+    
+                } else if (e.keyCode === 40) {
+    
+                    if(this.state.activeOption === null)
+                    {
+                        if (activeOption === classes.length - 1) {
+                        return;
+                        }
+                        document.getElementById('search').value = classes[0].name
+                        this.setState({ activeOption: 0 });
+                    }
+                    else
+                    {
+                        if (activeOption === classes.length - 1) {
+                            return;
+                        }
+                        document.getElementById('search').value = classes[activeOption + 1].name
+                        this.setState({ activeOption: activeOption + 1 });
+                    }
+    
                 }
-
             }
         }
 

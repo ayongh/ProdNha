@@ -220,7 +220,7 @@ class categorie extends Component
             if(Classes.length > 0)
             {
                 
-                classesElement = Classes.map( (val, index) => {
+                classesElement = Classes.map((val, index) => {
                     var newTag= this.tagFormate(val.tag)
 
                     return (
@@ -228,12 +228,12 @@ class categorie extends Component
                     )
                 }) 
 
-                document.getElementById('otherClassID').innerHTML="Other Classses"
             }
             else
             {
                 classesElement = <div style={{width: "100%", textAlign:"center"}}><h1>No content Found "{this.state.searchValue}" </h1></div> 
             }
+            document.getElementById('otherClassID').innerHTML="Other Classses"
             
         }
 
@@ -344,7 +344,7 @@ class categorie extends Component
 
                                 <div className="otherContent">
                                     <div className="otherContentTitle">
-                                        <h2 id="otherClassID">Other Class</h2>
+                                        <h2 id="otherClassID"></h2>
                                     </div>
                                     <div className="content_wrapper">
                                         {this.getPopularClass()}
